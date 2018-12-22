@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_title_bar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp70"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp">
+
+        <ImageView
+            android:id="@+id/location_city"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dp12"
+            android:src="@drawable/location_city_icon" />
+
+        <RelativeLayout
+            android:id="@+id/search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp30"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp50"
+            android:layout_marginRight="@dimen/dp50"
+            android:background="@drawable/corners_hollow_edit_search">
+
+            <View
+                android:layout_width="@dimen/dp15"
+                android:layout_height="@dimen/dp15"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp10"
+                android:background="@drawable/search_icon" />
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp30"
+                android:hint="@string/input_prompt"
+                android:textColorHint="@color/gray_light_text"
+                android:textSize="13dp" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/qr_code"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/dp12"
+            android:src="@drawable/qr_code_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

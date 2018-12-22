@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_social_title"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp70"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="@dimen/dp160"
+            android:layout_height="@dimen/dp40"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            app:tabBackground="@color/white"
+            app:tabIndicatorColor="@color/blue_bar"
+            app:tabIndicatorHeight="5dp"
+            app:tabSelectedTextColor="@color/transparent"
+            app:tabTextAppearance="@style/TaskTabPageIndicator.Text"
+            app:tabTextColor="@color/transparent" />
+
+        <ImageView
+            android:id="@+id/title_about_img"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp30"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:padding="@dimen/dp5"
+            android:src="@drawable/input_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/dp160"
+        android:layout_height="@dimen/dp40"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/dynamic_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@color/white"
+                android:drawablePadding="3dp"
+                android:drawableRight="@drawable/black_down_icon"
+                android:text="@string/friends_circle"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp16" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/message_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@color/white"
+                android:text="@string/message"
+                android:textColor="@color/gray_light_text"
+                android:textSize="@dimen/dp14" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

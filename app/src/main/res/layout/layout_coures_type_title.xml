@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_coures_title_bar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp40"
+    android:layout_below="@+id/layout_title_bar"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.example.administrator.sportsFitness.ui.view.ImmersedTextView
+        android:id="@+id/time_select_content"
+        android:layout_width="@dimen/dp80"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp10"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/dp5"
+        android:textSize="@dimen/dp13"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp80"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/time_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableRight="@drawable/down_icon"
+                android:gravity="center"
+                android:text="@string/time"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp14" />
+
+        </RelativeLayout>
+
+        <RadioGroup
+            android:id="@+id/group_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:text="@string/price"
+                android:textColor="@drawable/text_color_selector"
+                android:textSize="@dimen/dp14" />
+
+            <RadioButton
+                android:id="@+id/near"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/near"
+                android:textColor="@drawable/text_color_selector"
+                android:textSize="@dimen/dp14" />
+
+            <RadioButton
+                android:id="@+id/number_of_people"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/number_of_people"
+                android:textColor="@drawable/text_color_selector"
+                android:textSize="@dimen/dp14" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray_light" />
+
+</RelativeLayout>

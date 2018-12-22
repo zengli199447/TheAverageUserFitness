@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_add_action"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/corners_immersed_line_white"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp80"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/dynamic_release"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableTop="@drawable/dynamic_release_icon"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="@string/dynamic_release"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp12" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/add_friends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableTop="@drawable/add_friends_icon"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="@string/add_friends"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp12" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/action_qr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableTop="@drawable/action_qr_icon"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="@string/action_qr"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp12" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp50"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/dp20"
+        android:src="@drawable/close_icon" />
+
+
+</RelativeLayout>

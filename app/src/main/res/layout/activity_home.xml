@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/layout_fl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="51dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
+            android:background="@color/gray_light" />
+
+        <RadioGroup
+            android:id="@+id/group_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp50"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/home"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:drawablePadding="3dp"
+                android:drawableTop="@drawable/icon_home_selector"
+                android:gravity="center"
+                android:text="@string/home_page"
+                android:textColor="@drawable/text_color_selector"
+                android:textSize="@dimen/dp10" />
+
+            <RadioButton
+                android:id="@+id/social"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="3dp"
+                android:drawableTop="@drawable/icon_social_selector"
+                android:gravity="center"
+                android:text="@string/social"
+                android:textColor="@drawable/text_color_selector"
+                android:textSize="@dimen/dp10" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/course"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="3dp"
+                android:drawableTop="@drawable/icon_course_selector"
+                android:gravity="center"
+                android:text="@string/course"
+                android:textColor="@drawable/text_color_selector"
+                android:textSize="@dimen/dp10" />
+
+            <RadioButton
+                android:id="@+id/mine"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="3dp"
+                android:drawableTop="@drawable/icon_mine_selector"
+                android:gravity="center"
+                android:text="@string/mine"
+                android:textColor="@drawable/text_color_selector"
+                android:textSize="@dimen/dp10" />
+
+        </RadioGroup>
+
+        <ImageView
+            android:id="@+id/dynamic_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp15"
+            android:src="@drawable/dynamic_add_icon" />
+
+        <include layout="@layout/layout_add_action" />
+
+        <include layout="@layout/layout_search" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <include layout="@layout/layout_title_search" />
+
+    <TextView
+        android:id="@+id/history_search"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp40"
+        android:layout_below="@+id/layout_title_search"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15"
+        android:text="@string/history_search"
+        android:textColor="@color/gray_light_text"
+        android:textSize="@dimen/dp12" />
+
+    <TextView
+        android:id="@+id/clear_search"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp40"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/layout_title_search"
+        android:gravity="center"
+        android:text="@string/clear"
+        android:textColor="@color/black_overlay"
+        android:textSize="@dimen/dp12" />
+
+
+    <com.example.administrator.sportsFitness.ui.view.FlowLayout
+        android:id="@+id/history_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/history_search"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10" />
+
+    <FrameLayout
+        android:id="@+id/fl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_title_search"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

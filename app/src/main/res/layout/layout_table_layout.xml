@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp40"
+    android:layout_marginTop="@dimen/dp5"
+    android:background="@color/white">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:tabBackground="@color/white"
+        app:tabIndicatorColor="@color/blue_bar"
+        app:tabIndicatorHeight="5dp"
+        app:tabSelectedTextColor="@color/transparent"
+        app:tabTextAppearance="@style/TaskTabPageIndicator.Text"
+        app:tabTextColor="@color/transparent" />
+
+    <RadioGroup
+        android:id="@+id/group_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/the_gym"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="@string/the_gym"
+            android:textColor="@drawable/text_color_selector"
+            android:textSize="@dimen/dp14" />
+
+        <RadioButton
+            android:id="@+id/course"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/course"
+            android:textColor="@drawable/text_color_selector"
+            android:textSize="@dimen/dp14" />
+
+        <RadioButton
+            android:id="@+id/coach"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/coach"
+            android:textColor="@drawable/text_color_selector"
+            android:textSize="@dimen/dp14" />
+
+    </RadioGroup>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray_light" />
+
+</RelativeLayout>

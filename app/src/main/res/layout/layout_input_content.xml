@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/white"
+    android:minHeight="@dimen/dp50">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_light" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp60"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@drawable/corners_hollow_edit_reply">
+
+        <com.example.administrator.sportsFitness.ui.view.ClearEditTextView
+            android:id="@+id/input_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="center_vertical"
+            android:hint="@string/input_reply"
+            android:imeOptions="actionSearch"
+            android:lineSpacingExtra="@dimen/dp5"
+            android:minHeight="@dimen/dp30"
+            android:paddingBottom="@dimen/dp5"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10"
+            android:paddingTop="@dimen/dp5"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray_light_text"
+            android:textSize="13dp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/send"
+        android:layout_width="@dimen/dp60"
+        android:layout_height="@dimen/dp50"
+        android:layout_alignParentRight="true"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/send"
+        android:textColor="@color/gray_light_text" />
+
+    <RelativeLayout
+        android:id="@+id/about_tools_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_marginTop="@dimen/dp50"
+        android:background="@color/fatigue_yellow"
+        android:visibility="gone">
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_title_search"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp70"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp">
+
+        <RelativeLayout
+            android:id="@+id/search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp30"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp50"
+            android:background="@drawable/corners_hollow_edit_search">
+
+            <View
+                android:layout_width="@dimen/dp15"
+                android:layout_height="@dimen/dp15"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp10"
+                android:background="@drawable/search_icon" />
+
+            <com.example.administrator.sportsFitness.ui.view.ClearEditTextView
+                android:id="@+id/search_edit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp30"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_marginRight="@dimen/dp15"
+                android:background="@color/transparent"
+                android:hint="@string/input_prompt"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textColorHint="@color/gray_light_text"
+                android:textSize="13dp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/cancle"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="@string/cancle"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

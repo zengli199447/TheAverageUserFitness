@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_social_title" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_social_title" />
+
+
+    <LinearLayout
+        android:id="@+id/layout_dynamic_select"
+        android:layout_width="@dimen/dp160"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_social_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp5"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/corners_hollow_layout_blue" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
