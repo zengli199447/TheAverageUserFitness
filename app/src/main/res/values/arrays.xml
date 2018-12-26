@@ -238,4 +238,10 @@
         <item>私教</item>
     </string-array>
 
+    <string-array name="personal_details_info">
+        <item>介绍</item>
+        <item>私教</item>
+        <item>课程</item>
+    </string-array>
+
 </resources>

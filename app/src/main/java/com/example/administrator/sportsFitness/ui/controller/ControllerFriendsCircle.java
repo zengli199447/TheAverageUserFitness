@@ -14,6 +14,7 @@ import com.example.administrator.sportsFitness.base.ControllerClassObserver;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.activity.component.DynamicDetailsActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsInformationActivity;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerFriendsAdapter;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.CustomConditionsPopupWindow;
@@ -59,6 +60,8 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
         super.onClassCreate();
         albumBuilder = new AlbumBuilder(context);
         customConditionsPopupWindow = new CustomConditionsPopupWindow(context);
+        customConditionsPopupWindow.setOnItemClickListener(this);
+        customConditionsPopupWindow.setOnDismissListener(this);
         initAdapter();
         refreshView();
     }
@@ -70,11 +73,10 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
 
     private void initAdapter() {
         recycler_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        controllerFriendsAdapter = new ControllerFriendsAdapter(context, null);
+        controllerFriendsAdapter = new ControllerFriendsAdapter(context, null, false);
         recycler_view.setAdapter(controllerFriendsAdapter);
         controllerFriendsAdapter.setDynamicParentClickListener(this);
-        customConditionsPopupWindow.setOnItemClickListener(this);
-        customConditionsPopupWindow.setOnDismissListener(this);
+
     }
 
     private void refreshView() {
@@ -99,7 +101,7 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
                 SystemUtil.windowToDark(context);
                 break;
             case R.id.user_img:
-
+                context.startActivity(new Intent(context, TheDetailsInformationActivity.class));
                 break;
             case R.id.forwarding:
 
@@ -114,9 +116,7 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
     }
 
     @Override
-    public void onClearCheckClickListener(int position) {
-
-    }
+    public void onClearCheckClickListener(int position) {}
 
     @Override
     public void onDismiss() {
@@ -128,8 +128,6 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
         switch (v.getId()) {
             case R.id.report:
                 ShowDialog.getInstance().showInputDialog(context, EventCode.REPORT_INPUT);
-                break;
-            case R.id.cancle:
                 break;
         }
         customConditionsPopupWindow.dismiss();

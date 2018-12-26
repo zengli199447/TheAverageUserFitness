@@ -67,8 +67,33 @@
             android:theme="@style/MainTheme"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden" />
 
-        <activity android:name=".ui.activity.component.ReleaseNewDynamicActivity"
-            android:theme="@style/MainTheme"/>
+        <activity
+            android:name=".ui.activity.component.ReleaseNewDynamicActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.TheDetailsInformationActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.TheTagModifyActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.GeneralFormActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.InfoCoachPrivateActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.InfoGymActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.CoachPrivateInformationActivity"
+            android:theme="@style/MainTheme" />
 
         <service android:name=".server.InitializeService" />
         <service android:name=".server.ListenNetworkStateService" />

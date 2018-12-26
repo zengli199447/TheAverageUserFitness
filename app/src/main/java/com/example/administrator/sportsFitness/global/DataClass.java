@@ -26,7 +26,6 @@ public class DataClass {
     public static String LOGIN = "user_login_get";
 
 
-
     //用户登陆ID
     public static String USERID = ""; //10007 10005
     //账号标示
@@ -60,7 +59,6 @@ public class DataClass {
 
     public static int DefaultInformationFlow = 11;
 
-
     public DataClass() {
 
     }
@@ -80,10 +78,6 @@ public class DataClass {
         integers.add(R.drawable.welcome3);
         return integers;
     }
-
-
-
-
 
 
 }

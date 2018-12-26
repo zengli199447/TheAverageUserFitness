@@ -13,7 +13,7 @@ public class EventCode {
     public static final int RELEASE_SUCCESSFUL = 2001;
 
 
-    //-----------------------SWICH---------------------------------
+    //-----------------------EVENT---------------------------------
     public static final int PICTURE = 3001;
 
     public static final int PHOTO_REFRESH = 3001;
@@ -40,6 +40,16 @@ public class EventCode {
 
     public static final int SEARCH_ACTION = 3012;
 
+    public static final int CORNERS_TAG = 3013;
+
+
+    //-----------------------SWICH---------------------------------
+    public static final int DYNAMIC = 4000;
+    public static final int COMMENTS = 4003;
+    public static final int COACH_PRIVATE = 4001;
+    public static final int GYM = 4002;
+    public static final int COURSE = 4004;
+    public static final int COURSE_ZOO = 4005;
 
 
 }

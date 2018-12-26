@@ -1,5 +1,7 @@
 package com.example.administrator.sportsFitness.ui.controller;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -9,6 +11,8 @@ import com.example.administrator.sportsFitness.base.ControllerClassObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.bean.ArrangeBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.ui.activity.component.GeneralFormActivity;
 import com.example.administrator.sportsFitness.ui.adapter.ArrangeAdapter;
 import com.example.administrator.sportsFitness.ui.view.ImageSlideshow;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
@@ -90,6 +94,7 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
         easyBanner.commit();
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void OnItenClickListener(int position) {
         switch (arrangeBeanArrayList.get(position).getIndex()) {
@@ -100,10 +105,10 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
 
                 break;
             case 2:
-
+                context.startActivity(new Intent(context, GeneralFormActivity.class).setFlags(EventCode.COACH_PRIVATE));
                 break;
             case 3:
-
+                context.startActivity(new Intent(context, GeneralFormActivity.class).setFlags(EventCode.GYM));
                 break;
             case 4:
 
@@ -115,8 +120,6 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
     public void onItemClick(View view, int position) {
 
     }
-
-
 
 
 }

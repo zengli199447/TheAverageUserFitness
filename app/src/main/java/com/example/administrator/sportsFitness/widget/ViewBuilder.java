@@ -56,35 +56,40 @@ public class ViewBuilder {
     /**
      * tablayout标题长度修改
      */
-    public static void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+    public static void setIndicator(final TabLayout tabs, final int leftDip, final int rightDip) {
+        tabs.post(new Runnable() {
+            @Override
+            public void run() {
+                Class<?> tabLayout = tabs.getClass();
+                Field tabStrip = null;
+                try {
+                    tabStrip = tabLayout.getDeclaredField("mTabStrip");
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
 
-        tabStrip.setAccessible(true);
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+                tabStrip.setAccessible(true);
+                LinearLayout llTab = null;
+                try {
+                    llTab = (LinearLayout) tabStrip.get(tabs);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
 
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
+                int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
+                int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
 
-        for (int i = 0; i < llTab.getChildCount(); i++) {
-            View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
-        }
+                for (int i = 0; i < llTab.getChildCount(); i++) {
+                    View child = llTab.getChildAt(i);
+                    child.setPadding(0, 0, 0, 0);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+                    params.leftMargin = left;
+                    params.rightMargin = right;
+                    child.setLayoutParams(params);
+                    child.invalidate();
+                }
+            }
+        });
     }
 
     public static void textDrawable(TextView view, Context context, int id, int direction) {
@@ -195,5 +200,12 @@ public class ViewBuilder {
                 SystemUtil.dp2px(context, bottomMagin));
         view.setLayoutParams(layoutParams);
     }
+
+    public static void CanvasDrawable(Context context, TextView textView) {
+        Drawable drawable = context.getResources().getDrawable(R.drawable.clear_icon);
+        drawable.setBounds(1, 0, 20, 20);
+        textView.setCompoundDrawables(null, null, drawable, null);
+    }
+
 
 }

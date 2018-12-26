@@ -43,11 +43,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp40"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/dp50"
-                android:layout_marginRight="@dimen/dp50"
                 app:layout_collapseMode="pin"
+                app:tabBackground="@drawable/corners_table_layout"
                 app:tabIndicatorColor="@color/blue_bar"
-                app:tabIndicatorHeight="2dp"
+                app:tabIndicatorHeight="5dp"
                 app:tabSelectedTextColor="@color/blue_bar"
                 app:tabTextAppearance="@style/TaskTabPageIndicator.Text"
                 app:tabTextColor="@color/black_overlay" />

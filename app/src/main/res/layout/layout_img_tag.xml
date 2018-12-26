@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_img_tag"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp180">
+
+    <ImageView
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder" />
+
+    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+        android:id="@+id/img_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/dp15"
+        android:background="@drawable/corners_soild_layout_colorful_translucent"
+        android:drawableLeft="@drawable/img_tag_icon"
+        android:drawablePadding="@dimen/dp10"
+        android:gravity="center"
+        android:paddingBottom="2dp"
+        android:paddingRight="@dimen/dp10"
+        android:paddingTop="2dp"
+        android:text="10"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp10" />
+
+
+</RelativeLayout>

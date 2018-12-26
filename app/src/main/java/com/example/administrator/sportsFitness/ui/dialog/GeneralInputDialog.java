@@ -63,8 +63,12 @@ public class GeneralInputDialog extends BaseDialog implements View.OnClickListen
                 content_text.setHint(context.getString(R.string.input_report_content));
                 title.setText(context.getString(R.string.report_content));
                 break;
+            case EventCode.CORNERS_TAG:
+                content_text.setHint(context.getString(R.string.input_corners_tag));
+                title.setText(context.getString(R.string.add_tag));
+                break;
         }
-        handler.sendEmptyMessageDelayed(0,100);
+        handler.sendEmptyMessageDelayed(0, 100);
     }
 
     @Override
@@ -73,7 +77,7 @@ public class GeneralInputDialog extends BaseDialog implements View.OnClickListen
     }
 
     @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void dispatchMessage(Message msg) {
             super.dispatchMessage(msg);

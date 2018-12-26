@@ -30,10 +30,20 @@ public class ControllerFriendsAdapter extends RecyclerView.Adapter<MyViewHolder>
 
     Context context;
     List<Object> list;
+    boolean status;
+    int visibilityCount;
 
-    public ControllerFriendsAdapter(Context context, List<Object> list) {
+    public ControllerFriendsAdapter(Context context, List<Object> list, boolean status) {
         this.context = context;
         this.list = list;
+        this.status = status;
+    }
+
+    public ControllerFriendsAdapter(Context context, List<Object> list, boolean status, int visibilityCount) {
+        this.context = context;
+        this.list = list;
+        this.status = status;
+        this.visibilityCount = visibilityCount;
     }
 
     @NonNull
@@ -73,9 +83,9 @@ public class ControllerFriendsAdapter extends RecyclerView.Adapter<MyViewHolder>
 
         initRecyclerView(recycler_view, Arrays.asList(context.getResources().getStringArray(R.array.photo_list)));
 
-        initCheckClickListener(about,position);
-        initCheckClickListener(user_img,position);
-        initCheckClickListener(forwarding,position);
+        initCheckClickListener(about, position);
+        initCheckClickListener(user_img, position);
+        initCheckClickListener(forwarding, position);
         initCheckClickListener(support_check, position);
         initCheckClickListener(comments, position);
         initCheckClickListener(holder.itemView, position);
@@ -84,6 +94,8 @@ public class ControllerFriendsAdapter extends RecyclerView.Adapter<MyViewHolder>
         ViewBuilder.ChangeLinearLayoutViewMagin(context, recycler_view_layout, 50, 10, 0, 0);
         ViewBuilder.ChangeLinearLayoutViewMagin(context, controller_layout, 50, 0, 0, 0);
 
+        if (status)
+            line.setVisibility(View.GONE);
     }
 
     //类图模式(单张、两张、更多)
@@ -97,7 +109,7 @@ public class ControllerFriendsAdapter extends RecyclerView.Adapter<MyViewHolder>
             spanCount = 3;
         }
         recycler_view.setLayoutManager(ViewBuilder.getFullyGridLayoutManager(context, false, spanCount));
-        RecyclerChildAdapter recyclerChildAdapter = new RecyclerChildAdapter(context, imgList,true);
+        RecyclerChildAdapter recyclerChildAdapter = new RecyclerChildAdapter(context, imgList, true);
         recycler_view.setAdapter(recyclerChildAdapter);
         recyclerChildAdapter.notifyDataSetChanged();
         recyclerChildAdapter.setChildClickListener(this);
@@ -116,7 +128,13 @@ public class ControllerFriendsAdapter extends RecyclerView.Adapter<MyViewHolder>
 
     @Override
     public int getItemCount() {
-        return list == null ? 6 : list.size();
+        int size = 0;
+        if (status) {
+            size = visibilityCount;
+        } else {
+            size = 6;
+        }
+        return list == null ? size : list.size();
     }
 
     @Override
@@ -140,7 +158,6 @@ public class ControllerFriendsAdapter extends RecyclerView.Adapter<MyViewHolder>
     public void setDynamicParentClickListener(DynamicParentClickListener dynamicParentClickListener) {
         this.dynamicParentClickListener = dynamicParentClickListener;
     }
-
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.administrator.sportsFitness.ui.controller;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,9 @@ import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.ControllerClassObserver;
 import com.example.administrator.sportsFitness.model.bean.CategoryNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.ui.activity.component.InfoCoachPrivateActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.InfoGymActivity;
 import com.example.administrator.sportsFitness.ui.adapter.CategoryAdapter;
 import com.example.administrator.sportsFitness.ui.adapter.FitnessCourseAdapter;
 
@@ -28,20 +32,23 @@ public class ControllerCourse extends ControllerClassObserver implements Categor
     RecyclerView fitness_course_recycler;
     SwipeRefreshLayout swipe_layout;
 
+    private int flagStatus;
     int pageNumber = 1;
     String reason = "";
     String time = "";
     String category = "";
+
     private CategoryAdapter categoryAdapter;
 
     private List<CategoryNetBean> categoryNetBeansList = new ArrayList<>();
     private FitnessCourseAdapter fitnessCourseAdapter;
 
-    public ControllerCourse(RecyclerView category_recycler, TextView empty_layout, RecyclerView fitness_course_recycler, SwipeRefreshLayout swipe_layout) {
+    public ControllerCourse(RecyclerView category_recycler, TextView empty_layout, RecyclerView fitness_course_recycler, SwipeRefreshLayout swipe_layout, int flagStatus) {
         this.category_recycler = category_recycler;
         this.empty_layout = empty_layout;
         this.fitness_course_recycler = fitness_course_recycler;
         this.swipe_layout = swipe_layout;
+        this.flagStatus = flagStatus;
     }
 
     @Override
@@ -58,6 +65,17 @@ public class ControllerCourse extends ControllerClassObserver implements Categor
     protected void onClassCreate() {
         super.onClassCreate();
         initAdapter();
+        switch (flagStatus) {
+            case EventCode.COURSE:
+
+                break;
+            case EventCode.COACH_PRIVATE:
+
+                break;
+            case EventCode.GYM:
+
+                break;
+        }
         GetNetWork();
         refreshView();
     }
@@ -74,7 +92,7 @@ public class ControllerCourse extends ControllerClassObserver implements Categor
         categoryAdapter.setCategroyItemClickListener(this);
 
         fitness_course_recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        fitnessCourseAdapter = new FitnessCourseAdapter(context, null,false);
+        fitnessCourseAdapter = new FitnessCourseAdapter(context, null, false);
         fitness_course_recycler.setAdapter(fitnessCourseAdapter);
         fitnessCourseAdapter.setOnFitnessCourseClickListener(this);
     }
@@ -113,6 +131,22 @@ public class ControllerCourse extends ControllerClassObserver implements Categor
                 break;
             case R.id.sign_up:
                 toastUtil.showToast("position : " + position);
+                break;
+        }
+        switch (flagStatus) {
+            case EventCode.COURSE:
+                toastUtil.showToast("课程");
+
+                break;
+            case EventCode.COACH_PRIVATE:
+                toastUtil.showToast("私教");
+                Intent infoCoachPrivateIntent = new Intent(context, InfoCoachPrivateActivity.class);
+                context.startActivity(infoCoachPrivateIntent);
+                break;
+            case EventCode.GYM:
+                toastUtil.showToast("健身房");
+                Intent infoGymIntent = new Intent(context, InfoGymActivity.class);
+                context.startActivity(infoGymIntent);
                 break;
         }
     }

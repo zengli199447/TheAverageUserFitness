@@ -44,6 +44,10 @@
     <color name="white_the_gradient_c">#ffffff</color>
     <color name="white_the_gradient_l">#c4ffffff</color>
 
+    <color name="purple">#9f53ec</color>
+
     <drawable name="gray_light">#ffe3e2e2</drawable>
+
+    <color name="translucent">#39080808</color>
 
 </resources>

@@ -14,17 +14,17 @@
         <include layout="@layout/layout_coures_type_title" />
 
         <android.support.v7.widget.RecyclerView
+            android:layout_below="@+id/layout_coures_title_bar"
             android:id="@+id/category_recycler"
             android:layout_width="@dimen/dp80"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp110" />
+            android:layout_height="wrap_content" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/dp110"
+            android:layout_below="@+id/layout_coures_title_bar"
             android:layout_toRightOf="@+id/category_recycler">
 
             <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView

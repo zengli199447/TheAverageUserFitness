@@ -6,10 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseFragment;
+import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.adapter.TabPageIndicatorAdapter;
 import com.example.administrator.sportsFitness.ui.fragment.search.SearchTypeFragment;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
@@ -36,11 +39,15 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
     View line;
     @BindView(R.id.group_view)
     RadioGroup group_view;
+    @BindView(R.id.layout_table_layout)
+    RelativeLayout layout_table_layout;
 
     private List<Fragment> mFragments = new ArrayList<>();
     private TabPageIndicatorAdapter tabPageIndicatorAdapter;
-    private List<String> titleList;
+    private List<String> titleList = new ArrayList<>();
     private int[] ids = {R.id.the_gym, R.id.course, R.id.coach};
+
+    private boolean OPEN_SEARCH_STATUS;
 
     @Override
     protected void initInject() {
@@ -49,7 +56,13 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
-
+        switch (commonevent.getCode()) {
+            case EventCode.OPEN_SEARCH:
+                OPEN_SEARCH_STATUS = commonevent.isTemp_boolean();
+                initDiversifiedFragment();
+                initViewLayout();
+                break;
+        }
     }
 
     @Override
@@ -59,7 +72,7 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
 
     @Override
     protected void initClass() {
-        initDiversifiedFragment();
+
     }
 
     @Override
@@ -69,17 +82,12 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
 
     @Override
     protected void initView() {
-        tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getChildFragmentManager(), titleList, mFragments);
-        view_pager.setAdapter(tabPageIndicatorAdapter);
-        tab_layout.setupWithViewPager(view_pager);
-        tab_layout.addOnTabSelectedListener(this);
-        MeasurementIndicator();
+
     }
 
     @Override
     protected void initListener() {
         group_view.setOnCheckedChangeListener(this);
-
     }
 
     @Override
@@ -87,12 +95,34 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
 
     }
 
+    private void initViewLayout() {
+        view_pager.removeAllViews();
+        tab_layout.removeAllTabs();
+        tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getChildFragmentManager(), titleList, mFragments);
+        view_pager.setAdapter(tabPageIndicatorAdapter);
+        tab_layout.setupWithViewPager(view_pager);
+        tab_layout.addOnTabSelectedListener(this);
+        MeasurementIndicator();
+    }
+
     private void initDiversifiedFragment() {
-        titleList = Arrays.asList(getResources().getStringArray(R.array.search_type));
-        for (int i = 0; i < titleList.size(); i++) {
+        titleList.clear();
+        if (OPEN_SEARCH_STATUS) {
+            titleList.addAll(Arrays.asList(getResources().getStringArray(R.array.search_type)));
+            layout_table_layout.setVisibility(View.VISIBLE);
+            for (int i = 0; i < titleList.size(); i++) {
+                SearchTypeFragment searchTypeFragment = new SearchTypeFragment();
+                Bundle data = new Bundle();
+                data.putString("typeId", titleList.get(i));
+                searchTypeFragment.setArguments(data);
+                mFragments.add(searchTypeFragment);
+            }
+        } else {
+            titleList.add(getString(R.string.course));
+            layout_table_layout.setVisibility(View.GONE);
             SearchTypeFragment searchTypeFragment = new SearchTypeFragment();
             Bundle data = new Bundle();
-            data.putString("typeId", titleList.get(i));
+            data.putString("typeId", getString(R.string.course));
             searchTypeFragment.setArguments(data);
             mFragments.add(searchTypeFragment);
         }
@@ -115,12 +145,7 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
     }
 
     private void MeasurementIndicator() {
-        tab_layout.post(new Runnable() {
-            @Override
-            public void run() {
-                ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin_max), getResources().getInteger(R.integer.title_bar_margin_max));
-            }
-        });
+        ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin_max), getResources().getInteger(R.integer.title_bar_margin_max));
         tabPageIndicatorAdapter.notifyDataSetChanged();
     }
 

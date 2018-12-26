@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp10"
+        android:text="@string/my_tag"
+        android:textColor="@color/black_overlay"
+        android:textSize="@dimen/dp16" />
+
+    <com.example.administrator.sportsFitness.ui.view.FlowLayout
+        android:id="@+id/personal_tag_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp10" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp10"
+        android:text="@string/add_tag"
+        android:textColor="@color/black_overlay"
+        android:textSize="@dimen/dp16" />
+
+    <TextView
+        android:id="@+id/add_corners"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@drawable/corners_hollow_bg_gray"
+        android:gravity="center_vertical"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="@string/corners_tag"
+        android:textColor="@color/gray_light_text"
+        android:textSize="@dimen/dp12" />
+
+    <com.example.administrator.sportsFitness.ui.view.FlowLayout
+        android:id="@+id/hot_tag_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp10" />
+
+
+</LinearLayout>

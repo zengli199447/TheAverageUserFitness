@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <com.example.administrator.sportsFitness.ui.view.FlowLayout
+            android:id="@+id/flow_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp15"
+            android:minHeight="@dimen/dp30" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp15">
+
+            <ImageView
+                android:id="@+id/personal_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/personal_icon" />
+
+            <TextView
+                android:id="@+id/user_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_toRightOf="@+id/personal_icon"
+                android:text="女     18岁     湖北-武汉"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp13" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp15">
+
+            <ImageView
+                android:id="@+id/diamond_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/diamond_icon" />
+
+            <com.example.administrator.sportsFitness.ui.view.ShinyView
+                android:id="@+id/shiny_view"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp15"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_toRightOf="@+id/diamond_icon"
+                android:visibility="gone"
+                ratingbar:starCount="5"
+                ratingbar:starDistance="@dimen/dp5"
+                ratingbar:starEmpty="@drawable/shiny_off_icon"
+                ratingbar:starFill="@drawable/shiny_icon"
+                ratingbar:starSize="@dimen/dp10" />
+
+            <TextView
+                android:id="@+id/experience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_toRightOf="@+id/shiny_view"
+                android:text="6542次预约"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp13" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp15">
+
+            <ImageView
+                android:id="@+id/text_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/text_icon" />
+
+            <TextView
+                android:id="@+id/signature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_toRightOf="@+id/text_icon"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="激情、自信、坚持；我有一定的经验和能力，但我需要一个成功的方向，一个发展自己的空间，用自己的能力去创造财富！"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp13" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/dp15"
+            android:background="@color/gray_light" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginBottom="@dimen/dp5">
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/dynamic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/collection_icon"
+                android:drawablePadding="@dimen/dp10"
+                android:text="KOACH果...动态"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp14" />
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/dynamic_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableRight="@drawable/right_icon"
+                android:text="@string/more"
+                android:textColor="@color/gray_light_text"
+                android:textSize="@dimen/dp12" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/dynamic_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dp200" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_light" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginBottom="@dimen/dp5">
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/comments_icon"
+                android:drawablePadding="@dimen/dp10"
+                android:text="@string/comments"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp14" />
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/comments_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableRight="@drawable/right_icon"
+                android:text="@string/more"
+                android:textColor="@color/gray_light_text"
+                android:textSize="@dimen/dp12" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comments_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dp200" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_title_bar" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp60"
+            android:layout_margin="@dimen/dp15">
+
+            <com.example.administrator.sportsFitness.ui.view.CircleImageView
+                android:id="@+id/user_img"
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp60"
+                android:layout_centerVertical="true"
+                android:src="@drawable/placeholder" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_toRightOf="@+id/user_img"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="用户昵称"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp14" />
+
+
+            <TextView
+                android:id="@+id/standard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/dp10"
+                android:text="￥159"
+                android:textColor="@color/red_text"
+                android:textSize="@dimen/dp14" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp10"
+            android:background="@color/gray_" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp15">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/training_camp"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp13" />
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/select_training_camp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableRight="@drawable/right_icon"
+                android:text="@string/select_training_camp"
+                android:textColor="@color/gray_light_text"
+                android:textSize="@dimen/dp14" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/gray_light" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp15">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/student"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp13" />
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/select_student"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableRight="@drawable/right_icon"
+                android:text="@string/select_student"
+                android:textColor="@color/gray_light_text"
+                android:textSize="@dimen/dp14" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/gray_light" />
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_pay_bottom" />
+
+
+</RelativeLayout>

@@ -131,6 +131,9 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mineFragment = new MineFragment();
         loadMultipleRootFragment(R.id.layout_fl, 0, homeFragment, socialFragment, courseFragment, mineFragment);
         fragmentTransaction.replace(R.id.fl_layout, new SearchFragment());
+        Bundle data = new Bundle();
+        data.putInt("flagStatus", EventCode.COURSE);
+        courseFragment.setArguments(data);
         fragmentTransaction.commit();
     }
 

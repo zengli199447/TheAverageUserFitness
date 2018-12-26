@@ -87,6 +87,33 @@
     <string name="coach">教练</string>
     <string name="add_friend">添加好友</string>
     <string name="say_hello">打招呼</string>
+    <string name="more">查看更多</string>
+    <string name="my_tag">我的标签</string>
+    <string name="corners_tag">+自定义</string>
+    <string name="add_tag">添加标签</string>
+    <string name="input_corners_tag">请输入自定义标签</string>
+    <string name="coach_private">私人教练</string>
+    <string name="score">评分</string>
+    <string name="gym">健身房</string>
+    <string name="the_personal">的个人</string>
+    <string name="the_related">的相关</string>
+    <string name="students_list_log">学员记录</string>
+    <string name="course_our_shop">本店课程</string>
+    <string name="need_to_know">须知</string>
+    <string name="instructions">须知</string>
+    <string name="user_evaluation">用户评价</string>
+    <string name="reservations_now">立即预定</string>
+    <string name="personal_elucidation">说明</string>
+    <string name="coures_form">课程列表</string>
+    <string name="comments_additional">追加评论</string>
+    <string name="appointment_now">立即预约</string>
+    <string name="online_information">在线资讯</string>
+    <string name="select_training_camp">请选择训练场地</string>
+    <string name="training_camp">训练营</string>
+    <string name="select_student">请选择学员</string>
+    <string name="student">学员</string>
+    <string name="total">合计:</string>
+    <string name="pay_order">支付订单</string>
 
 
 </resources>

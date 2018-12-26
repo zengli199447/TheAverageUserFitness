@@ -1,12 +1,15 @@
 package com.example.administrator.sportsFitness.ui.fragment;
 
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,7 +17,10 @@ import android.widget.TextView;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseFragment;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
+import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.rxtools.RxBus;
 import com.example.administrator.sportsFitness.ui.controller.ControllerCourse;
 import com.example.administrator.sportsFitness.ui.view.CustomTimeChoicePopupWindow;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
@@ -55,10 +61,22 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
     @BindView(R.id.swipe_layout)
     SwipeRefreshLayout swipe_layout;
 
+    @BindView(R.id.layout_title_bar)
+    RelativeLayout layout_title_bar;
+    @BindView(R.id.number_of_people)
+    RadioButton number_of_people;
+    @BindView(R.id.price)
+    RadioButton price;
+    @BindView(R.id.score)
+    RadioButton score;
+    @BindView(R.id.time_select_layout)
+    RelativeLayout time_select_layout;
+
     boolean typeSelectOpenStatus;
     private ControllerCourse controllerCourse;
     private CustomTimeChoicePopupWindow customTimeChoicePopupWindow;
     private String selectTime = "";
+    private int flagStatus;
 
     @Override
     protected void initInject() {
@@ -77,7 +95,9 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
 
     @Override
     protected void initClass() {
-        controllerCourse = new ControllerCourse(category_recycler, empty_layout, fitness_course_recycler, swipe_layout);
+        Bundle bundle = getArguments();
+        flagStatus = bundle != null ? bundle.getInt("flagStatus") : -1;
+        controllerCourse = new ControllerCourse(category_recycler, empty_layout, fitness_course_recycler, swipe_layout, flagStatus);
         customTimeChoicePopupWindow = new CustomTimeChoicePopupWindow(getActivity(), new CalendarBuilder(Calendar.getInstance()), false, true);
     }
 
@@ -89,15 +109,32 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
     @Override
     protected void initData() {
 
+        toastUtil.showToast("flagStatus : " + flagStatus);
+
     }
 
     @Override
     protected void initView() {
-        location_city.setVisibility(View.GONE);
-        qr_code.setVisibility(View.GONE);
-        ViewBuilder.ChangeRelativeLayoutViewMagin(getActivity(), search_layout, 15, 0, 15, 0);
-        ViewBuilder.ProgressStyleChange(swipe_layout, SystemUtil.dp2px(getActivity(), 130));
+        switch (flagStatus) {
+            case EventCode.COURSE:
+                location_city.setVisibility(View.GONE);
+                qr_code.setVisibility(View.GONE);
+                ViewBuilder.ChangeRelativeLayoutViewMagin(getActivity(), search_layout, 15, 0, 15, 0);
+                break;
+            case EventCode.COACH_PRIVATE:
+                layout_title_bar.setVisibility(View.GONE);
+                number_of_people.setVisibility(View.GONE);
 
+                break;
+            case EventCode.GYM:
+                layout_title_bar.setVisibility(View.GONE);
+                number_of_people.setVisibility(View.GONE);
+                time_select_layout.setVisibility(View.GONE);
+                score.setVisibility(View.VISIBLE);
+
+                break;
+        }
+        ViewBuilder.ProgressStyleChange(swipe_layout, SystemUtil.dp2px(getActivity(), 130));
     }
 
     @Override
@@ -113,7 +150,7 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
     protected void onClickAble(View view) {
         switch (view.getId()) {
             case R.id.search_layout:
-
+                RxBus.getDefault().post(new CommonEvent(EventCode.OPEN_SEARCH, false));
                 break;
             case R.id.time_select:
                 if (typeSelectOpenStatus) {
@@ -138,6 +175,20 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
             case R.id.number_of_people:
                 controllerCourse.changeReason("3");
                 break;
+            case R.id.score:
+                controllerCourse.changeReason("4");
+                break;
+        }
+        switch (flagStatus) {
+            case EventCode.COURSE:
+
+                break;
+            case EventCode.COACH_PRIVATE:
+
+                break;
+            case EventCode.GYM:
+
+                break;
         }
         controllerCourse.RefreshNetWorkData(selectTime);
     }
@@ -146,11 +197,11 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
     public void refreshSelectView(int status) {
         switch (status) {
             case 0:
-                ViewBuilder.textDrawable(time_select, getActivity(), R.drawable.down_icon, 2);
+                ViewBuilder.textDrawable(time_select, getActivity(), R.drawable.black_down_icon, 2);
                 customTimeChoicePopupWindow.dismiss();
                 break;
             case 1:
-                ViewBuilder.textDrawable(time_select, getActivity(), R.drawable.up_icon, 2);
+                ViewBuilder.textDrawable(time_select, getActivity(), R.drawable.black_up_icon, 2);
                 customTimeChoicePopupWindow.refreshTitle(getString(R.string.appointment_time), 0);
                 customTimeChoicePopupWindow.showAtLocation(group_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
                 SystemUtil.windowToDark(getActivity());

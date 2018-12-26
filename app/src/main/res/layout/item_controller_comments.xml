@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp5"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp50">
+
+            <com.example.administrator.sportsFitness.ui.view.CircleImageView
+                android:id="@+id/user_img"
+                android:layout_width="@dimen/dp40"
+                android:layout_height="@dimen/dp40"
+                android:layout_centerVertical="true"
+                android:src="@drawable/placeholder" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp35"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_toRightOf="@+id/user_img">
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="@dimen/dp5"
+                    android:text="用户昵称"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp14" />
+
+                <com.example.administrator.sportsFitness.ui.view.ShinyView
+                    android:id="@+id/shiny_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp15"
+                    android:layout_alignParentBottom="true"
+                    ratingbar:starCount="5"
+                    ratingbar:starDistance="@dimen/dp5"
+                    ratingbar:starEmpty="@drawable/shiny_off_icon"
+                    ratingbar:starFill="@drawable/shiny_icon"
+                    ratingbar:starSize="@dimen/dp10" />
+
+                <TextView
+                    android:id="@+id/creat_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="2018-05-08"
+                    android:textColor="@color/gray_light_text"
+                    android:textSize="@dimen/dp12" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/comments_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:lineSpacingExtra="@dimen/dp5"
+            android:minHeight="@dimen/dp20"
+            android:text="评论内容"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp13" />
+
+        <RelativeLayout
+            android:id="@+id/recycler_view_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="-5dp"
+            android:layout_marginTop="@dimen/dp10"
+            android:visibility="visible">
+
+            <com.example.administrator.sportsFitness.ui.view.GridRecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp15"
+        android:background="@color/gray_light" />
+
+
+    <TextView
+        android:id="@+id/commtens_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:lineSpacingExtra="@dimen/dp5" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp10"
+        android:background="@color/gray_" />
+
+</LinearLayout>
+

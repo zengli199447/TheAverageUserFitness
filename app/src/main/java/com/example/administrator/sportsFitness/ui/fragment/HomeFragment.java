@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseFragment;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
+import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.rxtools.RxBus;
@@ -83,7 +84,7 @@ public class HomeFragment extends BaseFragment {
 
                 break;
             case R.id.search_layout:
-                RxBus.getDefault().post(new CommonEvent(EventCode.OPEN_SEARCH));
+                RxBus.getDefault().post(new CommonEvent(EventCode.OPEN_SEARCH, true));
                 break;
         }
     }

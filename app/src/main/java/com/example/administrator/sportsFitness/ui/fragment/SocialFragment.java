@@ -96,12 +96,7 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
         tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getChildFragmentManager(), titleList, mFragments);
         view_page.setAdapter(tabPageIndicatorAdapter);
         tab_layout.setupWithViewPager(view_page);
-        tab_layout.post(new Runnable() {
-            @Override
-            public void run() {
-                ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin), getResources().getInteger(R.integer.title_bar_margin));
-            }
-        });
+        ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin), getResources().getInteger(R.integer.title_bar_margin));
     }
 
     @Override

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_table_layout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp40"
     android:layout_marginTop="@dimen/dp5"
@@ -12,7 +13,7 @@
         android:layout_height="@dimen/dp40"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        app:tabBackground="@color/white"
+        app:tabBackground="@drawable/corners_table_layout"
         app:tabIndicatorColor="@color/blue_bar"
         app:tabIndicatorHeight="5dp"
         app:tabSelectedTextColor="@color/transparent"

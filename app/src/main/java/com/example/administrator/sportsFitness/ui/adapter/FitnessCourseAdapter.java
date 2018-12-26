@@ -31,11 +31,19 @@ public class FitnessCourseAdapter extends RecyclerView.Adapter<MyViewHolder> {
     Context context;
     List<Object> list;
     boolean maginStatus;
+    int visibilityCount = -1;
 
     public FitnessCourseAdapter(Context context, List<Object> list, boolean maginStatus) {
         this.context = context;
         this.list = list;
         this.maginStatus = maginStatus;
+    }
+
+    public FitnessCourseAdapter(Context context, List<Object> list, boolean maginStatus, int visibilityCount) {
+        this.context = context;
+        this.list = list;
+        this.maginStatus = maginStatus;
+        this.visibilityCount = visibilityCount;
     }
 
     @Override
@@ -84,7 +92,7 @@ public class FitnessCourseAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
         if (maginStatus) {
             ViewBuilder.ChangeLinearLayoutViewMagin(context, layout_content, 15, 15, 15, 15);
-            ViewBuilder.ChangeLinearLayoutViewMagin(context, line, 10, 0, 0, 0);
+            ViewBuilder.ChangeLinearLayoutViewMagin(context, line, 15, 0, 0, 0);
         }
 
         if (position == 0) {
@@ -114,7 +122,16 @@ public class FitnessCourseAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return list == null ? 12 : list.size();
+        int count = 0;
+        if (list != null)
+            count = list.size();
+        if (visibilityCount > 0)
+            count = visibilityCount;
+        if (visibilityCount > 0) {
+            return list == null ? 2 : count;
+        } else {
+            return list == null ? 12 : count;
+        }
     }
 
     public interface onFitnessCourseClickListener {

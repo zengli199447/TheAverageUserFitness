@@ -8,11 +8,16 @@ import com.example.administrator.sportsFitness.di.scope.ActivityScope;
 import com.example.administrator.sportsFitness.ui.activity.HomeActivity;
 import com.example.administrator.sportsFitness.ui.activity.LoginActivity;
 import com.example.administrator.sportsFitness.ui.activity.WelcomeActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.CoachPrivateInformationActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.DynamicDetailsActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.EmbeddedWebActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.GeneralFormActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.InfoCoachPrivateActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.InfoGymActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.RegisteredAccountActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.ReleaseNewDynamicActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsInformationActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.TheTagModifyActivity;
 
 import dagger.Component;
 
@@ -40,5 +45,15 @@ public interface ActivityComponent {
     void inject(ReleaseNewDynamicActivity releaseNewDynamicActivity);
 
     void inject(TheDetailsInformationActivity theDetailsInformationActivity);
+
+    void inject(TheTagModifyActivity theTagModifyActivity);
+
+    void inject(GeneralFormActivity generalFormActivity);
+
+    void inject(InfoCoachPrivateActivity infoCoachPrivateActivity);
+
+    void inject(InfoGymActivity infoGymActivity);
+
+    void inject(CoachPrivateInformationActivity coachPrivateInformationActivity);
 
 }
