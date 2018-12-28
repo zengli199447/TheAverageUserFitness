@@ -90,6 +90,7 @@ public class CustomConditionsPopupWindow extends PopupWindow implements View.OnC
             SystemUtil.windowToLight(context);
             mListener.setOnItemClick(v);
         }
+        dismiss();
     }
 
 

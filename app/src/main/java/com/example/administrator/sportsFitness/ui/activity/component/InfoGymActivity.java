@@ -133,19 +133,19 @@ public class InfoGymActivity extends BaseActivity implements NestedScrollView.On
                 break;
             case R.id.course_more:
                 intent.setFlags(EventCode.COURSE_ZOO);
-                intent.putExtra("gymId", "");
-                intent.putExtra("gymName", "欧时莱健身房");
+                intent.putExtra("relatedId", "");
+                intent.putExtra("relatedName", "欧时莱健身房");
                 startActivity(intent);
                 break;
             case R.id.evaluation_more:
                 intent.setFlags(EventCode.COMMENTS);
-                intent.putExtra("gymId", "");
-                intent.putExtra("gymName", "欧时莱健身房");
-                intent.putExtra("userName", "欧时莱健身房");
+                intent.putExtra("relatedId", "");
+                intent.putExtra("relatedName", "欧时莱健身房");
                 startActivity(intent);
                 break;
             case R.id.reservations_now:
-
+                Intent reservationsNowIntent = new Intent(this, GymInfomationActivity.class);
+                startActivity(reservationsNowIntent);
                 break;
         }
     }

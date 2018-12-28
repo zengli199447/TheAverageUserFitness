@@ -219,7 +219,6 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
     public void setOnItemClick(View v, String year, String month, String day, String hour, String minute, int selectType) {
         selectTime = new StringBuffer().append(year).append(".").append(month).append(".").append(day).toString();
         time_select_content.setText(selectTime);
-        customTimeChoicePopupWindow.dismiss();
         controllerCourse.RefreshNetWorkData(selectTime);
     }
 

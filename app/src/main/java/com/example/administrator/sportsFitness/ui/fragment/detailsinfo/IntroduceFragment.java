@@ -105,14 +105,14 @@ public class IntroduceFragment extends BaseFragment implements ControllerIntrodu
         switch (view.getId()) {
             case R.id.dynamic_more:
                 intent.setFlags(EventCode.DYNAMIC);
-                intent.putExtra("userId", UserId);
-                intent.putExtra("userName", UserName);
+                intent.putExtra("relatedId", UserId);
+                intent.putExtra("relatedName", UserName);
                 getActivity().startActivity(intent);
                 break;
             case R.id.comments_more:
                 intent.setFlags(EventCode.COMMENTS);
-                intent.putExtra("userId", UserId);
-                intent.putExtra("userName", UserName);
+                intent.putExtra("relatedId", UserId);
+                intent.putExtra("relatedName", UserName);
                 getActivity().startActivity(intent);
                 break;
         }

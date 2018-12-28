@@ -183,7 +183,6 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
             case R.id.cancle:
                 break;
         }
-        customConditionsPopupWindow.dismiss();
     }
 
     private TextWatcher TextWatcherListener = new TextWatcher() {

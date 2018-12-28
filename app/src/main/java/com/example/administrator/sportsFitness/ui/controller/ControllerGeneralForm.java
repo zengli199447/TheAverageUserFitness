@@ -18,6 +18,7 @@ import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsI
 import com.example.administrator.sportsFitness.ui.adapter.ControllerCommentsAdapter;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerFriendsAdapter;
 import com.example.administrator.sportsFitness.ui.adapter.FitnessCourseAdapter;
+import com.example.administrator.sportsFitness.ui.adapter.MyTripAdapter;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.CustomConditionsPopupWindow;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
@@ -32,29 +33,29 @@ import java.util.Arrays;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class ControllerGeneralForm extends ControllerClassObserver implements CustomConditionsPopupWindow.OnItemClickListener, PopupWindow.OnDismissListener, ControllerFriendsAdapter.DynamicParentClickListener, FitnessCourseAdapter.onFitnessCourseClickListener, ControllerCommentsAdapter.CommentsParentClickListener {
+public class ControllerGeneralForm extends ControllerClassObserver implements CustomConditionsPopupWindow.OnItemClickListener, PopupWindow.OnDismissListener, ControllerFriendsAdapter.DynamicParentClickListener, FitnessCourseAdapter.onFitnessCourseClickListener,
+        ControllerCommentsAdapter.CommentsParentClickListener,MyTripAdapter.OnTripClickListener{
 
     SwipeRefreshLayout swipe_layout;
     TextView empty_layout;
     RecyclerView recycler_view;
 
     private int flags;
-    private String userId;
-    private String gymId;
+    private String relatedId;
     private AlbumBuilder albumBuilder;
     private CustomConditionsPopupWindow customConditionsPopupWindow;
     private ControllerFriendsAdapter controllerFriendsAdapter;
     private ArrayList<String> photoList = new ArrayList<>();
     private FitnessCourseAdapter fitnessCourseAdapter;
     private ControllerCommentsAdapter controllerCommentsAdapter;
+    private MyTripAdapter myTripAdapter;
 
-    public ControllerGeneralForm(SwipeRefreshLayout swipe_layout, TextView empty_layout, RecyclerView recycler_view, int flags, String userId, String gymId) {
+    public ControllerGeneralForm(SwipeRefreshLayout swipe_layout, TextView empty_layout, RecyclerView recycler_view, int flags, String relatedId) {
         this.swipe_layout = swipe_layout;
         this.empty_layout = empty_layout;
         this.recycler_view = recycler_view;
         this.flags = flags;
-        this.userId = userId;
-        this.gymId = gymId;
+        this.relatedId = relatedId;
     }
 
     @Override
@@ -85,6 +86,9 @@ public class ControllerGeneralForm extends ControllerClassObserver implements Cu
             case EventCode.COURSE_ZOO:
 
                 break;
+            case EventCode.MY_TRIP:
+
+                break;
         }
         refreshView();
     }
@@ -112,6 +116,11 @@ public class ControllerGeneralForm extends ControllerClassObserver implements Cu
                 recycler_view.setAdapter(fitnessCourseAdapter);
                 fitnessCourseAdapter.setOnFitnessCourseClickListener(this);
                 break;
+            case EventCode.MY_TRIP:
+                myTripAdapter = new MyTripAdapter(context, null);
+                recycler_view.setAdapter(myTripAdapter);
+                myTripAdapter.setOnTripClickListener(this);
+                break;
         }
 
     }
@@ -127,12 +136,15 @@ public class ControllerGeneralForm extends ControllerClassObserver implements Cu
             case EventCode.COURSE_ZOO:
                 fitnessCourseAdapter.notifyDataSetChanged();
                 break;
+            case EventCode.MY_TRIP:
+                myTripAdapter.notifyDataSetChanged();
+                break;
         }
     }
 
     @Override
     public void onDismiss() {
-
+        SystemUtil.windowToLight(context);
     }
 
     //pop事件
@@ -143,7 +155,6 @@ public class ControllerGeneralForm extends ControllerClassObserver implements Cu
                 ShowDialog.getInstance().showInputDialog(context, EventCode.REPORT_INPUT);
                 break;
         }
-        customConditionsPopupWindow.dismiss();
     }
 
     //动态事件
@@ -213,5 +224,10 @@ public class ControllerGeneralForm extends ControllerClassObserver implements Cu
         }
     }
 
+    //行程事件
+    @Override
+    public void OnTripClickListener(int position) {
+
+    }
 
 }

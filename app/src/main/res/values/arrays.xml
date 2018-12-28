@@ -244,4 +244,10 @@
         <item>课程</item>
     </string-array>
 
+    <string-array name="friends_circle_all_type">
+        <item>好友</item>
+        <item>推荐</item>
+        <item>附近的人</item>
+    </string-array>
+
 </resources>

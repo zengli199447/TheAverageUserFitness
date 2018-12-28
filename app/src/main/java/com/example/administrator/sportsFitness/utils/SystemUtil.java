@@ -421,12 +421,18 @@ public class SystemUtil {
     }
 
     //魔术字符串
-    public static void textMagicToolTypeFace(Context context, TextView view, String firstText, String lastText, int dpFirst, int dpLast, int colorFirst, int colorLast, String enter) {
+    public static void textMagicToolTypeFace(Context context, TextView view, String firstText, String lastText, int dpFirst, int dpLast, int colorFirst, int colorLast, String enter, boolean status) {
+        int firshTypeface = Typeface.NORMAL;
+        int lastTypeface = Typeface.BOLD;
+        if (status) {
+            firshTypeface = Typeface.BOLD;
+            lastTypeface = Typeface.NORMAL;
+        }
         if (lastText != null && !lastText.isEmpty())
             view.setText(SpannableBuilder.create(context)
-                    .appendTypeface(firstText, dpFirst, colorFirst, Typeface.BOLD).
+                    .appendTypeface(firstText, dpFirst, colorFirst, firshTypeface).
                             appendTypeface(new StringBuffer().append(enter).append(lastText).toString(),
-                                    dpLast, colorLast, Typeface.NORMAL).buildFace());
+                                    dpLast, colorLast, lastTypeface).buildFace());
     }
 
     //格式化

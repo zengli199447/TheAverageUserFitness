@@ -147,7 +147,6 @@ public class ControllerIntroduce extends ControllerClassObserver implements Cont
                 ShowDialog.getInstance().showInputDialog(context, EventCode.REPORT_INPUT);
                 break;
         }
-        customConditionsPopupWindow.dismiss();
     }
 
     //标签事件

@@ -13,6 +13,8 @@ import com.example.administrator.sportsFitness.model.bean.ArrangeBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.activity.component.GeneralFormActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.PrivateGeneralFormActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.ShowGeneraActivity;
 import com.example.administrator.sportsFitness.ui.adapter.ArrangeAdapter;
 import com.example.administrator.sportsFitness.ui.view.ImageSlideshow;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
@@ -102,7 +104,7 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
 
                 break;
             case 1:
-
+                context.startActivity(new Intent(context, ShowGeneraActivity.class).setFlags(EventCode.TREAT));
                 break;
             case 2:
                 context.startActivity(new Intent(context, GeneralFormActivity.class).setFlags(EventCode.COACH_PRIVATE));
@@ -111,7 +113,7 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
                 context.startActivity(new Intent(context, GeneralFormActivity.class).setFlags(EventCode.GYM));
                 break;
             case 4:
-
+                context.startActivity(new Intent(context, PrivateGeneralFormActivity.class).setFlags(EventCode.MY_TRIP));
                 break;
         }
     }

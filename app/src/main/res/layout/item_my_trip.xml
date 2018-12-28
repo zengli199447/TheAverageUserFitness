@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp120"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@drawable/corners_soild_layout_white">
+
+
+        <TextView
+            android:id="@+id/creat_time"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp15"
+            android:background="@drawable/corners_soild_layout_irregular_blue"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp15"
+            android:paddingRight="@dimen/dp15"
+            android:text="12月20日      16:50"
+            android:textSize="@dimen/dp13" />
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp20"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp15"
+            android:gravity="center"
+            android:text="@string/cp"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp10" />
+
+        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            android:id="@+id/user_img"
+            android:layout_width="@dimen/dp60"
+            android:layout_height="@dimen/dp60"
+            android:layout_below="@+id/creat_time"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp10"
+            android:src="@drawable/placeholder" />
+
+
+        <ImageView
+            android:id="@+id/gym_img"
+            android:layout_width="@dimen/dp60"
+            android:layout_height="@dimen/dp60"
+            android:layout_below="@+id/creat_time"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp10"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder" />
+
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/creat_time"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp15"
+            android:layout_toRightOf="@+id/user_img"
+            android:lineSpacingExtra="@dimen/dp10"
+            android:text="文本"
+            android:textColor="@color/black_overlay" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

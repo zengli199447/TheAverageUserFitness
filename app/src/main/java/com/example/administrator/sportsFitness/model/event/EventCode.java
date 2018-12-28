@@ -50,6 +50,8 @@ public class EventCode {
     public static final int GYM = 4002;
     public static final int COURSE = 4004;
     public static final int COURSE_ZOO = 4005;
+    public static final int MY_TRIP = 4006;
+    public static final int TREAT = 4007;
 
 
 }

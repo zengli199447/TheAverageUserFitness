@@ -202,6 +202,7 @@ public class CustomTimeChoicePopupWindow extends PopupWindow implements View.OnC
                     minuteList.get(currentSelectMinute),
                     selectType);
         }
+        dismiss();
     }
 
     private void initData(boolean status) {

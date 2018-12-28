@@ -63,7 +63,7 @@ public class FriendsCircleFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        ViewBuilder.ProgressStyleChange(swipe_layout, 0);
+
     }
 
     @Override

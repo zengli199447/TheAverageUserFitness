@@ -44,10 +44,8 @@ public class GeneralFormActivity extends BaseActivity {
     private FragmentTransaction fragmentTransaction;
     private CourseFragment courseFragment;
     private int flags;
-    private String userId;
-    private String userName;
-    private String gymName;
-    private String gymId;
+    private String relatedId;
+    private String relatedName;
     private ControllerGeneralForm controllerGeneralForm;
 
 
@@ -70,12 +68,9 @@ public class GeneralFormActivity extends BaseActivity {
     protected void initClass() {
         Intent intent = getIntent();
         flags = intent.getFlags();
-        userId = intent.getStringExtra("userId");
-        userName = intent.getStringExtra("userName");
-        gymId = intent.getStringExtra("gymId");
-        gymName = intent.getStringExtra("gymName");
-
-        controllerGeneralForm = new ControllerGeneralForm(swipe_layout, empty_layout, recycler_view, flags, userId, gymId);
+        relatedId = intent.getStringExtra("relatedId");
+        relatedName = intent.getStringExtra("relatedName");
+        controllerGeneralForm = new ControllerGeneralForm(swipe_layout, empty_layout, recycler_view, flags, relatedId);
 
     }
 
@@ -94,7 +89,7 @@ public class GeneralFormActivity extends BaseActivity {
         switch (flags) {
             case EventCode.DYNAMIC:
                 initSwipeLayout();
-                title_name.setText(new StringBuffer().append(userName).append(getString(R.string.the_personal)).append(getString(R.string.dynamic)).toString());
+                title_name.setText(new StringBuffer().append(relatedName).append(getString(R.string.the_personal)).append(getString(R.string.dynamic)).toString());
                 break;
             case EventCode.COACH_PRIVATE:
                 title_name.setText(getString(R.string.coach_private));
@@ -106,18 +101,16 @@ public class GeneralFormActivity extends BaseActivity {
                 break;
             case EventCode.COMMENTS:
                 initSwipeLayout();
-                title_name.setText(new StringBuffer().append(userName).append(getString(R.string.the_related)).append(getString(R.string.comments)).toString());
+                title_name.setText(new StringBuffer().append(relatedName).append(getString(R.string.the_related)).append(getString(R.string.comments)).toString());
                 break;
             case EventCode.COURSE_ZOO:
                 initSwipeLayout();
-                title_name.setText(new StringBuffer().append(gymName).append(getString(R.string.coures_form)).toString());
+                title_name.setText(new StringBuffer().append(relatedName).append(getString(R.string.coures_form)).toString());
                 break;
-
         }
     }
 
     private void initSwipeLayout() {
-        ViewBuilder.ProgressStyleChange(swipe_layout, 0);
         swipe_layout.setVisibility(View.VISIBLE);
     }
 

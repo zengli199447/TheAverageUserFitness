@@ -4,11 +4,15 @@ package com.example.administrator.sportsFitness.di.component;
 import com.example.administrator.sportsFitness.base.ControllerClassObserver;
 import com.example.administrator.sportsFitness.di.module.ControllerModule;
 import com.example.administrator.sportsFitness.di.scope.ControllerScope;
+import com.example.administrator.sportsFitness.ui.controller.ConreollerWallet;
 import com.example.administrator.sportsFitness.ui.controller.ControllerArrange;
+import com.example.administrator.sportsFitness.ui.controller.ControllerCoachPrivateInformation;
 import com.example.administrator.sportsFitness.ui.controller.ControllerCourse;
 import com.example.administrator.sportsFitness.ui.controller.ControllerDynamicDetails;
 import com.example.administrator.sportsFitness.ui.controller.ControllerFriendsCircle;
+import com.example.administrator.sportsFitness.ui.controller.ControllerFriendsCircleRelated;
 import com.example.administrator.sportsFitness.ui.controller.ControllerGeneralForm;
+import com.example.administrator.sportsFitness.ui.controller.ControllerGymInfomation;
 import com.example.administrator.sportsFitness.ui.controller.ControllerHome;
 import com.example.administrator.sportsFitness.ui.controller.ControllerInfoGym;
 import com.example.administrator.sportsFitness.ui.controller.ControllerIntroduce;
@@ -17,6 +21,7 @@ import com.example.administrator.sportsFitness.ui.controller.ControllerMessage;
 import com.example.administrator.sportsFitness.ui.controller.ControllerMine;
 import com.example.administrator.sportsFitness.ui.controller.ControllerReleaseNewDynamic;
 import com.example.administrator.sportsFitness.ui.controller.ControllerSearchType;
+import com.example.administrator.sportsFitness.ui.controller.ControllerSelectDiversifiedForm;
 import com.example.administrator.sportsFitness.ui.controller.ControllerSocial;
 import com.example.administrator.sportsFitness.ui.controller.ControllerTheTagModify;
 
@@ -60,5 +65,15 @@ public interface ControllerComponent {
     void inject(ControllerGeneralForm controllerGeneralForm);
 
     void inject(ControllerInfoGym controllerInfoGym);
+
+    void inject(ControllerSelectDiversifiedForm controllerSelectDiversifiedForm);
+
+    void inject(ControllerGymInfomation controllerGymInfomation);
+
+    void inject(ControllerCoachPrivateInformation controllerCoachPrivateInformation);
+
+    void inject(ControllerFriendsCircleRelated controllerFriendsCircleRelated);
+
+    void inject(ConreollerWallet conreollerWallet);
 
 }

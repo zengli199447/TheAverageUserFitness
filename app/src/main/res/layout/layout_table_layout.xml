@@ -29,39 +29,36 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/the_gym"
+            android:id="@+id/life_radio_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
             android:checked="true"
             android:gravity="center"
-            android:text="@string/the_gym"
             android:textColor="@drawable/text_color_selector"
             android:textSize="@dimen/dp14" />
-
+        <!--android:text="@string/the_gym"-->
         <RadioButton
-            android:id="@+id/course"
+            android:id="@+id/center_radio_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="@string/course"
             android:textColor="@drawable/text_color_selector"
             android:textSize="@dimen/dp14" />
-
+        <!--android:text="@string/course"-->
         <RadioButton
-            android:id="@+id/coach"
+            android:id="@+id/right_radio_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="@string/coach"
             android:textColor="@drawable/text_color_selector"
             android:textSize="@dimen/dp14" />
-
+        <!--android:text="@string/coach"-->
     </RadioGroup>
 
     <View

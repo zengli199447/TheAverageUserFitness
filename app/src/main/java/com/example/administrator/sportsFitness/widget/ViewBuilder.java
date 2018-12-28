@@ -112,8 +112,6 @@ public class ViewBuilder {
     }
 
     public static void ProgressStyleChange(SwipeRefreshLayout swipe_layout, int end) {
-        if (end == 0)
-            end = 100;
         swipe_layout.setProgressViewOffset(true, -20, end);
         swipe_layout.setColorSchemeResources(R.color.blue_bar);
     }

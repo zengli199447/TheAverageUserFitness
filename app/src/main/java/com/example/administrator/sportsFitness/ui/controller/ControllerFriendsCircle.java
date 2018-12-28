@@ -130,7 +130,6 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
                 ShowDialog.getInstance().showInputDialog(context, EventCode.REPORT_INPUT);
                 break;
         }
-        customConditionsPopupWindow.dismiss();
     }
 
 }

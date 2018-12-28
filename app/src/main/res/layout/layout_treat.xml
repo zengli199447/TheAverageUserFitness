@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_treat"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    android:background="@color/gray_"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp80"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@drawable/corners_soild_layout_white">
+
+        <TextView
+            android:id="@+id/fitness_treat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:drawableLeft="@drawable/dumbbell_icon"
+            android:drawablePadding="@dimen/dp15"
+            android:gravity="center_vertical"
+            android:text="健身请客"
+            android:textColor="@color/black_overlay" />
+
+        <TextView
+            android:id="@+id/select_site"
+            android:layout_width="@dimen/dp70"
+            android:layout_height="@dimen/dp25"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:background="@drawable/corners_immersed_square_blue"
+            android:gravity="center"
+            android:text="@string/select_site"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp12" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp80"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@drawable/corners_soild_layout_white">
+
+        <TextView
+            android:id="@+id/share_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:drawableLeft="@drawable/share_icon"
+            android:drawablePadding="@dimen/dp15"
+            android:lineSpacingExtra="@dimen/dp5"
+            android:gravity="center_vertical"
+            android:text="分享好友"
+            android:textColor="@color/black_overlay" />
+
+        <TextView
+            android:id="@+id/select_share"
+            android:layout_width="@dimen/dp70"
+            android:layout_height="@dimen/dp25"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:lineSpacingExtra="@dimen/dp5"
+            android:background="@drawable/corners_immersed_square_blue"
+            android:gravity="center"
+            android:text="@string/select_share"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp12" />
+
+    </RelativeLayout>
+
+</LinearLayout>

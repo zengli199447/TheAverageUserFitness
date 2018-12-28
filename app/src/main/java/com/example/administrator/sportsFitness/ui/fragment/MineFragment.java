@@ -1,5 +1,6 @@
 package com.example.administrator.sportsFitness.ui.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,8 @@ import com.example.administrator.sportsFitness.base.BaseFragment;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.ui.activity.component.FriendsCircleActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.WalletActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerMine;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 
@@ -87,11 +90,32 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.ranking_list, R.id.weekly, R.id.CV, R.id.sign_in})
+    @OnClick({R.id.ranking_list, R.id.weekly, R.id.CV, R.id.sign_in, R.id.collection, R.id.friends,
+            R.id.dynamic, R.id.balance, R.id.card})
     @Override
     protected void onClickAble(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
+            case R.id.ranking_list:
+                break;
+            case R.id.weekly:
+                break;
+            case R.id.CV:
+                break;
+            case R.id.sign_in:
+                break;
+            case R.id.collection:
+                break;
+            case R.id.friends:
+                getActivity().startActivity(new Intent(getActivity(), FriendsCircleActivity.class));
+                break;
+            case R.id.dynamic:
+                break;
+            case R.id.balance:
+                getActivity().startActivity(new Intent(getActivity(), WalletActivity.class));
+                break;
+            case R.id.card:
 
+                break;
         }
     }
 

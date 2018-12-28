@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp80"
+    android:background="@color/white">
+
+    <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        android:id="@+id/user_img"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp50"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp15"
+        android:src="@drawable/placeholder" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_toRightOf="@+id/user_img"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="@dimen/dp5"
+            android:text="用户名称"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:id="@+id/user_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/dp5"
+            android:maxEms="16"
+            android:maxLines="1"
+            android:text="个信签名"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp13" />
+
+    </LinearLayout>
+
+    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+        android:visibility="gone"
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp15"
+        android:drawableLeft="@drawable/location_blue_icon"
+        android:drawablePadding="@dimen/dp5"
+        android:text="相距"
+        android:textColor="@color/gray_light_text"
+        android:textSize="@dimen/dp12" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray_light" />
+
+</RelativeLayout>

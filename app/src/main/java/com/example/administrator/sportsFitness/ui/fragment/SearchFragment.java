@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
@@ -45,7 +46,7 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
     private List<Fragment> mFragments = new ArrayList<>();
     private TabPageIndicatorAdapter tabPageIndicatorAdapter;
     private List<String> titleList = new ArrayList<>();
-    private int[] ids = {R.id.the_gym, R.id.course, R.id.coach};
+    private int[] ids = {R.id.life_radio_button, R.id.center_radio_button, R.id.right_radio_button};
 
     private boolean OPEN_SEARCH_STATUS;
 
@@ -88,6 +89,7 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
     @Override
     protected void initListener() {
         group_view.setOnCheckedChangeListener(this);
+        tab_layout.addOnTabSelectedListener(this);
     }
 
     @Override
@@ -101,7 +103,6 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
         tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getChildFragmentManager(), titleList, mFragments);
         view_pager.setAdapter(tabPageIndicatorAdapter);
         tab_layout.setupWithViewPager(view_pager);
-        tab_layout.addOnTabSelectedListener(this);
         MeasurementIndicator();
     }
 
@@ -116,6 +117,8 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
                 data.putString("typeId", titleList.get(i));
                 searchTypeFragment.setArguments(data);
                 mFragments.add(searchTypeFragment);
+                RadioButton radioButton = (RadioButton) group_view.getChildAt(i);
+                radioButton.setText(titleList.get(i));
             }
         } else {
             titleList.add(getString(R.string.course));
@@ -152,13 +155,13 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
-            case R.id.the_gym:
+            case R.id.life_radio_button:
                 view_pager.setCurrentItem(0);
                 break;
-            case R.id.course:
+            case R.id.center_radio_button:
                 view_pager.setCurrentItem(1);
                 break;
-            case R.id.coach:
+            case R.id.right_radio_button:
                 view_pager.setCurrentItem(2);
                 break;
         }

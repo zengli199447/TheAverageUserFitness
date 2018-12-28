@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp50"
+            android:gravity="center"
+            android:text="@string/select_pay"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/gray_light" />
+
+
+        <RelativeLayout
+            android:id="@+id/zfb_pay_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp15">
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/zfb_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/zfb_pay_icon"
+                android:drawablePadding="@dimen/dp15"
+                android:gravity="center"
+                android:text="@string/zfb_pay"
+                android:textColor="@color/blue_bar"
+                android:textSize="@dimen/dp14" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/zfb_pay_check"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp30"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@drawable/check_conditions"
+                android:checked="true"
+                android:enabled="false" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/gray_light" />
+
+        <RelativeLayout
+            android:id="@+id/wechat_pay_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp15">
+
+            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                android:id="@+id/wechat_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/wechat_icon"
+                android:drawablePadding="@dimen/dp15"
+                android:gravity="center"
+                android:text="@string/wechat_pay"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp14" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/wechat_pay_check"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp30"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@drawable/check_conditions"
+                android:checked="false"
+                android:enabled="false" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/gray_light" />
+
+        <RelativeLayout
+            android:id="@+id/page_pay_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp15">
+
+            <TextView
+                android:id="@+id/page_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/page_pay_icon"
+                android:drawablePadding="@dimen/dp15"
+                android:gravity="center"
+                android:text="@string/page_pay"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp14" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/page_pay_check"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp30"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@drawable/check_conditions"
+                android:checked="false"
+                android:enabled="false" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/confirm"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="@dimen/dp15"
+            android:layout_marginLeft="@dimen/dp40"
+            android:layout_marginRight="@dimen/dp40"
+            android:background="@drawable/corners_immersed_in_blue"
+            android:gravity="center"
+            android:text="@string/confirm_pay"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp14" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
