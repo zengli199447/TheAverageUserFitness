@@ -14,7 +14,6 @@ import com.example.administrator.sportsFitness.base.ControllerClassObserver;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.activity.component.DynamicDetailsActivity;
-import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsInformationActivity;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerCommentsAdapter;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerFriendsAdapter;
 import com.example.administrator.sportsFitness.ui.adapter.FitnessCourseAdapter;
@@ -23,7 +22,6 @@ import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.CustomConditionsPopupWindow;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.AlbumBuilder;
-import com.example.administrator.sportsFitness.widget.ViewBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -172,7 +170,7 @@ public class ControllerGeneralForm extends ControllerClassObserver implements Cu
                 context.startActivity(new Intent(context, DynamicDetailsActivity.class));
                 break;
             case R.id.about:
-                customConditionsPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+                customConditionsPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 SystemUtil.windowToDark(context);
                 break;
             case R.id.forwarding:

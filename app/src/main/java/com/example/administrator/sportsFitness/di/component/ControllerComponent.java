@@ -6,6 +6,7 @@ import com.example.administrator.sportsFitness.di.module.ControllerModule;
 import com.example.administrator.sportsFitness.di.scope.ControllerScope;
 import com.example.administrator.sportsFitness.ui.controller.ConreollerWallet;
 import com.example.administrator.sportsFitness.ui.controller.ControllerArrange;
+import com.example.administrator.sportsFitness.ui.controller.ControllerCardPage;
 import com.example.administrator.sportsFitness.ui.controller.ControllerCoachPrivateInformation;
 import com.example.administrator.sportsFitness.ui.controller.ControllerCourse;
 import com.example.administrator.sportsFitness.ui.controller.ControllerDynamicDetails;
@@ -22,6 +23,7 @@ import com.example.administrator.sportsFitness.ui.controller.ControllerMine;
 import com.example.administrator.sportsFitness.ui.controller.ControllerReleaseNewDynamic;
 import com.example.administrator.sportsFitness.ui.controller.ControllerSearchType;
 import com.example.administrator.sportsFitness.ui.controller.ControllerSelectDiversifiedForm;
+import com.example.administrator.sportsFitness.ui.controller.ControllerShowGenera;
 import com.example.administrator.sportsFitness.ui.controller.ControllerSocial;
 import com.example.administrator.sportsFitness.ui.controller.ControllerTheTagModify;
 
@@ -75,5 +77,9 @@ public interface ControllerComponent {
     void inject(ControllerFriendsCircleRelated controllerFriendsCircleRelated);
 
     void inject(ConreollerWallet conreollerWallet);
+
+    void inject(ControllerCardPage controllerCardPage);
+
+    void inject(ControllerShowGenera controllerShowGenera);
 
 }

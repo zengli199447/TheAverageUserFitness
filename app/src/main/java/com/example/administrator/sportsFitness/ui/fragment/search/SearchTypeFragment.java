@@ -57,7 +57,7 @@ public class SearchTypeFragment extends BaseFragment {
     protected void initData() {
         Bundle bundle = getArguments();
         String typeId = bundle != null ? bundle.getString("typeId") : "";
-
+        String relatedId = bundle != null ? bundle.getString("relatedId") : "";
 
     }
 

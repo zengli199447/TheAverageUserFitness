@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
+import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.controller.ControllerGeneralForm;
@@ -89,6 +90,8 @@ public class GeneralFormActivity extends BaseActivity {
         switch (flags) {
             case EventCode.DYNAMIC:
                 initSwipeLayout();
+                if (DataClass.USERID.equals(relatedId))
+                    relatedName = "我";
                 title_name.setText(new StringBuffer().append(relatedName).append(getString(R.string.the_personal)).append(getString(R.string.dynamic)).toString());
                 break;
             case EventCode.COACH_PRIVATE:

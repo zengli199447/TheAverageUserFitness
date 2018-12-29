@@ -99,7 +99,7 @@ public class GymInfomationActivity extends BaseActivity implements CustomPayPopu
         switch (view.getId()) {
             case R.id.pay_order:
                 customPayPopupWindow.refreshPageView(20, 0);
-                customPayPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+                customPayPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 SystemUtil.windowToDark(this);
                 break;
             case R.id.add_friend:

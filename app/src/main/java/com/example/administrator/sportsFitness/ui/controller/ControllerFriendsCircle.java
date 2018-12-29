@@ -1,5 +1,6 @@
 package com.example.administrator.sportsFitness.ui.controller;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.ControllerClassObserver;
+import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.activity.component.DynamicDetailsActivity;
@@ -90,6 +92,7 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
         albumBuilder.ImageTheExhibition(photoList, false, position);
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void onCheckClickListener(int position, int id) {
         switch (id) {
@@ -97,11 +100,14 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
                 context.startActivity(new Intent(context, DynamicDetailsActivity.class));
                 break;
             case R.id.about:
-                customConditionsPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+                customConditionsPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 SystemUtil.windowToDark(context);
                 break;
             case R.id.user_img:
-                context.startActivity(new Intent(context, TheDetailsInformationActivity.class));
+                Intent theDetailsInformationIntent = new Intent(context, TheDetailsInformationActivity.class);
+                theDetailsInformationIntent.setFlags(EventCode.OTHERS_PEOPLE);
+                theDetailsInformationIntent.putExtra("userId", DataClass.USERID);
+                context.startActivity(theDetailsInformationIntent);
                 break;
             case R.id.forwarding:
 
@@ -116,7 +122,8 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
     }
 
     @Override
-    public void onClearCheckClickListener(int position) {}
+    public void onClearCheckClickListener(int position) {
+    }
 
     @Override
     public void onDismiss() {

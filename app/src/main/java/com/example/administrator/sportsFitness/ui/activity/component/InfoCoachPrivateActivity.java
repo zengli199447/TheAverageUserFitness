@@ -1,5 +1,6 @@
 package com.example.administrator.sportsFitness.ui.activity.component;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.widget.NestedScrollView;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
 import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 
 import butterknife.BindView;
@@ -101,6 +103,7 @@ public class InfoCoachPrivateActivity extends BaseActivity implements NestedScro
 
     }
 
+    @SuppressLint("WrongConstant")
     @OnClick({R.id.img_btn_black, R.id.user_img, R.id.controller_life, R.id.controller_right})
     @Override
     protected void onClickAble(View view) {
@@ -109,7 +112,10 @@ public class InfoCoachPrivateActivity extends BaseActivity implements NestedScro
 
                 break;
             case R.id.user_img:
-
+                Intent theDetailsInformationIntent = new Intent(this, TheDetailsInformationActivity.class);
+                theDetailsInformationIntent.setFlags(EventCode.COACH);
+                theDetailsInformationIntent.putExtra("userId", DataClass.USERID);
+                startActivity(theDetailsInformationIntent);
                 break;
             case R.id.controller_life:
 

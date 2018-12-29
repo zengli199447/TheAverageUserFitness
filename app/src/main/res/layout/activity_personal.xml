@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:text="@string/user_photo"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp14" />
+
+        <ImageView
+            android:layout_width="@dimen/dp10"
+            android:layout_height="@dimen/dp10"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:src="@drawable/right_icon" />
+
+        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            android:id="@+id/user_photo"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp30"
+            android:src="@drawable/placeholder" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:text="@string/nick_name"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp14" />
+
+        <ImageView
+            android:layout_width="@dimen/dp10"
+            android:layout_height="@dimen/dp10"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:src="@drawable/right_icon" />
+
+        <com.example.administrator.sportsFitness.ui.view.ClearEditTextView
+            android:id="@+id/nick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/dp50"
+            android:gravity="right|center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp30"
+            android:background="@color/transparent"
+            android:text="@string/nick_name"
+            android:textColor="@color/gray_light_text"
+            android:textSize="@dimen/dp13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:id="@+id/account_no_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp14" />
+
+        <ImageView
+            android:layout_width="@dimen/dp10"
+            android:layout_height="@dimen/dp10"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:src="@drawable/right_icon" />
+
+        <TextView
+            android:id="@+id/account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp30"
+            android:text="15072080821"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:text="@string/gender"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp14" />
+
+        <ImageView
+            android:layout_width="@dimen/dp10"
+            android:layout_height="@dimen/dp10"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:src="@drawable/right_icon" />
+
+        <TextView
+            android:id="@+id/gender"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp30"
+            android:text="女"
+            android:minWidth="@dimen/dp50"
+            android:gravity="right|center_vertical"
+            android:textColor="@color/gray_light_text"
+            android:textSize="@dimen/dp13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:text="@string/birthday"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp14" />
+
+        <ImageView
+            android:layout_width="@dimen/dp10"
+            android:layout_height="@dimen/dp10"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:src="@drawable/right_icon" />
+
+        <TextView
+            android:id="@+id/birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:minWidth="@dimen/dp50"
+            android:gravity="right|center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp30"
+            android:text="1996-08-08"
+            android:textColor="@color/gray_light_text"
+            android:textSize="@dimen/dp13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:text="@string/location"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp14" />
+
+        <ImageView
+            android:layout_width="@dimen/dp10"
+            android:layout_height="@dimen/dp10"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:src="@drawable/right_icon" />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:minWidth="@dimen/dp50"
+            android:gravity="right|center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp30"
+            android:text="湖北-武汉"
+            android:textColor="@color/gray_light_text"
+            android:textSize="@dimen/dp13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:text="@string/dynamic_visible"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp14" />
+
+        <ImageView
+            android:layout_width="@dimen/dp10"
+            android:layout_height="@dimen/dp10"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:src="@drawable/right_icon" />
+
+        <TextView
+            android:id="@+id/dynamic_visible"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:minWidth="@dimen/dp50"
+            android:gravity="right|center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp30"
+            android:text="近半年可见"
+            android:textColor="@color/gray_light_text"
+            android:textSize="@dimen/dp13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:text="@string/face_recognition"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp14" />
+
+        <ImageView
+            android:layout_width="@dimen/dp10"
+            android:layout_height="@dimen/dp10"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:src="@drawable/right_icon" />
+
+        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            android:id="@+id/face_recognition"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp30"
+            android:src="@drawable/placeholder" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:layout_marginLeft="@dimen/dp40"
+        android:layout_marginRight="@dimen/dp40"
+        android:layout_marginTop="@dimen/dp50"
+        android:background="@drawable/corners_immersed_in_blue"
+        android:gravity="center"
+        android:text="@string/save"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp15" />
+
+
+</LinearLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_qr_code"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    android:background="@color/blue_bar">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_centerVertical="true"
+        android:background="@drawable/corners_white_dialog_bg">
+
+
+        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            android:id="@+id/user_img"
+            android:layout_width="@dimen/dp60"
+            android:layout_height="@dimen/dp60"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp30"
+            android:src="@drawable/placeholder" />
+
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp15"
+            android:text="用户名"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp14" />
+
+        <ImageView
+            android:id="@+id/qr_code"
+            android:layout_width="@dimen/dp200"
+            android:layout_height="@dimen/dp200"
+            android:layout_below="@+id/user_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp20"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/qr_code"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp30"
+            android:layout_marginBottom="@dimen/dp30"
+            android:text="@string/qr_code_instructions"
+            android:textColor="@color/gray_light_text"
+            android:textSize="@dimen/dp14" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

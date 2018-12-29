@@ -1,5 +1,6 @@
 package com.example.administrator.sportsFitness.ui.activity.component;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
 import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.adapter.TabPageIndicatorAdapter;
 import com.example.administrator.sportsFitness.ui.fragment.detailsinfo.IntroduceFragment;
 import com.example.administrator.sportsFitness.ui.fragment.search.SearchTypeFragment;
@@ -55,6 +58,8 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
 
     @BindView(R.id.tab_layout)
     TabLayout tab_layout;
+    @BindView(R.id.line)
+    View line;
     @BindView(R.id.view_page)
     ViewPager view_page;
     @BindView(R.id.bar_layout)
@@ -62,10 +67,15 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
     @BindView(R.id.controller_layout)
     RelativeLayout controller_layout;
 
+    @BindView(R.id.controller_all_layout)
+    LinearLayout controller_all_layout;
+    @BindView(R.id.edit_data)
+    TextView edit_data;
+
     private String userId;
     private int flags;
     private List<Fragment> mFragments = new ArrayList<>();
-    private List<String> titleList;
+    private List<String> titleList = new ArrayList<>();
     private TabPageIndicatorAdapter tabPageIndicatorAdapter;
     int[] location = new int[2];
     private int interval;
@@ -74,6 +84,8 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
     private RelativeLayout.LayoutParams controllerLayoutParams;
     private int magin;
     private AlbumBuilder albumBuilder;
+    private SearchTypeFragment courseFragment;
+    private SearchTypeFragment personalTrainingFragment;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
@@ -94,34 +106,60 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
     protected void initClass() {
         albumBuilder = new AlbumBuilder(this);
 
+        Intent intent = getIntent();
+        flags = intent.getFlags();
+        userId = intent.getStringExtra("userId");
+
         IntroduceFragment introduceFragment = new IntroduceFragment();
-
-        SearchTypeFragment personalTrainingFragment = new SearchTypeFragment();
-        Bundle personalTrainingData = new Bundle();
-        personalTrainingData.putString("typeId", "");
-        personalTrainingFragment.setArguments(personalTrainingData);
-
-        SearchTypeFragment courseFragment = new SearchTypeFragment();
-        Bundle courseFragmentData = new Bundle();
-        courseFragmentData.putString("typeId", "");
-        courseFragment.setArguments(courseFragmentData);
-
+        Bundle introduceTrainingData = new Bundle();
+        introduceTrainingData.putString("userId", userId);
+        introduceTrainingData.putInt("userType", flags);
+        introduceFragment.setArguments(introduceTrainingData);
         mFragments.add(introduceFragment);
-        mFragments.add(personalTrainingFragment);
-        mFragments.add(courseFragment);
 
+        switch (flags) {
+            case EventCode.PERSONLA:
+
+                break;
+            case EventCode.COACH:
+                personalTrainingFragment = new SearchTypeFragment();
+                Bundle personalTrainingData = new Bundle();
+                personalTrainingData.putString("typeId", "");
+                personalTrainingData.putString("relatedId", "");
+                personalTrainingFragment.setArguments(personalTrainingData);
+
+                courseFragment = new SearchTypeFragment();
+                Bundle courseFragmentData = new Bundle();
+                courseFragmentData.putString("typeId", "");
+                personalTrainingData.putString("relatedId", "");
+                courseFragment.setArguments(courseFragmentData);
+
+                mFragments.add(personalTrainingFragment);
+                mFragments.add(courseFragment);
+                break;
+            case EventCode.OTHERS_PEOPLE:
+
+                break;
+        }
     }
 
     @Override
     protected void initData() {
-        Intent intent = getIntent();
-        flags = intent.getFlags();
-        userId = intent.getStringExtra("userId");
-        titleList = Arrays.asList(getResources().getStringArray(R.array.personal_details_info));
         interval = SystemUtil.dp2px(this, 70);
         controllerHeight = SystemUtil.dp2px(this, 50);
         magin = SystemUtil.dp2px(this, -30);
 
+        switch (flags) {
+            case EventCode.PERSONLA:
+                titleList.add("");
+                break;
+            case EventCode.COACH:
+                titleList.addAll(Arrays.asList(getResources().getStringArray(R.array.personal_details_info)));
+                break;
+            case EventCode.OTHERS_PEOPLE:
+                titleList.add("");
+                break;
+        }
     }
 
     @Override
@@ -133,6 +171,20 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
         tab_layout.addOnTabSelectedListener(this);
         ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin_max), getResources().getInteger(R.integer.title_bar_margin_max));
         tabPageIndicatorAdapter.notifyDataSetChanged();
+
+        switch (flags) {
+            case EventCode.PERSONLA:
+                controller_all_layout.setVisibility(View.GONE);
+                edit_data.setVisibility(View.VISIBLE);
+                break;
+            case EventCode.COACH:
+
+                break;
+            case EventCode.OTHERS_PEOPLE:
+
+                break;
+        }
+
         refreshView();
     }
 
@@ -143,7 +195,8 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
 
     }
 
-    @OnClick({R.id.img_btn_black, R.id.title_about_img, R.id.user_img})
+    @SuppressLint("WrongConstant")
+    @OnClick({R.id.img_btn_black, R.id.title_about_img, R.id.user_img, R.id.controller_life, R.id.controller_right, R.id.edit_data})
     @Override
     protected void onClickAble(View view) {
         switch (view.getId()) {
@@ -151,26 +204,48 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
                 finish();
                 break;
             case R.id.title_about_img:
+                switch (flags) {
+                    case EventCode.PERSONLA:
+                        startActivity(new Intent(this, ShowGeneraActivity.class).setFlags(EventCode.MY_QR_CODE));
+                        break;
+                    case EventCode.COACH:
+                        title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.like_icon));
+                        break;
+                    case EventCode.OTHERS_PEOPLE:
 
+                        break;
+                }
                 break;
             case R.id.user_img:
                 ArrayList<String> list = new ArrayList<>();
                 list.add(DataClass.USERPHOTO);
                 albumBuilder.ImageTheExhibition(list, false, 0);
                 break;
+            case R.id.controller_life:
+
+                break;
+            case R.id.controller_right:
+
+                break;
+            case R.id.edit_data:
+                startActivity(new Intent(this, PersonalActivity.class));
+                break;
         }
     }
 
     public void refreshView() {
         switch (flags) {
-            case 0:
-
+            case EventCode.PERSONLA:
+                title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.code_content_icon));
+                tab_layout.setVisibility(View.GONE);
+                line.setVisibility(View.GONE);
                 break;
-            case 1:
-
+            case EventCode.COACH:
+                title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.like_off_icon));
                 break;
-            case 2:
-
+            case EventCode.OTHERS_PEOPLE:
+                tab_layout.setVisibility(View.GONE);
+                line.setVisibility(View.GONE);
                 break;
         }
 
@@ -178,9 +253,6 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
                 R.color.black, R.color.gray_light_text, "\n");
 
         Glide.with(this).load(SystemUtil.JudgeUrl(DataClass.USERPHOTO)).error(R.drawable.banner_off).into(user_img);
-
-        title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.like_off_icon));
-
 
     }
 
@@ -201,11 +273,11 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        float top = tab_layout.getTop();
+        float top = user_img.getTop();
         float abs = Math.abs(verticalOffset);
         float proportion = abs / top;
         title_about_round_img.setAlpha(1 * proportion);
-        tab_layout.getLocationOnScreen(location);
+        user_img.getLocationOnScreen(location);
         float topHight = proportion * ((float) controllerHeight) * (-1);
         controllerLayoutParams.setMargins(magin, 0, magin, (int) topHight);
         controller_layout.setLayoutParams(controllerLayoutParams);

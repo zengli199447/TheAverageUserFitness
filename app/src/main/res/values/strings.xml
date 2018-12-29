@@ -142,6 +142,23 @@
     <string name="confirm_top_up">确认充值</string>
     <string name="billing_details">账单明细</string>
     <string name="giving">送</string>
+    <string name="fitness_card">健身卡办理</string>
+    <string name="handle_card">立即办理</string>
+    <string name="renewal">续费</string>
+    <string name="money_page">钱包</string>
+    <string name="qr_code_instructions">扫一扫二维码,加我为好友~</string>
+    <string name="my_qr_code">我的二维码</string>
+    <string name="edit_data">编辑资料</string>
+    <string name="user_photo">头像</string>
+    <string name="nick_name">昵称</string>
+    <string name="gender">性别</string>
+    <string name="birthday">生日</string>
+    <string name="location">所在地</string>
+    <string name="dynamic_visible">动态对他人可见</string>
+    <string name="face_recognition">人脸识别</string>
+    <string name="save">保存</string>
+    <string name="account_no_change">(不可修改)</string>
+    <string name="city">城市</string>
 
 
 </resources>

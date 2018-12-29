@@ -6,7 +6,6 @@ import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.ControllerClassObserver;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.ui.adapter.RecyclerChildAdapter;
-import com.example.administrator.sportsFitness.ui.view.CustomConditionsPopupWindow;
 import com.example.administrator.sportsFitness.widget.AlbumBuilder;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
 

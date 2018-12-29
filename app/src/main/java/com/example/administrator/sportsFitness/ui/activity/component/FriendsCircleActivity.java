@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
@@ -21,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 作者：真理 Created by Administrator on 2018/12/28.
@@ -29,6 +31,8 @@ import butterknife.BindView;
  */
 public class FriendsCircleActivity extends BaseActivity implements TabLayout.OnTabSelectedListener, RadioGroup.OnCheckedChangeListener {
 
+    @BindView(R.id.title_name)
+    TextView title_name;
     @BindView(R.id.tab_layout)
     TabLayout tab_layout;
     @BindView(R.id.view_pager)
@@ -71,6 +75,7 @@ public class FriendsCircleActivity extends BaseActivity implements TabLayout.OnT
 
     @Override
     protected void initView() {
+        title_name.setText(getText(R.string.friends_circle));
         titleList.addAll(Arrays.asList(getResources().getStringArray(R.array.friends_circle_all_type)));
         for (int i = 0; i < titleList.size(); i++) {
             FriendsCircleRelatedFragment friendsCircleRelatedFragment = new FriendsCircleRelatedFragment();
@@ -91,9 +96,14 @@ public class FriendsCircleActivity extends BaseActivity implements TabLayout.OnT
         tab_layout.addOnTabSelectedListener(this);
     }
 
+    @OnClick({R.id.img_btn_black})
     @Override
     protected void onClickAble(View view) {
-
+        switch (view.getId()) {
+            case R.id.img_btn_black:
+                finish();
+                break;
+        }
     }
 
 

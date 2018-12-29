@@ -2,11 +2,13 @@ package com.example.administrator.sportsFitness.ui.fragment.detailsinfo;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
@@ -49,11 +51,15 @@ public class IntroduceFragment extends BaseFragment implements ControllerIntrodu
     FlowLayout flow_layout;
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
+    @BindView(R.id.signature_layout)
+    RelativeLayout signature_layout;
 
     private ControllerIntroduce controllerIntroduce;
 
     private String UserId = DataClass.USERID;
     private String UserName = DataClass.UNAME;
+    private String userId;
+    private int userType;
 
     @Override
     protected void initInject() {
@@ -83,12 +89,23 @@ public class IntroduceFragment extends BaseFragment implements ControllerIntrodu
 
     @Override
     protected void initData() {
-
+        Bundle bundle = getArguments();
+        userId = bundle != null ? bundle.getString("userId") : "";
+        userType = bundle != null ? bundle.getInt("userType") : -1;
     }
 
     @Override
     protected void initView() {
-
+        switch (userType) {
+            case EventCode.PERSONLA:
+            case EventCode.OTHERS_PEOPLE:
+                experience.setText("2356经验");
+                signature_layout.setVisibility(View.GONE);
+                break;
+            case EventCode.COACH:
+                shiny_view.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     @Override

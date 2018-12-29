@@ -75,6 +75,7 @@ public class WalletActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        title_name.setText(getString(R.string.money_page));
         refreshView();
     }
 
@@ -83,12 +84,15 @@ public class WalletActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.confirm_top_up})
+    @OnClick({R.id.confirm_top_up, R.id.img_btn_black})
     @Override
     protected void onClickAble(View view) {
         switch (view.getId()) {
             case R.id.confirm_top_up:
 
+                break;
+            case R.id.img_btn_black:
+                finish();
                 break;
         }
     }

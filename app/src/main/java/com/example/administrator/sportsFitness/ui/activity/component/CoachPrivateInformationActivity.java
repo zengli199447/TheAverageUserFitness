@@ -98,7 +98,7 @@ public class CoachPrivateInformationActivity extends BaseActivity implements Cus
         switch (view.getId()) {
             case R.id.pay_order:
                 customPayPopupWindow.refreshPageView(20, 0);
-                customPayPopupWindow.showAtLocation(total_content, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+                customPayPopupWindow.showAtLocation(total_content, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 SystemUtil.windowToDark(this);
                 break;
             case R.id.select_training_camp:

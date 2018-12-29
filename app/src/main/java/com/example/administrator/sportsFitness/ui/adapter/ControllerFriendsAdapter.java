@@ -96,6 +96,12 @@ public class ControllerFriendsAdapter extends RecyclerView.Adapter<MyViewHolder>
 
         if (status)
             line.setVisibility(View.GONE);
+
+        if (false) {
+            about.setImageDrawable(context.getResources().getDrawable(R.drawable.basket_icon));
+        }
+
+
     }
 
     //类图模式(单张、两张、更多)

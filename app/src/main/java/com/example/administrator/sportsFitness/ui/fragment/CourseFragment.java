@@ -203,7 +203,7 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
             case 1:
                 ViewBuilder.textDrawable(time_select, getActivity(), R.drawable.black_up_icon, 2);
                 customTimeChoicePopupWindow.refreshTitle(getString(R.string.appointment_time), 0);
-                customTimeChoicePopupWindow.showAtLocation(group_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+                customTimeChoicePopupWindow.showAtLocation(group_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 SystemUtil.windowToDark(getActivity());
                 break;
         }

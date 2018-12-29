@@ -107,17 +107,33 @@
             android:name=".ui.activity.component.PrivateGeneralFormActivity"
             android:theme="@style/MainTheme" />
 
-        <activity android:name=".ui.activity.component.ShowGeneraActivity"
+        <activity
+            android:name=".ui.activity.component.ShowGeneraActivity"
             android:theme="@style/MainTheme" />
 
-        <activity android:name=".ui.activity.component.WebConcentratedActivity"
-            android:theme="@style/MainTheme"/>
+        <activity
+            android:name=".ui.activity.component.WebConcentratedActivity"
+            android:theme="@style/MainTheme" />
 
-        <activity android:name=".ui.activity.component.FriendsCircleActivity"
-            android:theme="@style/MainTheme"/>
+        <activity
+            android:name=".ui.activity.component.FriendsCircleActivity"
+            android:theme="@style/MainTheme" />
 
-        <activity android:name=".ui.activity.component.WalletActivity"
-            android:theme="@style/MainTheme"/>
+        <activity
+            android:name=".ui.activity.component.WalletActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.CardPageActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.PersonalActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.CityScreeningActivity"
+            android:theme="@style/MainTheme" />
 
         <service android:name=".server.InitializeService" />
         <service android:name=".server.ListenNetworkStateService" />

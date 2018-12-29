@@ -8,7 +8,7 @@
 
     <include layout="@layout/layout_treat"/>
 
-
+    <include layout="@layout/layout_qr_code"/>
 
 
 </LinearLayout>

@@ -34,7 +34,7 @@
                 app:expandedTitleMarginStart="48dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <include layout="@layout/layout_details_infomation"/>
+                <include layout="@layout/layout_details_infomation" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -70,7 +70,20 @@
         android:layout_marginRight="-30dp"
         android:background="@drawable/corners_immersed_in_blue">
 
+        <TextView
+            android:id="@+id/edit_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp30"
+            android:gravity="center"
+            android:text="@string/edit_data"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp13"
+            android:visibility="gone" />
+
         <LinearLayout
+            android:id="@+id/controller_all_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dp30"

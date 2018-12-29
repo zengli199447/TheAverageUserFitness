@@ -8,6 +8,8 @@ import com.example.administrator.sportsFitness.di.scope.ActivityScope;
 import com.example.administrator.sportsFitness.ui.activity.HomeActivity;
 import com.example.administrator.sportsFitness.ui.activity.LoginActivity;
 import com.example.administrator.sportsFitness.ui.activity.WelcomeActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.CardPageActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.CityScreeningActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.CoachPrivateInformationActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.DynamicDetailsActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.EmbeddedWebActivity;
@@ -16,6 +18,7 @@ import com.example.administrator.sportsFitness.ui.activity.component.GeneralForm
 import com.example.administrator.sportsFitness.ui.activity.component.GymInfomationActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.InfoCoachPrivateActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.InfoGymActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.PersonalActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.PrivateGeneralFormActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.SelectDiversifiedFormActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.RegisteredAccountActivity;
@@ -76,5 +79,11 @@ public interface ActivityComponent {
     void inject(FriendsCircleActivity friendsCircleActivity);
 
     void inject(WalletActivity walletActivity);
+
+    void inject(CardPageActivity cardPageActivity);
+
+    void inject(PersonalActivity personalActivity);
+
+    void inject(CityScreeningActivity cityScreeningActivity);
 
 }

@@ -1,5 +1,6 @@
 package com.example.administrator.sportsFitness.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,7 +13,11 @@ import com.example.administrator.sportsFitness.base.BaseFragment;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.ui.activity.component.CardPageActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.FriendsCircleActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.GeneralFormActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsInformationActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.WalletActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerMine;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
@@ -90,8 +95,9 @@ public class MineFragment extends BaseFragment {
 
     }
 
+    @SuppressLint("WrongConstant")
     @OnClick({R.id.ranking_list, R.id.weekly, R.id.CV, R.id.sign_in, R.id.collection, R.id.friends,
-            R.id.dynamic, R.id.balance, R.id.card})
+            R.id.dynamic, R.id.balance, R.id.card, R.id.user_photo})
     @Override
     protected void onClickAble(View view) {
         switch (view.getId()) {
@@ -109,12 +115,23 @@ public class MineFragment extends BaseFragment {
                 getActivity().startActivity(new Intent(getActivity(), FriendsCircleActivity.class));
                 break;
             case R.id.dynamic:
+                Intent generalFormIntent = new Intent(getActivity(), GeneralFormActivity.class);
+                generalFormIntent.setFlags(EventCode.DYNAMIC);
+                generalFormIntent.putExtra("relatedId", DataClass.USERID);
+                generalFormIntent.putExtra("relatedName", DataClass.UNAME);
+                getActivity().startActivity(generalFormIntent);
                 break;
             case R.id.balance:
                 getActivity().startActivity(new Intent(getActivity(), WalletActivity.class));
                 break;
             case R.id.card:
-
+                getActivity().startActivity(new Intent(getActivity(), CardPageActivity.class));
+                break;
+            case R.id.user_photo:
+                Intent theDetailsInformationIntent = new Intent(getActivity(), TheDetailsInformationActivity.class);
+                theDetailsInformationIntent.setFlags(EventCode.PERSONLA);
+                theDetailsInformationIntent.putExtra("userId", DataClass.USERID);
+                getActivity().startActivity(theDetailsInformationIntent);
                 break;
         }
     }

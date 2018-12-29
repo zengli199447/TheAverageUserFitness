@@ -127,7 +127,7 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
 
                 break;
             case R.id.about:
-                customConditionsPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+                customConditionsPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 SystemUtil.windowToDark(this);
                 break;
             case R.id.support_check:

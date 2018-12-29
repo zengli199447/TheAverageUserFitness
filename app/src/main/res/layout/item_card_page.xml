@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp15"
+    android:layout_marginRight="@dimen/dp15"
+    android:layout_marginTop="@dimen/dp15"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp70"
+        android:background="@drawable/corners_hollow_bg_gray">
+
+
+        <RelativeLayout
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/card_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                android:lineSpacingExtra="@dimen/dp10"
+                android:textSize="@dimen/dp14"
+                android:textColor="@color/black"
+                android:text="卡类信息" />
+
+            <TextView
+                android:id="@+id/handle_card_status"
+                android:layout_width="@dimen/dp70"
+                android:layout_height="@dimen/dp25"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp15"
+                android:layout_marginLeft="@dimen/dp15"
+                android:background="@drawable/corners_immersed_in_blue"
+                android:gravity="center"
+                android:text="@string/handle_card"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp12" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp25"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_toLeftOf="@+id/handle_card_status"
+                android:gravity="center"
+                android:text="120元"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp12" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

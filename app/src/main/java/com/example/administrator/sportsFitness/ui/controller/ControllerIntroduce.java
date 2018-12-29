@@ -12,7 +12,6 @@ import com.example.administrator.sportsFitness.base.ControllerClassObserver;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.activity.component.DynamicDetailsActivity;
-import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsInformationActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.TheTagModifyActivity;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerCommentsAdapter;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerFriendsAdapter;
@@ -120,7 +119,7 @@ public class ControllerIntroduce extends ControllerClassObserver implements Cont
                 context.startActivity(new Intent(context, DynamicDetailsActivity.class));
                 break;
             case R.id.about:
-                customConditionsPopupWindow.showAtLocation(dynamic_recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+                customConditionsPopupWindow.showAtLocation(dynamic_recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 SystemUtil.windowToDark(context);
                 break;
             case R.id.forwarding:

@@ -53,5 +53,11 @@ public class EventCode {
     public static final int MY_TRIP = 4006;
     public static final int TREAT = 4007;
 
+    public static final int PERSONLA = 4008;
+    public static final int COACH = 4009;
+    public static final int OTHERS_PEOPLE = 4011;
+
+    public static final int MY_QR_CODE = 4010;
+
 
 }

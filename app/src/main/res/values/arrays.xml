@@ -250,4 +250,16 @@
         <item>附近的人</item>
     </string-array>
 
+    <string-array name="gender">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
+    <string-array name="dynamic_visible">
+        <item>全部</item>
+        <item>近三天可见</item>
+        <item>近半年可见</item>
+    </string-array>
+
+
 </resources>
