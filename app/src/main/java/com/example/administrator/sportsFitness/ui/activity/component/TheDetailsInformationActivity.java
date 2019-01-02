@@ -222,7 +222,10 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
                 albumBuilder.ImageTheExhibition(list, false, 0);
                 break;
             case R.id.controller_life:
-
+                Intent addFriendsIntent = new Intent(this, ShowGeneraActivity.class);
+                addFriendsIntent.addFlags(EventCode.ADD_VALIDATION);
+                addFriendsIntent.putExtra("addFriendsId","");
+                startActivity(addFriendsIntent);
                 break;
             case R.id.controller_right:
 

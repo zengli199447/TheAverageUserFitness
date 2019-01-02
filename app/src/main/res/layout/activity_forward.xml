@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_title_bar"
+        android:layout_margin="@dimen/dp15"
+        android:background="@drawable/corners_hollow_bg_gray">
+
+        <TextView
+            android:id="@+id/insights"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="left"
+            android:hint="@string/insights"
+            android:lineSpacingExtra="@dimen/dp5"
+            android:minHeight="@dimen/dp100"
+            android:padding="@dimen/dp10"
+            android:textColor="@color/black_overlay"
+            android:textColorHint="@color/gray_light_text"
+            android:textSize="@dimen/dp13" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/dp15"
+        android:background="@drawable/corners_hollow_bg_gray"
+        android:minHeight="@dimen/dp100">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp80"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp10"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder" />
+
+        <TextView
+            android:id="@+id/text_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:layout_toRightOf="@+id/img"
+            android:lineSpacingExtra="@dimen/dp5"
+            android:text="原文相关信息"
+            android:textColor="@color/gray_light_text"
+            android:textSize="@dimen/dp13" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

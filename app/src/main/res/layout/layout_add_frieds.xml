@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_add_friends"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+
+    <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        android:id="@+id/add_user_img"
+        android:layout_width="@dimen/dp70"
+        android:layout_height="@dimen/dp70"
+        android:layout_margin="@dimen/dp15"
+        android:src="@drawable/placeholder" />
+
+    <TextView
+        android:id="@+id/add_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp70"
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_toRightOf="@+id/add_user_img"
+        android:gravity="center_vertical"
+        android:text="用户名"
+        android:textColor="@color/black_overlay"
+        android:textSize="@dimen/dp14" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_user_img"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:background="@drawable/corners_hollow_bg_gray">
+
+        <EditText
+            android:id="@+id/add_friend_validation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="left"
+            android:hint="@string/add_friend_validation"
+            android:lineSpacingExtra="@dimen/dp5"
+            android:minHeight="@dimen/dp200"
+            android:padding="@dimen/dp10"
+            android:textColor="@color/black_overlay"
+            android:textColorHint="@color/gray_light_text"
+            android:textSize="@dimen/dp13" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

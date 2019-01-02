@@ -13,6 +13,7 @@ import com.example.administrator.sportsFitness.ui.activity.component.CityScreeni
 import com.example.administrator.sportsFitness.ui.activity.component.CoachPrivateInformationActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.DynamicDetailsActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.EmbeddedWebActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.ForwardingActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.FriendsCircleActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.GeneralFormActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.GymInfomationActivity;
@@ -85,5 +86,7 @@ public interface ActivityComponent {
     void inject(PersonalActivity personalActivity);
 
     void inject(CityScreeningActivity cityScreeningActivity);
+
+    void inject(ForwardingActivity forwardingActivity);
 
 }

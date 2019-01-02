@@ -49,6 +49,8 @@ public class DataClass {
     //用户编辑动态内容
     public static String DYNAMICCONTENT = "";
 
+    //转发标记
+    public static String FORWARDING_TAG = ":";
 
     //当前经纬度
     public static double LONGITUDE;

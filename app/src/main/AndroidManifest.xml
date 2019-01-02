@@ -135,6 +135,10 @@
             android:name=".ui.activity.component.CityScreeningActivity"
             android:theme="@style/MainTheme" />
 
+        <activity
+            android:name=".ui.activity.component.ForwardingActivity"
+            android:theme="@style/MainTheme" />
+
         <service android:name=".server.InitializeService" />
         <service android:name=".server.ListenNetworkStateService" />
 

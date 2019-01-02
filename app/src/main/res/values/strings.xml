@@ -159,6 +159,9 @@
     <string name="save">保存</string>
     <string name="account_no_change">(不可修改)</string>
     <string name="city">城市</string>
+    <string name="add_friend_validation">填写好友验证信息</string>
+    <string name="apply_for_friend">申请好友</string>
+    <string name="insights">说点什么</string>
 
 
 </resources>

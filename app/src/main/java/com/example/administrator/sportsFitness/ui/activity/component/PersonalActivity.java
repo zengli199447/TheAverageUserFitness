@@ -122,7 +122,9 @@ public class PersonalActivity extends BaseActivity implements CustomSingleChoice
     @Override
     protected void initListener() {
         customSingleChoicePopupWindow.setOnItemClickListener(this);
+        customSingleChoicePopupWindow.setOnDismissListener(this);
         customTimeChoicePopupWindow.setOnItemClickListener(this);
+        customTimeChoicePopupWindow.setOnDismissListener(this);
 
     }
 

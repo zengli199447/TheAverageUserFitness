@@ -29,10 +29,29 @@ public class GymInfomationAdapter extends RecyclerView.Adapter<MyViewHolder> {
         this.list = list;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        int type = -1;
+        if (position != list.size()) {
+            type = 0;
+        } else {
+            type = 1;
+        }
+        return type;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym_infomation, parent, false);
+        View view = null;
+        switch (viewType) {
+            case 0:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym_infomation, parent, false);
+                break;
+            case 1:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_footer, parent, false);
+                break;
+        }
         return new MyViewHolder(view);
     }
 
@@ -40,17 +59,34 @@ public class GymInfomationAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         TextView people_name = holder.itemView.findViewById(R.id.people_name);
         TextView people_phone = holder.itemView.findViewById(R.id.people_phone);
-
-        people_name.setText(DataClass.UNAME);
-        people_phone.setText("10086");
-
+        TextView add_friend = holder.itemView.findViewById(R.id.add_friend);
+        if (people_name != null) {
+            people_name.setText(DataClass.UNAME);
+            people_phone.setText("10086");
+        }
+        if (add_friend != null)
+            add_friend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onAddClickListener != null)
+                        onAddClickListener.onAddClickListener();
+                }
+            });
     }
 
     @Override
     public int getItemCount() {
-        return list == null ? 6 : list.size();
+        return list.size() == 0 ? 0 : list.size() + 1;
     }
 
+    public interface OnAddClickListener {
+        void onAddClickListener();
+    }
 
+    private OnAddClickListener onAddClickListener;
+
+    public void setOnAddClickListener(OnAddClickListener onAddClickListener) {
+        this.onAddClickListener = onAddClickListener;
+    }
 
 }

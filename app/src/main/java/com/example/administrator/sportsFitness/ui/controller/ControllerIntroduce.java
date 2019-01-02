@@ -12,6 +12,7 @@ import com.example.administrator.sportsFitness.base.ControllerClassObserver;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.activity.component.DynamicDetailsActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.ForwardingActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.TheTagModifyActivity;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerCommentsAdapter;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerFriendsAdapter;
@@ -123,7 +124,9 @@ public class ControllerIntroduce extends ControllerClassObserver implements Cont
                 SystemUtil.windowToDark(context);
                 break;
             case R.id.forwarding:
-
+                Intent forwardingIntent = new Intent(context, ForwardingActivity.class);
+                forwardingIntent.putExtra("forwardingId", "");
+                context.startActivity(forwardingIntent);
                 break;
             case R.id.support_check:
 

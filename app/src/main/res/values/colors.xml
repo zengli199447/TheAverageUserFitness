@@ -47,6 +47,7 @@
     <color name="purple">#9f53ec</color>
 
     <drawable name="gray_light">#ffe3e2e2</drawable>
+    <drawable name="red_text">#cc3333</drawable>
 
     <color name="translucent">#39080808</color>
 

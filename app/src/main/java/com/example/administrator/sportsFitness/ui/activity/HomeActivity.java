@@ -1,5 +1,7 @@
 package com.example.administrator.sportsFitness.ui.activity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +18,7 @@ import com.example.administrator.sportsFitness.base.BaseActivity;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.ui.activity.component.ShowGeneraActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerHome;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.fragment.CourseFragment;
@@ -142,6 +145,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         group_view.setOnCheckedChangeListener(this);
     }
 
+    @SuppressLint("WrongConstant")
     @OnClick({R.id.dynamic_add, R.id.close, R.id.dynamic_release, R.id.add_friends, R.id.action_qr, R.id.layout_add_action,
             R.id.layout_search, R.id.cancle, R.id.clear_search})
     @Override

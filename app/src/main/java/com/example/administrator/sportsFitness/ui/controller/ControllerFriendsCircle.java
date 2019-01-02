@@ -16,6 +16,7 @@ import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.activity.component.DynamicDetailsActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.ForwardingActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsInformationActivity;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerFriendsAdapter;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
@@ -110,7 +111,9 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
                 context.startActivity(theDetailsInformationIntent);
                 break;
             case R.id.forwarding:
-
+                Intent forwardingIntent = new Intent(context, ForwardingActivity.class);
+                forwardingIntent.putExtra("forwardingId", "");
+                context.startActivity(forwardingIntent);
                 break;
             case R.id.support_check:
 

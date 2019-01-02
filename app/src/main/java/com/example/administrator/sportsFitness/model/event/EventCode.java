@@ -59,5 +59,8 @@ public class EventCode {
 
     public static final int MY_QR_CODE = 4010;
 
+    public static final int ADD_VALIDATION = 4011;
+
+
 
 }

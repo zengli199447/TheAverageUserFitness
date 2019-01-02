@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -34,6 +35,8 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
 
     @BindView(R.id.title_name)
     TextView title_name;
+    @BindView(R.id.title_about_text)
+    TextView title_about_text;
 
     @BindView(R.id.layout_treat)
     LinearLayout layout_treat;
@@ -51,10 +54,20 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
     @BindView(R.id.qr_code)
     ImageView qr_code;
 
+    @BindView(R.id.layout_add_friends)
+    RelativeLayout layout_add_friends;
+    @BindView(R.id.add_user_img)
+    ImageView add_user_img;
+    @BindView(R.id.add_user_name)
+    TextView add_user_name;
+    @BindView(R.id.add_friend_validation)
+    EditText add_friend_validation;
+
 
     private int flags;
     private CustomSharePopupWindow customSharePopupWindow;
     private ControllerShowGenera controllerShowGenera;
+    private String addFriendsId;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
@@ -74,6 +87,7 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
     @Override
     protected void initClass() {
         flags = getIntent().getFlags();
+        addFriendsId = getIntent().getStringExtra("addFriendsId");
         controllerShowGenera = new ControllerShowGenera(flags);
         customSharePopupWindow = new CustomSharePopupWindow(this);
 
@@ -107,6 +121,14 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
                 user_name.setText(DataClass.UNAME);
                 qr_code.setImageBitmap(QrBuilder.createQRCodeWithLogo("DataClass.USERID", 200, BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher)));
                 break;
+            case EventCode.ADD_VALIDATION:
+                title_name.setText(getString(R.string.apply_for_friend));
+                layout_add_friends.setVisibility(View.VISIBLE);
+                Glide.with(this).load(DataClass.USERPHOTO).error(R.drawable.banner_off).into(add_user_img);
+                add_user_name.setText(DataClass.UNAME);
+                title_about_text.setText(getString(R.string.send));
+                title_about_text.setTextColor(getResources().getColor(R.color.blue_bar));
+                break;
         }
     }
 
@@ -117,7 +139,7 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
     }
 
     @SuppressLint("WrongConstant")
-    @OnClick({R.id.select_site, R.id.select_share,})
+    @OnClick({R.id.select_site, R.id.select_share, R.id.title_about_text})
     @Override
     protected void onClickAble(View view) {
         switch (view.getId()) {
@@ -127,6 +149,13 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
             case R.id.select_share:
                 customSharePopupWindow.showAtLocation(title_name, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 SystemUtil.windowToDark(this);
+                break;
+            case R.id.title_about_text:
+                switch (flags) {
+                    case EventCode.ADD_VALIDATION:
+
+                        break;
+                }
                 break;
         }
     }

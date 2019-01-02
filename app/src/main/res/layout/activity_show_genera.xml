@@ -10,5 +10,7 @@
 
     <include layout="@layout/layout_qr_code"/>
 
+    <include layout="@layout/layout_add_frieds"/>
+
 
 </LinearLayout>

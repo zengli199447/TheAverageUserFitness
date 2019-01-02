@@ -13,6 +13,8 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.Scroller;
 
+import com.example.administrator.sportsFitness.utils.LogUtil;
+
 /**
  * 作者：真理 Created by Administrator on 2018/12/27.
  * 邮箱：229017464@qq.com
@@ -20,7 +22,7 @@ import android.widget.Scroller;
  */
 public class SlideRecyclerView extends RecyclerView {
 
-    private static final String TAG = "SlideRecyclerView";
+    private final String TAG = getClass().getSimpleName();
     private static final int INVALID_POSITION = -1; // 触摸到的点不在子View范围内
     private static final int INVALID_CHILD_WIDTH = -1;  // 子ItemView不含两个子View
     private static final int SNAP_VELOCITY = 600;   // 最小滑动速度
@@ -109,8 +111,10 @@ public class SlideRecyclerView extends RecyclerView {
             obtainVelocity(e);
             switch (e.getAction()) {
                 case MotionEvent.ACTION_DOWN:   // 因为没有拦截，所以不会被调用到
+                    LogUtil.e(TAG, "ACTION_DOWN");
                     break;
                 case MotionEvent.ACTION_MOVE:
+                    LogUtil.e(TAG, "ACTION_MOVE");
                     // 随手指滑动
                     if (mMenuViewWidth != INVALID_CHILD_WIDTH) {
                         float dx = mLastX - x;
@@ -122,6 +126,7 @@ public class SlideRecyclerView extends RecyclerView {
                     }
                     break;
                 case MotionEvent.ACTION_UP:
+                    LogUtil.e(TAG, "ACTION_UP");
                     if (mMenuViewWidth != INVALID_CHILD_WIDTH) {
                         int scrollX = mFlingView.getScrollX();
                         mVelocityTracker.computeCurrentVelocity(1000);

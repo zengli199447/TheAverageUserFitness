@@ -1,5 +1,6 @@
 package com.example.administrator.sportsFitness.ui.fragment;
 
+import android.content.Intent;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.rxtools.RxBus;
+import com.example.administrator.sportsFitness.ui.activity.component.CityScreeningActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerArrange;
 
 import butterknife.BindView;
@@ -78,7 +80,7 @@ public class HomeFragment extends BaseFragment {
     protected void onClickAble(View view) {
         switch (view.getId()) {
             case R.id.location_city:
-
+                getActivity().startActivity(new Intent(getActivity(), CityScreeningActivity.class));
                 break;
             case R.id.qr_code:
 

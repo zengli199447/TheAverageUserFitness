@@ -19,6 +19,7 @@ import com.example.administrator.sportsFitness.ui.controller.ControllerGymInfoma
 import com.example.administrator.sportsFitness.ui.view.CustomPayPopupWindow;
 import com.example.administrator.sportsFitness.ui.view.SlideRecyclerView;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,7 +42,7 @@ public class GymInfomationActivity extends BaseActivity implements CustomPayPopu
     @BindView(R.id.people_count)
     TextView people_count;
     @BindView(R.id.recycler_view)
-    RecyclerView recycler_view;
+    SwipeMenuRecyclerView recycler_view;
     @BindView(R.id.total_content)
     TextView total_content;
     private ControllerGymInfomation controllerGymInfomation;
@@ -82,6 +83,7 @@ public class GymInfomationActivity extends BaseActivity implements CustomPayPopu
 
     @Override
     protected void initView() {
+        recycler_view.setFocusable(false);
         refreshView();
     }
 
@@ -92,7 +94,7 @@ public class GymInfomationActivity extends BaseActivity implements CustomPayPopu
     }
 
     @SuppressLint("WrongConstant")
-    @OnClick({R.id.pay_order, R.id.add_friend, R.id.img_btn_black})
+    @OnClick({R.id.pay_order, R.id.img_btn_black})
     @Override
     protected void onClickAble(View view) {
         Intent intent = new Intent(this, SelectDiversifiedFormActivity.class);
@@ -101,11 +103,6 @@ public class GymInfomationActivity extends BaseActivity implements CustomPayPopu
                 customPayPopupWindow.refreshPageView(20, 0);
                 customPayPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 SystemUtil.windowToDark(this);
-                break;
-            case R.id.add_friend:
-                intent.setFlags(0);
-                intent.putExtra("typeId", "");
-                startActivity(intent);
                 break;
             case R.id.img_btn_black:
                 finish();

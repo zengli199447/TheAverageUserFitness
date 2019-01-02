@@ -6,114 +6,101 @@
 
     <include layout="@layout/layout_title_bar" />
 
-    <android.support.v4.widget.NestedScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_title_bar"
-        android:layout_marginBottom="@dimen/dp50">
+        android:layout_marginBottom="@dimen/dp50"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/layout_title_bar"
-            android:orientation="vertical">
+            android:layout_height="@dimen/dp60"
+            android:layout_margin="@dimen/dp15">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/gym_img"
+                android:layout_width="@dimen/dp60"
                 android:layout_height="@dimen/dp60"
-                android:layout_margin="@dimen/dp15">
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder" />
 
-                <ImageView
-                    android:id="@+id/gym_img"
-                    android:layout_width="@dimen/dp60"
-                    android:layout_height="@dimen/dp60"
-                    android:layout_centerVertical="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/placeholder" />
+            <TextView
+                android:id="@+id/gym_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_toRightOf="@+id/gym_img"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:text="健身房信息"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp14" />
 
-                <TextView
-                    android:id="@+id/gym_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:layout_toRightOf="@+id/gym_img"
-                    android:lineSpacingExtra="@dimen/dp5"
-                    android:text="健身房信息"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dp14" />
+            <TextView
+                android:id="@+id/standard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/dp10"
+                android:text="20元/次"
+                android:textColor="@color/red_text"
+                android:textSize="@dimen/dp14" />
 
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/standard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="@dimen/dp10"
-                    android:text="20元/次"
-                    android:textColor="@color/red_text"
-                    android:textSize="@dimen/dp14" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp10"
-                android:background="@color/gray_" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp10"
+            android:background="@color/gray_" />
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp50"
-                android:layout_marginLeft="@dimen/dp15"
-                android:layout_marginRight="@dimen/dp15">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp50"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp15">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/people_count"
-                    android:textColor="@color/black_overlay"
-                    android:textSize="@dimen/dp13" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/people_count"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp13" />
 
-                <TextView
-                    android:id="@+id/people_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="-1"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dp14" />
+            <TextView
+                android:id="@+id/people_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="-1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp14" />
 
-            </RelativeLayout>
+        </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:background="@color/gray_light" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/gray_light" />
 
-            <android.support.v7.widget.RecyclerView
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
-                android:id="@+id/add_friend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/dp15"
-                android:drawableLeft="@drawable/add_blue_icon"
-                android:drawablePadding="@dimen/dp5"
-                android:text="@string/add_friend"
-                android:textColor="@color/black_overlay"
-                android:textSize="@dimen/dp14" />
+        </RelativeLayout>
 
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 
     <include layout="@layout/layout_pay_bottom" />
 

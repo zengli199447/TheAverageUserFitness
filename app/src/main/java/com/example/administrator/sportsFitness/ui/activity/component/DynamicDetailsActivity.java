@@ -1,5 +1,6 @@
 package com.example.administrator.sportsFitness.ui.activity.component;
 
+import android.content.Intent;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -137,7 +138,9 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
 
                 break;
             case R.id.forwarding:
-
+                Intent forwardingIntent = new Intent(this, ForwardingActivity.class);
+                forwardingIntent.putExtra("forwardingId", "");
+                startActivity(forwardingIntent);
                 break;
             case R.id.all_comments:
 
