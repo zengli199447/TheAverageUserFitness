@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.sportsFitness.R;
+import com.example.administrator.sportsFitness.model.bean.MyTripNetBean;
 import com.example.administrator.sportsFitness.ui.holder.MyViewHolder;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 
@@ -44,9 +46,27 @@ public class MyTripAdapter extends RecyclerView.Adapter<MyViewHolder> {
         ImageView user_img = holder.itemView.findViewById(R.id.user_img);
         ImageView gym_img = holder.itemView.findViewById(R.id.gym_img);
         TextView content = holder.itemView.findViewById(R.id.content);
+        View line = holder.itemView.findViewById(R.id.line);
 
-        SystemUtil.textMagicTool(context, content, "果粒橙教练", "地点坐标",
+        MyTripNetBean.ResultBean.NeeddoBean needdoBean = (MyTripNetBean.ResultBean.NeeddoBean) list.get(position);
+
+        creat_time.setText(needdoBean.getTime_txt());
+
+        SystemUtil.textMagicTool(context, content, needdoBean.getShopname(), needdoBean.getCoursesname(),
                 R.dimen.dp14, R.dimen.dp13, R.color.black_overlay, R.color.gray_light_text, "\n");
+
+        type.setText(needdoBean.getDatatype_txt());
+
+        if (needdoBean.getDatatype_txt().contains(context.getString(R.string.course))) {
+            Glide.with(context).load(SystemUtil.JudgeUrl(needdoBean.getListimg())).error(R.drawable.banner_off).into(gym_img);
+            gym_img.setVisibility(View.VISIBLE);
+            user_img.setVisibility(View.GONE);
+        } else {
+            Glide.with(context).load(SystemUtil.JudgeUrl(needdoBean.getListimg())).error(R.drawable.banner_off).into(user_img);
+            gym_img.setVisibility(View.GONE);
+            user_img.setVisibility(View.VISIBLE);
+        }
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +75,12 @@ public class MyTripAdapter extends RecyclerView.Adapter<MyViewHolder> {
                     onTripClickListener.OnTripClickListener(position);
             }
         });
+
+        if (position == list.size() - 1) {
+            line.setVisibility(View.VISIBLE);
+        } else {
+            line.setVisibility(View.GONE);
+        }
 
     }
 

@@ -1,13 +1,18 @@
 package com.example.administrator.sportsFitness.widget;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 
 import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.example.administrator.sportsFitness.utils.ToastUtil;
+import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareConfig;
+import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import java.util.Map;
 
@@ -102,16 +107,129 @@ public class UmComprehensiveBuilder {
         }
     };
 
+    public void initUmImageShare(int shareType, Bitmap bitmap) {
+        UMImage umImage = new UMImage(activity, bitmap);
+        switch (shareType) {
+            case 0:
+                new ShareAction(activity)
+                        .setPlatform(SHARE_MEDIA.QQ)//传入QQ平台
+                        .withMedia(umImage)
+                        .setCallback(shareListener)
+                        .share();
+                break;
+            case 1:
+                new ShareAction(activity)
+                        .setPlatform(SHARE_MEDIA.WEIXIN)//传入微信平台
+                        .withMedia(umImage)
+                        .setCallback(shareListener)
+                        .share();
+                break;
+            case 2:
+                new ShareAction(activity)
+                        .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)//传入微信朋友圈平台
+                        .withMedia(umImage)
+                        .setCallback(shareListener)
+                        .share();
+                break;
+        }
+    }
+
+    //分享链接可以使用UMWeb进行分享：
+    public void initUmUrlShare(int shareType, Bitmap bitmap, String img_url, String url, String title, String description) {
+//        url = "http://e.hiphotos.baidu.com/image/pic/item/d0c8a786c9177f3eeb8bedb57ccf3bc79e3d56ce.jpg";
+        UMWeb web = new UMWeb(url);
+        web.setTitle(title);//标题
+        if (img_url.isEmpty()) {
+            web.setThumb(new UMImage(activity, bitmap));  //缩略图
+        } else {
+            web.setThumb(new UMImage(activity, img_url));  //缩略图
+        }
+        web.setDescription(description);//描述
+        switch (shareType) {
+            case 0:
+                new ShareAction(activity)
+                        .setPlatform(SHARE_MEDIA.QQ)//传入QQ平台
+                        .withMedia(web)
+                        .setCallback(shareListener)
+                        .share();
+                break;
+            case 1:
+                new ShareAction(activity)
+                        .setPlatform(SHARE_MEDIA.WEIXIN)//传入微信平台
+                        .withMedia(web)
+                        .setCallback(shareListener)
+                        .share();
+                break;
+            case 2:
+                new ShareAction(activity)
+                        .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)//传入微信朋友圈平台
+                        .withMedia(web)
+                        .setCallback(shareListener)
+                        .share();
+                break;
+        }
+    }
+
+    public UMShareListener shareListener = new UMShareListener() {
+        /**
+         * @descrption 分享开始的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+
+        }
+
+        /**
+         * @descrption 分享成功的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            LogUtil.e(TAG, "分享成功");
+            onShareListener.successful();
+        }
+
+        /**
+         * @descrption 分享失败的回调
+         * @param platform 平台类型
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            LogUtil.e(TAG, "分享失败");
+        }
+
+        /**
+         * @descrption 分享取消的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+
+        }
+    };
+
     public interface onCompleteListener {
         void comlete(Map<String, String> data);
 
         void notReach();
     }
 
+    public interface onShareListener {
+        void successful();
+    }
+
     private onCompleteListener onCompleteListener;
+
+    private onShareListener onShareListener;
 
     public void setOnCompleteListener(onCompleteListener onCompleteListener) {
         this.onCompleteListener = onCompleteListener;
+    }
+
+    public void setOnShareListener(onShareListener onShareListener) {
+        this.onShareListener = onShareListener;
     }
 
 }

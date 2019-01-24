@@ -3,6 +3,7 @@ package com.example.administrator.sportsFitness.ui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,13 @@ public class TabPageIndicatorAdapter extends FragmentStatePagerAdapter {
 
     private List<String> strings;
     private List<Fragment> FragmentList;
+    boolean save;
 
-    public TabPageIndicatorAdapter(FragmentManager supportFragmentManager, List<String> strings, List<Fragment> FragmentList) {
+    public TabPageIndicatorAdapter(FragmentManager supportFragmentManager, List<String> strings, List<Fragment> FragmentList, boolean save) {
         super(supportFragmentManager);
         this.strings = strings;
         this.FragmentList = FragmentList;
+        this.save = save;
     }
 
     @Override
@@ -40,6 +43,9 @@ public class TabPageIndicatorAdapter extends FragmentStatePagerAdapter {
 
     }
 
-
-
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        if (save)
+            super.destroyItem(container, position, object);
+    }
 }

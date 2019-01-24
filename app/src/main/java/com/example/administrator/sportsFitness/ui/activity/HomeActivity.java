@@ -12,13 +12,18 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
+import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.ui.activity.component.FriendsCircleActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.ReleaseNewDynamicActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.ShowGeneraActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsInformationActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerHome;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.fragment.CourseFragment;
@@ -27,8 +32,12 @@ import com.example.administrator.sportsFitness.ui.fragment.MineFragment;
 import com.example.administrator.sportsFitness.ui.fragment.SearchFragment;
 import com.example.administrator.sportsFitness.ui.fragment.SocialFragment;
 import com.example.administrator.sportsFitness.ui.view.FlowLayout;
+import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.Constants;
+import com.example.administrator.sportsFitness.widget.QrBuilder;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -159,12 +168,15 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 refreshViewStatus();
                 break;
             case R.id.dynamic_release:
+                startActivity(new Intent(this, ReleaseNewDynamicActivity.class));
                 refreshViewStatus();
                 break;
             case R.id.add_friends:
+                startActivity(new Intent(this, FriendsCircleActivity.class).setFlags(2));
                 refreshViewStatus();
                 break;
             case R.id.action_qr:
+                QrBuilder.Integrator(this);
                 refreshViewStatus();
                 break;
             case R.id.layout_search:
@@ -199,6 +211,29 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         hideFragment = showFragment;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (intentResult != null) {
+            if (intentResult.getContents() == null) {
+                toastUtil.showToast(getString(R.string.content_null));
+            } else {
+                String ScanResult = intentResult.getContents();
+                String[] split = ScanResult.split("-");
+                if (split.length > 1 && split[0].equals(getString(R.string.fitness))) {
+                    Intent theDetailsInformationIntent = new Intent(this, TheDetailsInformationActivity.class);
+                    theDetailsInformationIntent.putExtra("userId", split[1]);
+                    theDetailsInformationIntent.putExtra("userName", getString(R.string.new_friends));
+                    startActivity(theDetailsInformationIntent);
+                } else {
+                    toastUtil.showToast(getString(R.string.scan_error));
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     private void refreshViewStatus() {
         if (frameLayout.getVisibility() != View.GONE) {
             frameLayout.setVisibility(View.GONE);
@@ -231,5 +266,6 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             System.exit(0);
         }
     }
+
 
 }

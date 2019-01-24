@@ -27,16 +27,18 @@ public class RecyclerChildAdapter extends RecyclerView.Adapter<MyViewHolder> {
     List<String> list;
     boolean viewStatus;
     boolean status;
+    int parentIndex;
 
     /**
      * @param context 文络
      * @param list 数据集
      * @param status  列表、详情 宽度切换标示
      */
-    public RecyclerChildAdapter(Context context, List<String> list, boolean status) {
+    public RecyclerChildAdapter(Context context, List<String> list, boolean status, int parentIndex) {
         this.context = context;
         this.list = list;
         this.status = status;
+        this.parentIndex = parentIndex;
     }
 
     @NonNull
@@ -60,6 +62,8 @@ public class RecyclerChildAdapter extends RecyclerView.Adapter<MyViewHolder> {
             ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
             if (list.size() > 2) {
                 layoutParams.height = SystemUtil.dp2px(context, (width / 3) - 2);
+            } else if (list.size() == 2) {
+                layoutParams.height = SystemUtil.dp2px(context, (width / 3) + 10);
             } else {
                 layoutParams.height = SystemUtil.dp2px(context, width * 2 / 5);
             }
@@ -70,7 +74,7 @@ public class RecyclerChildAdapter extends RecyclerView.Adapter<MyViewHolder> {
             @Override
             public void onClick(View v) {
                 if (childClickListener != null)
-                    childClickListener.onChildClickListener(position, object);
+                    childClickListener.onChildClickListener(position, parentIndex);
             }
         });
 
@@ -78,13 +82,13 @@ public class RecyclerChildAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (list.size() == 1 || list.size() > 2)
+//        if (list.size() == 1 || list.size() > 2)
             viewStatus = true;
         return list.size() == 0 ? 0 : list.size();
     }
 
     public interface ChildClickListener {
-        void onChildClickListener(int position, String object);
+        void onChildClickListener(int position, int parentIndex);
     }
 
     private ChildClickListener childClickListener;

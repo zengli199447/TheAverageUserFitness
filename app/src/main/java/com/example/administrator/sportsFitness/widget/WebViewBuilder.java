@@ -12,6 +12,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.example.administrator.sportsFitness.ui.dialog.ProgressDialog;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.utils.LogUtil;
 
 
@@ -23,6 +25,7 @@ import com.example.administrator.sportsFitness.utils.LogUtil;
 public class WebViewBuilder {
 
     private String TAG = getClass().getSimpleName();
+    private final ProgressDialog progressDialog;
 
     public WebView web_view;
     public ProgressBar progressBar;
@@ -30,6 +33,7 @@ public class WebViewBuilder {
     public WebViewBuilder(WebView web_view, ProgressBar progressBar) {
         this.web_view = web_view;
         this.progressBar = progressBar;
+        progressDialog = ShowDialog.getInstance().showProgressStatus(progressBar.getContext());
     }
 
     public void initWebView() {
@@ -66,22 +70,24 @@ public class WebViewBuilder {
         //加载进度回调
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
-            if (progressBar != null)
-                progressBar.setProgress(newProgress);
+//            if (progressBar != null)
+//                progressBar.setProgress(newProgress);
         }
     };
 
     private WebViewClient webViewClient = new WebViewClient() {
         @Override
         public void onPageFinished(WebView view, String url) {//页面加载完成
-            if (progressBar != null)
-                progressBar.setVisibility(View.GONE);
+//            if (progressBar != null)
+//                progressBar.setVisibility(View.GONE);
+            progressDialog.dismiss();
         }
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {//页面开始加载
-            if (progressBar != null)
-                progressBar.setVisibility(View.VISIBLE);
+//            if (progressBar != null)
+//                progressBar.setVisibility(View.VISIBLE);
+            progressDialog.show();
         }
 
         @Override

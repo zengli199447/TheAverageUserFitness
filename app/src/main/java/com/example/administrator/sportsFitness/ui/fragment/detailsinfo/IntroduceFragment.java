@@ -14,10 +14,10 @@ import android.widget.TextView;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseFragment;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
-import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.HomePageInfoNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
-import com.example.administrator.sportsFitness.ui.activity.component.GeneralFormActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.MoreDataReferenceActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerIntroduce;
 import com.example.administrator.sportsFitness.ui.view.FlowLayout;
 import com.example.administrator.sportsFitness.ui.view.ShinyView;
@@ -53,13 +53,13 @@ public class IntroduceFragment extends BaseFragment implements ControllerIntrodu
     NestedScrollView scrollView;
     @BindView(R.id.signature_layout)
     RelativeLayout signature_layout;
+    @BindView(R.id.commtent_layout)
+    RelativeLayout commtent_layout;
 
     private ControllerIntroduce controllerIntroduce;
 
-    private String UserId = DataClass.USERID;
-    private String UserName = DataClass.UNAME;
     private String userId;
-    private int userType;
+    private String userName;
 
     @Override
     protected void initInject() {
@@ -78,7 +78,10 @@ public class IntroduceFragment extends BaseFragment implements ControllerIntrodu
 
     @Override
     protected void initClass() {
-        controllerIntroduce = new ControllerIntroduce(dynamic_recycler_view, comments_recycler_view, flow_layout);
+        Bundle bundle = getArguments();
+        userId = bundle != null ? bundle.getString("userId") : "";
+        userName = bundle != null ? bundle.getString("userName") : "";
+        controllerIntroduce = new ControllerIntroduce(dynamic_recycler_view, comments_recycler_view, flow_layout, userId);
 
     }
 
@@ -89,23 +92,12 @@ public class IntroduceFragment extends BaseFragment implements ControllerIntrodu
 
     @Override
     protected void initData() {
-        Bundle bundle = getArguments();
-        userId = bundle != null ? bundle.getString("userId") : "";
-        userType = bundle != null ? bundle.getInt("userType") : -1;
+
     }
 
     @Override
     protected void initView() {
-        switch (userType) {
-            case EventCode.PERSONLA:
-            case EventCode.OTHERS_PEOPLE:
-                experience.setText("2356经验");
-                signature_layout.setVisibility(View.GONE);
-                break;
-            case EventCode.COACH:
-                shiny_view.setVisibility(View.VISIBLE);
-                break;
-        }
+
     }
 
     @Override
@@ -118,18 +110,20 @@ public class IntroduceFragment extends BaseFragment implements ControllerIntrodu
     @OnClick({R.id.dynamic_more, R.id.comments_more})
     @Override
     protected void onClickAble(View view) {
-        Intent intent = new Intent(getActivity(), GeneralFormActivity.class);
+        Intent intent = new Intent(getActivity(), MoreDataReferenceActivity.class);
         switch (view.getId()) {
             case R.id.dynamic_more:
                 intent.setFlags(EventCode.DYNAMIC);
-                intent.putExtra("relatedId", UserId);
-                intent.putExtra("relatedName", UserName);
+                intent.putExtra("relatedId", userId);
+                intent.putExtra("relatedName", userName);
+                intent.putExtra("relatedType", "3");
                 getActivity().startActivity(intent);
                 break;
             case R.id.comments_more:
                 intent.setFlags(EventCode.COMMENTS);
-                intent.putExtra("relatedId", UserId);
-                intent.putExtra("relatedName", UserName);
+                intent.putExtra("relatedId", userId);
+                intent.putExtra("relatedName", userName);
+                intent.putExtra("relatedType", "3");
                 getActivity().startActivity(intent);
                 break;
         }
@@ -141,12 +135,34 @@ public class IntroduceFragment extends BaseFragment implements ControllerIntrodu
 
     }
 
+    @Override
+    public void onHomePageDataListener(HomePageInfoNetBean.ResultBean result) {
+        HomePageInfoNetBean.ResultBean.UserBean user = result.getUser();
+        if (user.getRole().equals("1")) {
+            experience.setText(new StringBuffer().append(user.getTotal_yuyue()).append(getString(R.string.experience)).toString());
+        } else {
+            commtent_layout.setVisibility(View.VISIBLE);
+            comments_recycler_view.setVisibility(View.VISIBLE);
+            shiny_view.setVisibility(View.VISIBLE);
+            signature_layout.setVisibility(View.VISIBLE);
+            shiny_view.setStarMark(Float.valueOf(user.getScore()));
+            experience.setText(new StringBuffer().append(user.getTotal_yuyue()).append(getString(R.string.appointment_count)).toString());
+            signature.setText(user.getRemark());
+        }
+
+        String userContent = new StringBuffer().append("  ").append(user.getSex()).append("   ").append(user.getAge()).append("   ").append(user.getCity()).toString();
+        user_content.setText(userContent);
+
+        dynamic.setText(new StringBuffer().append(user.getSecondname()).append(getString(R.string.the_dynamic)));
+    }
+
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void dispatchMessage(Message msg) {
             super.dispatchMessage(msg);
-            scrollView.scrollTo(0, 0);
+            if (scrollView != null)
+                scrollView.scrollTo(0, 0);
         }
     };
 

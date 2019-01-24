@@ -8,23 +8,32 @@ import com.example.administrator.sportsFitness.di.scope.ActivityScope;
 import com.example.administrator.sportsFitness.ui.activity.HomeActivity;
 import com.example.administrator.sportsFitness.ui.activity.LoginActivity;
 import com.example.administrator.sportsFitness.ui.activity.WelcomeActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.BindPhoneActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.CardPageActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.CityScreeningActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.CoachPrivateInformationActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.CollectionActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.CourseInformationActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.DynamicDetailsActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.EmbeddedWebActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.ForwardingActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.FriendsCircleActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.GeneralFormActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.GymClassSelectActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.GymInfomationActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.InfoCoachPrivateActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.InfoCourseActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.InfoGymActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.ModifyThePassWordActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.MoreDataReferenceActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.OrderFormActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.PersonalActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.PrivateGeneralFormActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.SelectDiversifiedFormActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.RegisteredAccountActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.ReleaseNewDynamicActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.ShowGeneraActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.SingleConditionsSelectActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsInformationActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.TheTagModifyActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.WalletActivity;
@@ -88,5 +97,23 @@ public interface ActivityComponent {
     void inject(CityScreeningActivity cityScreeningActivity);
 
     void inject(ForwardingActivity forwardingActivity);
+
+    void inject(ModifyThePassWordActivity modifyThePassWordActivity);
+
+    void inject(OrderFormActivity orderFormActivity);
+
+    void inject(SingleConditionsSelectActivity singleConditionsSelectActivity);
+
+    void inject(MoreDataReferenceActivity moreDataReferenceActivity);
+
+    void inject(GymClassSelectActivity gymClassSelectActivity);
+
+    void inject(CourseInformationActivity courseInformationActivity);
+
+    void inject(InfoCourseActivity infoCourseActivity);
+
+    void inject(BindPhoneActivity bindPhoneActivity);
+
+    void inject(CollectionActivity collectionActivity);
 
 }

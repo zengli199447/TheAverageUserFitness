@@ -85,8 +85,10 @@
             android:id="@+id/signature_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp15"
             android:layout_marginLeft="@dimen/dp15"
-            android:layout_marginRight="@dimen/dp15">
+            android:layout_marginRight="@dimen/dp15"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/text_icon"
@@ -110,16 +112,15 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="@dimen/dp15"
             android:background="@color/gray_light" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp15"
-            android:layout_marginRight="@dimen/dp15"
+            android:layout_marginBottom="@dimen/dp5"
             android:layout_marginLeft="@dimen/dp15"
-            android:layout_marginBottom="@dimen/dp5">
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp15">
 
             <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
                 android:id="@+id/dynamic"
@@ -149,7 +150,7 @@
             android:id="@+id/dynamic_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/dp200" />
+            android:minHeight="@dimen/dp10" />
 
         <View
             android:layout_width="match_parent"
@@ -157,12 +158,14 @@
             android:background="@color/gray_light" />
 
         <RelativeLayout
+            android:id="@+id/commtent_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp15"
-            android:layout_marginRight="@dimen/dp15"
+            android:layout_marginBottom="@dimen/dp5"
             android:layout_marginLeft="@dimen/dp15"
-            android:layout_marginBottom="@dimen/dp5">
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp15"
+            android:visibility="gone">
 
             <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
                 android:id="@+id/comments"
@@ -192,7 +195,8 @@
             android:id="@+id/comments_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/dp200" />
+            android:minHeight="@dimen/dp10"
+            android:visibility="gone" />
 
     </LinearLayout>
 

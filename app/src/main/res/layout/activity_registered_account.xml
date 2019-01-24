@@ -176,7 +176,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/login"
+        android:id="@+id/registered"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp40"
         android:layout_below="@+id/layout_input"
@@ -185,15 +185,15 @@
         android:layout_marginTop="@dimen/dp30"
         android:background="@drawable/corners_soild_layout_blue"
         android:gravity="center"
-        android:text="@string/login"
+        android:text="@string/registered"
         android:textSize="@dimen/dp16" />
 
     <android.support.v7.widget.AppCompatCheckBox
-        android:id="@+id/save"
+        android:id="@+id/agreed"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp30"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/login"
+        android:layout_below="@+id/registered"
         android:layout_marginLeft="@dimen/dp70"
         android:layout_marginTop="@dimen/dp5"
         android:button="@drawable/check_tools_save"
@@ -208,7 +208,7 @@
         android:layout_height="@dimen/dp30"
         android:layout_below="@+id/login"
         android:layout_marginTop="@dimen/dp5"
-        android:layout_toRightOf="@+id/save"
+        android:layout_toRightOf="@+id/agreed"
         android:gravity="center"
         android:text="@string/user_agreement"
         android:textColor="@color/blue_bar"

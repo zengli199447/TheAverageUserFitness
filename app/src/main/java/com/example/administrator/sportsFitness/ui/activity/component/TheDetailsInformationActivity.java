@@ -16,14 +16,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
+import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.HomePageInfoNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.adapter.TabPageIndicatorAdapter;
+import com.example.administrator.sportsFitness.ui.controller.ControllerTheDetailsInformation;
+import com.example.administrator.sportsFitness.ui.dialog.ProgressDialog;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.fragment.detailsinfo.IntroduceFragment;
 import com.example.administrator.sportsFitness.ui.fragment.search.SearchTypeFragment;
 import com.example.administrator.sportsFitness.ui.fragment.social.FriendsCircleFragment;
 import com.example.administrator.sportsFitness.ui.fragment.social.MessageFragment;
+import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.AlbumBuilder;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
@@ -41,7 +47,8 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class TheDetailsInformationActivity extends BaseActivity implements TabLayout.OnTabSelectedListener, AppBarLayout.OnOffsetChangedListener {
+public class TheDetailsInformationActivity extends BaseActivity implements TabLayout.OnTabSelectedListener, AppBarLayout.OnOffsetChangedListener,
+        ControllerTheDetailsInformation.OnHomePageDataListener {
 
     @BindView(R.id.title_name)
     TextView title_name;
@@ -72,7 +79,17 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
     @BindView(R.id.edit_data)
     TextView edit_data;
 
+    @BindView(R.id.controller_life)
+    TextView controller_life;
+    @BindView(R.id.controller_right)
+    TextView controller_right;
+    @BindView(R.id.center_line)
+    View center_line;
+    @BindView(R.id.pen)
+    View pen;
+
     private String userId;
+    private String userName;
     private int flags;
     private List<Fragment> mFragments = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
@@ -86,6 +103,13 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
     private AlbumBuilder albumBuilder;
     private SearchTypeFragment courseFragment;
     private SearchTypeFragment personalTrainingFragment;
+    private ControllerTheDetailsInformation controllerTheDetailsInformation;
+    private int userType;
+    private ShowDialog instance;
+    private HomePageInfoNetBean.ResultBean resultBean;
+    private String collectionStatus;
+    private ProgressDialog progressDialog;
+
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
@@ -105,42 +129,19 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
     @Override
     protected void initClass() {
         albumBuilder = new AlbumBuilder(this);
-
+        instance = ShowDialog.getInstance();
         Intent intent = getIntent();
-        flags = intent.getFlags();
         userId = intent.getStringExtra("userId");
+        userName = intent.getStringExtra("userName");
+        controllerTheDetailsInformation = new ControllerTheDetailsInformation(userId);
+        controllerLayoutParams = (RelativeLayout.LayoutParams) controller_layout.getLayoutParams();
+        progressDialog = instance.showProgressStatus(this);
+        progressDialog.show();
+    }
 
-        IntroduceFragment introduceFragment = new IntroduceFragment();
-        Bundle introduceTrainingData = new Bundle();
-        introduceTrainingData.putString("userId", userId);
-        introduceTrainingData.putInt("userType", flags);
-        introduceFragment.setArguments(introduceTrainingData);
-        mFragments.add(introduceFragment);
-
-        switch (flags) {
-            case EventCode.PERSONLA:
-
-                break;
-            case EventCode.COACH:
-                personalTrainingFragment = new SearchTypeFragment();
-                Bundle personalTrainingData = new Bundle();
-                personalTrainingData.putString("typeId", "");
-                personalTrainingData.putString("relatedId", "");
-                personalTrainingFragment.setArguments(personalTrainingData);
-
-                courseFragment = new SearchTypeFragment();
-                Bundle courseFragmentData = new Bundle();
-                courseFragmentData.putString("typeId", "");
-                personalTrainingData.putString("relatedId", "");
-                courseFragment.setArguments(courseFragmentData);
-
-                mFragments.add(personalTrainingFragment);
-                mFragments.add(courseFragment);
-                break;
-            case EventCode.OTHERS_PEOPLE:
-
-                break;
-        }
+    @Override
+    protected BaseLifecycleObserver initLifecycleObserver() {
+        return controllerTheDetailsInformation;
     }
 
     @Override
@@ -148,55 +149,23 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
         interval = SystemUtil.dp2px(this, 70);
         controllerHeight = SystemUtil.dp2px(this, 50);
         magin = SystemUtil.dp2px(this, -30);
-
-        switch (flags) {
-            case EventCode.PERSONLA:
-                titleList.add("");
-                break;
-            case EventCode.COACH:
-                titleList.addAll(Arrays.asList(getResources().getStringArray(R.array.personal_details_info)));
-                break;
-            case EventCode.OTHERS_PEOPLE:
-                titleList.add("");
-                break;
-        }
     }
 
     @Override
     protected void initView() {
-        controllerLayoutParams = (RelativeLayout.LayoutParams) controller_layout.getLayoutParams();
-        tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getSupportFragmentManager(), titleList, mFragments);
-        view_page.setAdapter(tabPageIndicatorAdapter);
-        tab_layout.setupWithViewPager(view_page);
-        tab_layout.addOnTabSelectedListener(this);
-        ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin_max), getResources().getInteger(R.integer.title_bar_margin_max));
-        tabPageIndicatorAdapter.notifyDataSetChanged();
 
-        switch (flags) {
-            case EventCode.PERSONLA:
-                controller_all_layout.setVisibility(View.GONE);
-                edit_data.setVisibility(View.VISIBLE);
-                break;
-            case EventCode.COACH:
-
-                break;
-            case EventCode.OTHERS_PEOPLE:
-
-                break;
-        }
-
-        refreshView();
     }
 
     @Override
     protected void initListener() {
         tab_layout.setOnTabSelectedListener(this);
         bar_layout.addOnOffsetChangedListener(this);
-
+        controllerTheDetailsInformation.setOnHomePageDataListener(this);
     }
 
     @SuppressLint("WrongConstant")
-    @OnClick({R.id.img_btn_black, R.id.title_about_img, R.id.user_img, R.id.controller_life, R.id.controller_right, R.id.edit_data})
+    @OnClick({R.id.img_btn_black, R.id.title_about_img, R.id.user_img, R.id.controller_life, R.id.controller_right, R.id.edit_data,
+            R.id.the_details_img, R.id.user_content, R.id.pen})
     @Override
     protected void onClickAble(View view) {
         switch (view.getId()) {
@@ -204,59 +173,51 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
                 finish();
                 break;
             case R.id.title_about_img:
-                switch (flags) {
-                    case EventCode.PERSONLA:
+                switch (userType == 1 ? EventCode.OTHERS_PEOPLE : EventCode.COACH) {
+                    case EventCode.OTHERS_PEOPLE:
                         startActivity(new Intent(this, ShowGeneraActivity.class).setFlags(EventCode.MY_QR_CODE));
                         break;
                     case EventCode.COACH:
-                        title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.like_icon));
-                        break;
-                    case EventCode.OTHERS_PEOPLE:
-
+                        controllerTheDetailsInformation.NetCollection(collectionStatus);
                         break;
                 }
                 break;
             case R.id.user_img:
                 ArrayList<String> list = new ArrayList<>();
-                list.add(DataClass.USERPHOTO);
+                list.add(SystemUtil.JudgeUrl(resultBean.getUser().getPhoto()));
                 albumBuilder.ImageTheExhibition(list, false, 0);
                 break;
             case R.id.controller_life:
                 Intent addFriendsIntent = new Intent(this, ShowGeneraActivity.class);
                 addFriendsIntent.addFlags(EventCode.ADD_VALIDATION);
-                addFriendsIntent.putExtra("addFriendsId","");
+                addFriendsIntent.putExtra("addFriendsId", resultBean.getUser().getUserid());
+                addFriendsIntent.putExtra("addFriendsUserName", resultBean.getUser().getSecondname());
+                addFriendsIntent.putExtra("addFriendsPhoto", resultBean.getUser().getPhoto());
                 startActivity(addFriendsIntent);
                 break;
             case R.id.controller_right:
-
+//                if (controller_right.getText().toString().equals(getString(R.string.chat))) {
+                Intent webIntent = new Intent(this, WebConcentratedActivity.class);
+                webIntent.putExtra("link_all", new StringBuffer().append(DataClass.URL).append("chat/chat.php?fromuid=").append(DataClass.USERID).append("&touid=").append(resultBean.getUser().getUserid()).toString());
+                webIntent.putExtra("titleName", resultBean.getUser().getSecondname());
+                startActivity(webIntent);
+//                } else {
+//
+//                }
                 break;
             case R.id.edit_data:
                 startActivity(new Intent(this, PersonalActivity.class));
                 break;
-        }
-    }
-
-    public void refreshView() {
-        switch (flags) {
-            case EventCode.PERSONLA:
-                title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.code_content_icon));
-                tab_layout.setVisibility(View.GONE);
-                line.setVisibility(View.GONE);
+            case R.id.the_details_img:
+                if (DataClass.USERID.equals(resultBean.getUser().getUserid()))
+                    albumBuilder.ImageSingleSelection();
                 break;
-            case EventCode.COACH:
-                title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.like_off_icon));
-                break;
-            case EventCode.OTHERS_PEOPLE:
-                tab_layout.setVisibility(View.GONE);
-                line.setVisibility(View.GONE);
+            case R.id.user_content:
+            case R.id.pen:
+                if (DataClass.USERID.equals(resultBean.getUser().getUserid()))
+                    instance.showInputDialog(this, EventCode.SIGNATURE);
                 break;
         }
-
-        SystemUtil.textMagicTool(this, user_content, DataClass.UNAME, "身体是革命的本钱，全民健身动起来！加油加油加油", R.dimen.dp16, R.dimen.dp12,
-                R.color.black, R.color.gray_light_text, "\n");
-
-        Glide.with(this).load(SystemUtil.JudgeUrl(DataClass.USERPHOTO)).error(R.drawable.banner_off).into(user_img);
-
     }
 
     @Override
@@ -266,12 +227,10 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
-
     }
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-
     }
 
     @Override
@@ -284,6 +243,120 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
         float topHight = proportion * ((float) controllerHeight) * (-1);
         controllerLayoutParams.setMargins(magin, 0, magin, (int) topHight);
         controller_layout.setLayoutParams(controllerLayoutParams);
+    }
+
+    @Override
+    public void onHomePageDataListener(HomePageInfoNetBean.ResultBean resultBean) {
+        progressDialog.dismiss();
+
+        this.resultBean = resultBean;
+        userType = Integer.valueOf(resultBean.getUser().getRole());
+
+        SystemUtil.textMagicTool(this, user_content, resultBean.getUser().getSecondname(), resultBean.getUser().getSignature(), R.dimen.dp16, R.dimen.dp12,
+                R.color.black, R.color.gray_light_text, "\n");
+
+        Glide.with(this).load(SystemUtil.JudgeUrl(resultBean.getUser().getPhoto())).error(R.drawable.banner_off).into(user_img);
+
+        Glide.with(this).load(SystemUtil.JudgeUrl(resultBean.getUser().getImg_center())).error(R.drawable.banner_off).into(the_details_img);
+
+        if (userId.equals(DataClass.USERID)) {
+            title_name.setText(getString(R.string.my_home_page));
+        } else {
+            title_name.setText(new StringBuffer().append(resultBean.getUser().getSecondname()).append(getString(R.string.the_home_page)));
+        }
+
+        if (titleList.size() == 0) {
+            swichType();
+        }
+
+        refreshView();
+
+    }
+
+    @Override
+    public void onCollectionSuccessfulListener(boolean status) {
+        refreshCollectionStatus(status);
+    }
+
+    private void swichType() {
+
+        IntroduceFragment introduceFragment = new IntroduceFragment();
+        Bundle introduceTrainingData = new Bundle();
+        introduceTrainingData.putString("userId", userId);
+        introduceTrainingData.putString("userName", userName);
+        introduceFragment.setArguments(introduceTrainingData);
+        mFragments.add(introduceFragment);
+
+        switch (userType == 1 ? EventCode.OTHERS_PEOPLE : EventCode.COACH) {
+            case EventCode.OTHERS_PEOPLE:
+                titleList.add("");
+                break;
+            case EventCode.COACH:
+                personalTrainingFragment = new SearchTypeFragment();
+                Bundle personalTrainingData = new Bundle();
+                personalTrainingData.putString("typeId", getString(R.string.cp));
+                personalTrainingData.putString("relatedId", userId);
+                personalTrainingFragment.setArguments(personalTrainingData);
+
+                courseFragment = new SearchTypeFragment();
+                Bundle courseFragmentData = new Bundle();
+                courseFragmentData.putString("typeId", getString(R.string.course));
+                courseFragmentData.putString("relatedId", userId);
+                courseFragment.setArguments(courseFragmentData);
+
+                mFragments.add(personalTrainingFragment);
+                mFragments.add(courseFragment);
+                titleList.addAll(Arrays.asList(getResources().getStringArray(R.array.personal_details_info)));
+                break;
+        }
+
+        tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getSupportFragmentManager(), titleList, mFragments, false);
+        view_page.setAdapter(tabPageIndicatorAdapter);
+        tab_layout.setupWithViewPager(view_page);
+        tab_layout.addOnTabSelectedListener(this);
+        ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin_max), getResources().getInteger(R.integer.title_bar_margin_max));
+        tabPageIndicatorAdapter.notifyDataSetChanged();
+
+    }
+
+    public void refreshView() {
+        switch (userType == 1 ? EventCode.OTHERS_PEOPLE : EventCode.COACH) {
+            case EventCode.OTHERS_PEOPLE:
+                if (userId.equals(DataClass.USERID)) {
+                    title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.code_content_icon));
+                    controller_all_layout.setVisibility(View.GONE);
+                    pen.setVisibility(View.VISIBLE);
+                    edit_data.setVisibility(View.VISIBLE);
+                }
+                tab_layout.setVisibility(View.GONE);
+                line.setVisibility(View.GONE);
+                break;
+            case EventCode.COACH:
+                collectionStatus = resultBean.getIfcollect();
+                refreshCollectionStatus(collectionStatus.equals("0") ? false : true);
+                break;
+        }
+
+        if (resultBean.getIffriend().equals("1")) {
+            controller_life.setVisibility(View.GONE);
+            center_line.setVisibility(View.GONE);
+            controller_right.setText(getString(R.string.chat));
+        } else {
+            controller_life.setVisibility(View.VISIBLE);
+            center_line.setVisibility(View.VISIBLE);
+            controller_right.setText(getString(R.string.say_hello));
+        }
+
+    }
+
+    private void refreshCollectionStatus(boolean status) {
+        if (status) {
+            collectionStatus = "1";
+            title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.like_icon));
+        } else {
+            collectionStatus = "0";
+            title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.like_off_icon));
+        }
     }
 
 }

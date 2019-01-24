@@ -1,6 +1,7 @@
 package com.example.administrator.sportsFitness.ui.activity.component;
 
 import android.content.Intent;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -19,13 +20,19 @@ import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.DynamicDetailsNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.controller.ControllerDynamicDetails;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.CustomConditionsPopupWindow;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
+import com.example.administrator.sportsFitness.widget.StickyBoContentTextBuilder;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,7 +42,8 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class DynamicDetailsActivity extends BaseActivity implements CustomConditionsPopupWindow.OnItemClickListener, PopupWindow.OnDismissListener {
+public class DynamicDetailsActivity extends BaseActivity implements CustomConditionsPopupWindow.OnItemClickListener, PopupWindow.OnDismissListener,
+        ControllerDynamicDetails.OnDynamicDetailsListener, NestedScrollView.OnScrollChangeListener, StickyBoContentTextBuilder.OnStickyBoContentTextClickListener {
 
     @BindView(R.id.title_name)
     TextView title_name;
@@ -67,10 +75,26 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
     EditText input_reply;
     @BindView(R.id.send)
     TextView send;
+    @BindView(R.id.clear_dynamic)
+    ImageView clear_dynamic;
+
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
+    @BindView(R.id.progress_bar)
+    RelativeLayout progress_bar;
+    @BindView(R.id.footer_layout)
+    RelativeLayout footer_layout;
 
     private ControllerDynamicDetails controllerDynamicDetails;
     private CustomConditionsPopupWindow customConditionsPopupWindow;
-
+    private String userId;
+    private String dynamicId;
+    private int pageNumber = 1;
+    private ShowDialog instance;
+    private StickyBoContentTextBuilder stickyBoContentTextBuilder;
+    private List<DynamicDetailsNetBean.ResultBean.DetailBean.UserZhuanBean> user_zhuan;
+    private Map<String, String> ForwardingMap = new HashMap<>();
+    private String secondname;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
@@ -89,8 +113,12 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
 
     @Override
     protected void initClass() {
-        controllerDynamicDetails = new ControllerDynamicDetails(recycler_view, recycler_view_comments);
+        stickyBoContentTextBuilder = new StickyBoContentTextBuilder();
+        userId = getIntent().getStringExtra("userId");
+        dynamicId = getIntent().getStringExtra("dynamicId");
+        controllerDynamicDetails = new ControllerDynamicDetails(recycler_view, recycler_view_comments, input_reply, send, userId, dynamicId);
         customConditionsPopupWindow = new CustomConditionsPopupWindow(this);
+        instance = ShowDialog.getInstance();
     }
 
     @Override
@@ -109,37 +137,42 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
         decorView.getViewTreeObserver().addOnGlobalLayoutListener(ViewBuilder.getGlobalLayoutListener(decorView, findViewById(Window.ID_ANDROID_CONTENT)));
         title_name.setText(getString(R.string.dynamic_body));
         line.setVisibility(View.GONE);
-        RefreshView();
+        footer_layout.setVisibility(View.GONE);
     }
 
     @Override
     protected void initListener() {
         customConditionsPopupWindow.setOnItemClickListener(this);
         customConditionsPopupWindow.setOnDismissListener(this);
-        input_reply.addTextChangedListener(TextWatcherListener);
+        controllerDynamicDetails.setOnDynamicDetailsListener(this);
+        scrollView.setOnScrollChangeListener(this);
+        stickyBoContentTextBuilder.setOnStickyBoContentTextClickListener(this);
     }
 
     @OnClick({R.id.user_img, R.id.about, R.id.comments, R.id.forwarding, R.id.support_check, R.id.all_comments, R.id.img_btn_black,
-            R.id.send})
+            R.id.send, R.id.clear_dynamic})
     @Override
     protected void onClickAble(View view) {
         switch (view.getId()) {
             case R.id.user_img:
-
+                Intent theDetailsInformationIntent = new Intent(this, TheDetailsInformationActivity.class);
+                theDetailsInformationIntent.putExtra("userId", userId);
+                theDetailsInformationIntent.putExtra("userName", secondname);
+                startActivity(theDetailsInformationIntent);
                 break;
             case R.id.about:
                 customConditionsPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 SystemUtil.windowToDark(this);
                 break;
             case R.id.support_check:
-
+                controllerDynamicDetails.NetOrSupport(support_check);
                 break;
             case R.id.comments:
 
                 break;
             case R.id.forwarding:
                 Intent forwardingIntent = new Intent(this, ForwardingActivity.class);
-                forwardingIntent.putExtra("forwardingId", "");
+                forwardingIntent.putExtra("forwardingId", dynamicId);
                 startActivity(forwardingIntent);
                 break;
             case R.id.all_comments:
@@ -150,26 +183,13 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
                 break;
             case R.id.send:
                 toastUtil.showToast(input_reply.getText().toString().trim());
+                controllerDynamicDetails.NetSendComments(input_reply.getText().toString().trim());
+                break;
+            case R.id.clear_dynamic:
+                instance.showConfirmOrNoDialog(this, getString(R.string.clear_dynamic), EventCode.ONSTART, EventCode.DELET_DYNAMIC, EventCode.ONSTART);
                 break;
         }
 
-    }
-
-    private void RefreshView() {
-        Glide.with(this).load(SystemUtil.JudgeUrl(DataClass.USERPHOTO)).error(R.drawable.banner_off).into(user_img);
-
-        SystemUtil.textMagicTool(this, user_name, DataClass.UNAME, "今天  15:20", R.dimen.dp15, R.dimen.dp10,
-                R.color.blue_bar, R.color.gray_light_text, "\n");
-
-        dynamic_content.setText("一组超棒的按摩指南，累了、睡前都可以做，做完非常舒服~~ get");
-
-        comments.setText(new StringBuffer().append(this.getString(R.string.comments)).append(" 1000").toString());
-
-        forwarding.setText(new StringBuffer().append(this.getString(R.string.forwarding)).append(" 1021").toString());
-
-        support_check.setText(" 1002");
-
-        recycler_view_layout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -181,34 +201,99 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
     public void setOnItemClick(View v) {
         switch (v.getId()) {
             case R.id.report:
-                ShowDialog.getInstance().showInputDialog(this, EventCode.REPORT_INPUT);
+                instance.showInputDialog(this, EventCode.REPORT_INPUT);
                 break;
             case R.id.cancle:
                 break;
         }
     }
 
-    private TextWatcher TextWatcherListener = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    @Override
+    public void onDynamicDetailsListener(DynamicDetailsNetBean.ResultBean resultBean, int pageNumber) {
 
-        }
+        if (pageNumber == 1) {
+            this.pageNumber = pageNumber;
 
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            DynamicDetailsNetBean.ResultBean.DetailBean detail = resultBean.getDetail();
 
-        }
+            secondname = detail.getSecondname();
 
-        @Override
-        public void afterTextChanged(Editable s) {
-            if (s.toString().trim().isEmpty()) {
-                send.setEnabled(false);
-                send.setTextColor(getResources().getColor(R.color.gray_light));
+            Glide.with(this).load(SystemUtil.JudgeUrl(detail.getPhoto())).error(R.drawable.banner_off).into(user_img);
+
+            SystemUtil.textMagicTool(this, user_name, secondname, detail.getCreatedate_show(), R.dimen.dp15, R.dimen.dp10,
+                    R.color.blue_bar, R.color.gray_light_text, "\n");
+
+            if (detail.getContent().isEmpty() && detail.getUser_zhuan().size() == 0) {
+                dynamic_content.setVisibility(View.GONE);
             } else {
-                send.setEnabled(true);
-                send.setTextColor(getResources().getColor(R.color.blue_bar));
+                dynamic_content.setVisibility(View.VISIBLE);
+                user_zhuan = detail.getUser_zhuan();
+                if (user_zhuan.size() > 0) {
+                    String sizeLine = "";
+                    for (int i = 0; i < user_zhuan.size(); i++) {
+                        String content = new StringBuffer().append(DataClass.FORWARDING_TAG).append(user_zhuan.get(i).getSecondname()).append(" ").toString();
+                        ForwardingMap.put(content, user_zhuan.get(i).getUserid());
+                        sizeLine = new StringBuffer().append(sizeLine).append(content).toString();
+                    }
+                    dynamic_content.setText(stickyBoContentTextBuilder.getWeiBoContent(new StringBuffer().append(sizeLine).append(detail.getContent()).toString(), this, dynamic_content, -1));
+                } else {
+                    dynamic_content.setText(detail.getContent());
+                }
+            }
+
+            comments.setText(new StringBuffer().append(this.getString(R.string.comments)).append(" ").append(detail.getTotal_ping()).toString());
+
+            forwarding.setText(new StringBuffer().append(this.getString(R.string.forwarding)).append(" ").append(detail.getTotal_zhuan()).toString());
+
+            if (detail.getIfzan_cleck().equals("1")) {
+                support_check.setChecked(true);
+            } else {
+                support_check.setChecked(false);
+            }
+            support_check.setText(new StringBuffer().append(" ").append(detail.getTotal_zan()).toString());
+
+            if (DataClass.USERID.equals(userId)) {
+                clear_dynamic.setVisibility(View.VISIBLE);
+            } else {
+                about.setVisibility(View.VISIBLE);
             }
         }
-    };
 
+        footer_layout.setVisibility(View.VISIBLE);
+        switch (resultBean.getReply().size() == 0 ? 0 : 1) {
+            case 0:
+                progress_bar.setVisibility(View.GONE);
+                if (pageNumber == 1)
+                    footer_layout.setVisibility(View.GONE);
+                break;
+            case 1:
+                if (resultBean.getReply().size() < DataClass.DefaultInformationFlow) {
+                    progress_bar.setVisibility(View.GONE);
+                } else {
+                    progress_bar.setVisibility(View.VISIBLE);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onSendCommentsListener() {
+        input_reply.setText("");
+    }
+
+    @Override
+    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+            pageNumber = pageNumber + 1;
+            controllerDynamicDetails.NetDynamicDetails(pageNumber);
+        }
+    }
+
+    @Override
+    public void onStickyBoContentTextClickListener(String content, int index) {
+        Intent theDetailsInformationIntent = new Intent(this, TheDetailsInformationActivity.class);
+        theDetailsInformationIntent.putExtra("userId", ForwardingMap.get(new StringBuffer().append(content).append(" ").toString()));
+        theDetailsInformationIntent.putExtra("userName", content);
+        startActivity(theDetailsInformationIntent);
+    }
 }

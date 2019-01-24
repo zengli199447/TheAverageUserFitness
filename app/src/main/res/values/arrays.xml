@@ -194,9 +194,9 @@
 
     <string-array name="arrange">
         <item>撩好友</item>
-        <item>我要请客</item>
-        <item>预约私教</item>
-        <item>预定训练营</item>
+        <item>约好友</item>
+        <item>觅私教</item>
+        <item>觅场地</item>
         <item>我的行程</item>
     </string-array>
 
@@ -215,7 +215,7 @@
 
     <string-array name="friends_circle">
         <item>好友圈</item>
-        <item>热门</item>
+        <item>全部</item>
     </string-array>
 
     <string-array name="mine_tools">
@@ -224,12 +224,12 @@
     </string-array>
 
     <string-array name="photo_list">
-        <item>http://wx1.sinaimg.cn/orj360/006pnLoLgy1ft6yichmarj30j60j675x.jpg</item>
-        <item>http://wx1.sinaimg.cn/orj360/006pnLoLgy1ft6yichmarj30j60j675x.jpg</item>
-        <item>http://wx1.sinaimg.cn/orj360/006pnLoLgy1ft6yichmarj30j60j675x.jpg</item>
-        <item>http://wx1.sinaimg.cn/orj360/006pnLoLgy1ft6yichmarj30j60j675x.jpg</item>
-        <item>http://wx1.sinaimg.cn/orj360/006pnLoLgy1ft6yichmarj30j60j675x.jpg</item>
-        <item>http://wx1.sinaimg.cn/orj360/006pnLoLgy1ft6yichmarj30j60j675x.jpg</item>
+        <item>http://jianshen.027perfect.com/upload/sport.jpg</item>
+        <item>http://jianshen.027perfect.com/upload/sport.jpg</item>
+        <item>http://jianshen.027perfect.com/upload/sport.jpg</item>
+        <item>http://jianshen.027perfect.com/upload/sport.jpg</item>
+        <item>http://jianshen.027perfect.com/upload/sport.jpg</item>
+        <item>http://jianshen.027perfect.com/upload/sport.jpg</item>
     </string-array>
 
     <string-array name="search_type">
@@ -261,5 +261,18 @@
         <item>近半年可见</item>
     </string-array>
 
+    <string-array name="order_type">
+        <item>全部</item>
+        <item>待付款</item>
+        <item>待完成</item>
+        <item>已完成</item>
+        <item>已取消</item>
+    </string-array>
+
+    <string-array name="collection_type">
+        <item>健身房</item>
+        <item>课程</item>
+        <item>教练</item>
+    </string-array>
 
 </resources>

@@ -109,8 +109,6 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
     @Override
     protected void initData() {
 
-        toastUtil.showToast("flagStatus : " + flagStatus);
-
     }
 
     @Override
@@ -124,14 +122,12 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
             case EventCode.COACH_PRIVATE:
                 layout_title_bar.setVisibility(View.GONE);
                 number_of_people.setVisibility(View.GONE);
-
                 break;
             case EventCode.GYM:
                 layout_title_bar.setVisibility(View.GONE);
                 number_of_people.setVisibility(View.GONE);
                 time_select_layout.setVisibility(View.GONE);
                 score.setVisibility(View.VISIBLE);
-
                 break;
         }
         ViewBuilder.ProgressStyleChange(swipe_layout, SystemUtil.dp2px(getActivity(), 130));
@@ -165,6 +161,7 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         controllerCourse.changePageNumber();
+        controllerCourse.RefreshNetWorkData(selectTime);
         switch (checkedId) {
             case R.id.price:
                 controllerCourse.changeReason("1");
@@ -176,21 +173,10 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
                 controllerCourse.changeReason("3");
                 break;
             case R.id.score:
-                controllerCourse.changeReason("4");
+                controllerCourse.changeReason("3");
                 break;
         }
-        switch (flagStatus) {
-            case EventCode.COURSE:
-
-                break;
-            case EventCode.COACH_PRIVATE:
-
-                break;
-            case EventCode.GYM:
-
-                break;
-        }
-        controllerCourse.RefreshNetWorkData(selectTime);
+        refreshDataView();
     }
 
     //类型栏状态刷新
@@ -217,9 +203,31 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
 
     @Override
     public void setOnItemClick(View v, String year, String month, String day, String hour, String minute, int selectType) {
-        selectTime = new StringBuffer().append(year).append(".").append(month).append(".").append(day).toString();
+        switch (v.getId()) {
+            case R.id.confirm:
+                selectTime = new StringBuffer().append(year).append(".").append(month).append(".").append(day).toString();
+                break;
+            case R.id.clear_time:
+                selectTime = "";
+                break;
+        }
         time_select_content.setText(selectTime);
         controllerCourse.RefreshNetWorkData(selectTime);
+        refreshDataView();
+    }
+
+    private void refreshDataView() {
+        switch (flagStatus) {
+            case EventCode.COURSE:
+                controllerCourse.NetCourse();
+                break;
+            case EventCode.COACH_PRIVATE:
+                controllerCourse.NetCoachPrivateForm();
+                break;
+            case EventCode.GYM:
+                controllerCourse.NetGymForm();
+                break;
+        }
     }
 
 }

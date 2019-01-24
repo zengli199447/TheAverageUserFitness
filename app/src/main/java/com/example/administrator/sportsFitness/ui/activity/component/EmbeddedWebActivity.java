@@ -1,13 +1,18 @@
 package com.example.administrator.sportsFitness.ui.activity.component;
 
+import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
+import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
-import com.example.administrator.sportsFitness.ui.view.X5WebView;
-import com.example.administrator.sportsFitness.utils.LogUtil;
+import com.example.administrator.sportsFitness.ui.dialog.ProgressDialog;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
+import com.example.administrator.sportsFitness.widget.WebViewBuilder;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -17,12 +22,19 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class EmbeddedWebActivity extends BaseActivity implements X5WebView.X5LoadingListener {
+public class EmbeddedWebActivity extends BaseActivity {
 
     @BindView(R.id.title_name)
     TextView title_name;
-    @BindView(R.id.web_view)
-    X5WebView web_view;
+    @BindView(R.id.webView)
+    WebView webView;
+    @BindView(R.id.progressbar)
+    ProgressBar progressbar;
+    private String titleName;
+    private String url;
+    private WebViewBuilder webViewBuilder;
+    private int urlType;
+    boolean status;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
@@ -41,22 +53,49 @@ public class EmbeddedWebActivity extends BaseActivity implements X5WebView.X5Loa
 
     @Override
     protected void initClass() {
-
+        webViewBuilder = new WebViewBuilder(webView, progressbar);
+        webViewBuilder.initWebView();
     }
 
     @Override
     protected void initData() {
-
+        titleName = getIntent().getStringExtra("titleName");
+        urlType = getIntent().getFlags();
+        switch (urlType) {
+            case 0:
+                url = getIntent().getStringExtra("link");
+                break;
+            case 1:
+                url = new StringBuffer().append(DataClass.WEB_URL).append(getIntent().getStringExtra("link")).toString();
+                status = true;
+                break;
+        }
     }
 
     @Override
     protected void initView() {
-        web_view.loadUrl("https://home.firefoxchina.cn/");
+        title_name.setText(titleName);
+        webViewBuilder.loadWebView(url, status);
+        progressbar.setVisibility(View.GONE);
     }
 
     @Override
     protected void initListener() {
-        web_view.setX5LoadingListener(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webView.onResume();
+        webView.getSettings().setJavaScriptEnabled(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        webView.onPause();
+        webView.getSettings().setLightTouchEnabled(false);
     }
 
     @OnClick({R.id.img_btn_black})
@@ -64,24 +103,33 @@ public class EmbeddedWebActivity extends BaseActivity implements X5WebView.X5Loa
     protected void onClickAble(View view) {
         switch (view.getId()) {
             case R.id.img_btn_black:
-
+                finish();
                 break;
         }
     }
 
-    @Override
-    public void onPageFinished() {
-        LogUtil.e(TAG, "onPageFinished");
+    private void onKeyDownActiion() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            finish();
+        }
     }
 
     @Override
-    public void onPageStarted() {
-        LogUtil.e(TAG, "onPageStarted");
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onKeyDownActiion();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
-    public void onProgressChanged() {
-        LogUtil.e(TAG, "onProgressChanged");
+    protected void onDestroy() {
+        if (webView != null)
+            webView.destroy();
+        super.onDestroy();
     }
 
 }

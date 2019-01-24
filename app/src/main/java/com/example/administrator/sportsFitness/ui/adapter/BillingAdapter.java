@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
+import com.example.administrator.sportsFitness.model.bean.WalletLogNetBean;
 import com.example.administrator.sportsFitness.ui.holder.MyViewHolder;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 
@@ -22,9 +23,9 @@ import java.util.List;
 public class BillingAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     Context context;
-    List<Object> list;
+    List<WalletLogNetBean.ResultBean.MoneydetaillistBean> list;
 
-    public BillingAdapter(Context context, List<Object> list) {
+    public BillingAdapter(Context context, List<WalletLogNetBean.ResultBean.MoneydetaillistBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -40,18 +41,32 @@ public class BillingAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         TextView content = holder.itemView.findViewById(R.id.content);
         TextView amount = holder.itemView.findViewById(R.id.amount);
+        View line = holder.itemView.findViewById(R.id.line);
 
-        SystemUtil.textMagicTool(context, content, "账单类型", "2018-05-26   15:52",
+        WalletLogNetBean.ResultBean.MoneydetaillistBean moneydetaillistBean = list.get(position);
+
+        SystemUtil.textMagicTool(context, content, moneydetaillistBean.getRemark(), moneydetaillistBean.getCreatedate(),
                 R.dimen.dp15, R.dimen.dp12, R.color.black, R.color.gray_light_text, "\n");
 
-        amount.setText("+2000.00");
-        amount.setTextColor(context.getResources().getColor(R.color.blue_bar));
+        amount.setText(moneydetaillistBean.getOptmoney());
+
+        if (moneydetaillistBean.getOptmoney().contains("+")) {
+            amount.setTextColor(context.getResources().getColor(R.color.blue_bar));
+        } else {
+            amount.setTextColor(context.getResources().getColor(R.color.gray_light_text));
+        }
+
+        if (position == list.size() - 1) {
+            line.setVisibility(View.GONE);
+        } else {
+            line.setVisibility(View.VISIBLE);
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return list == null ? 6 : list.size();
+        return list.size() == 0 ? 0 : list.size();
     }
 
 

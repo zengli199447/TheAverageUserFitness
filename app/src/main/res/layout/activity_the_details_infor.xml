@@ -102,6 +102,7 @@
                 android:textSize="@dimen/dp13" />
 
             <View
+                android:id="@+id/center_line"
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/dp10"

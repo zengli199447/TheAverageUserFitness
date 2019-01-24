@@ -14,6 +14,11 @@ import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.controller.ControllerReleaseNewDynamic;
+import com.example.administrator.sportsFitness.ui.dialog.ProgressDialog;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
+import com.example.administrator.sportsFitness.widget.MultipartBuilder;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,7 +28,7 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class ReleaseNewDynamicActivity extends BaseActivity {
+public class ReleaseNewDynamicActivity extends BaseActivity implements MultipartBuilder.UpLoadFileListener, ControllerReleaseNewDynamic.OnNewDynamicReleaseListener {
 
     @BindView(R.id.title_name)
     TextView title_name;
@@ -38,7 +43,10 @@ public class ReleaseNewDynamicActivity extends BaseActivity {
     @BindView(R.id.conditions_only)
     AppCompatCheckBox conditions_only;
     private ControllerReleaseNewDynamic controllerReleaseNewDynamic;
-
+    private MultipartBuilder multipartBuilder;
+    private ShowDialog instance;
+    private int LookStatus = 0;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
@@ -52,7 +60,7 @@ public class ReleaseNewDynamicActivity extends BaseActivity {
                 DataClass.AlbumFileList.clear();
                 finish();
                 break;
-            case EventCode.RELEASE_SUCCESSFUL:
+            case EventCode.DYNAMIC_RELEASE_SUCCESSFUL:
                 finish();
                 break;
         }
@@ -71,6 +79,9 @@ public class ReleaseNewDynamicActivity extends BaseActivity {
     @Override
     protected void initClass() {
         controllerReleaseNewDynamic = new ControllerReleaseNewDynamic(recycler_view);
+        multipartBuilder = new MultipartBuilder(this, 1, DataClass.AlbumFileList);
+        instance = ShowDialog.getInstance();
+        progressDialog = instance.showProgressStatus(this);
     }
 
     @Override
@@ -94,7 +105,8 @@ public class ReleaseNewDynamicActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-
+        multipartBuilder.setUpLoadFileListener(this);
+        controllerReleaseNewDynamic.setOnNewDynamicReleaseListener(this);
     }
 
     @OnClick({R.id.title_about_text, R.id.conditions_all, R.id.conditions_only, R.id.img_btn_black})
@@ -102,15 +114,26 @@ public class ReleaseNewDynamicActivity extends BaseActivity {
     protected void onClickAble(View view) {
         switch (view.getId()) {
             case R.id.title_about_text:
-
+                if (input_content.getText().toString().trim().isEmpty() && DataClass.AlbumFileList.size() == 0) {
+                    instance.showHelpfulHintsDialog(this, getString(R.string.dynamic_empty_error), EventCode.ONSTART);
+                } else {
+                    if (DataClass.AlbumFileList.size() > 0) {
+                        progressDialog.show();
+                        multipartBuilder.arrangementUpLoad();
+                    } else {
+                        upLoadReleaseNewDynamic("");
+                    }
+                }
                 break;
             case R.id.conditions_all:
                 conditions_all.setChecked(true);
                 conditions_only.setChecked(false);
+                LookStatus = 0;
                 break;
             case R.id.conditions_only:
                 conditions_only.setChecked(true);
                 conditions_all.setChecked(false);
+                LookStatus = 1;
                 break;
             case R.id.img_btn_black:
                 finishController();
@@ -125,6 +148,21 @@ public class ReleaseNewDynamicActivity extends BaseActivity {
         } else {
             controllerReleaseNewDynamic.ShowOrSelect(EventCode.DYNAMIC_OR_SAVE);
         }
+    }
+
+    @Override
+    public void onNewDynamicReleaseListener() {
+
+    }
+
+    @Override
+    public void onUpLoadFileListener(String url, List<String> list) {
+        progressDialog.dismiss();
+        upLoadReleaseNewDynamic(url);
+    }
+
+    private void upLoadReleaseNewDynamic(String url) {
+        controllerReleaseNewDynamic.NetNewDynamic("", url, input_content.getText().toString().trim(), LookStatus);
     }
 
     @Override

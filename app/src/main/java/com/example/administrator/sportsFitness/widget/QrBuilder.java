@@ -1,12 +1,17 @@
 package com.example.administrator.sportsFitness.widget;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
+import com.example.administrator.sportsFitness.R;
+import com.example.administrator.sportsFitness.ui.activity.plugin.CustomScanActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
@@ -86,5 +91,16 @@ public class QrBuilder {
             return null;
         }
     }
+
+    public static void Integrator(Context context) {
+        new IntentIntegrator((Activity) context)
+                .setPrompt("")
+                .setOrientationLocked(false)
+                .setBeepEnabled(true)
+                .setCaptureActivity(CustomScanActivity.class)
+                .setTimeout(context.getResources().getInteger(R.integer.scan_time_out))
+                .initiateScan();
+    }
+
 
 }

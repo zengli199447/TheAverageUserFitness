@@ -194,7 +194,7 @@
                 android:id="@+id/course_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp200" />
+                android:minHeight="@dimen/dp15" />
 
             <View
                 android:layout_width="match_parent"
@@ -226,6 +226,7 @@
                 android:layout_marginLeft="@dimen/dp30"
                 android:layout_marginRight="@dimen/dp15"
                 android:layout_marginTop="@dimen/dp10"
+                android:minHeight="@dimen/dp15"
                 android:text="须知内容，说明内容"
                 android:textColor="@color/black_overlay"
                 android:textSize="@dimen/dp13" />
@@ -276,7 +277,7 @@
                 android:id="@+id/evaluation_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp200" />
+                android:minHeight="@dimen/dp15" />
 
         </LinearLayout>
 

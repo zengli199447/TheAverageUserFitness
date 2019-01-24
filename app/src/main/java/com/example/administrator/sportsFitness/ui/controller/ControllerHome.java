@@ -1,6 +1,8 @@
 package com.example.administrator.sportsFitness.ui.controller;
 
 import android.app.Activity;
+
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +14,25 @@ import android.widget.TextView;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.ControllerClassObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.InfoAboutNetBean;
+import com.example.administrator.sportsFitness.model.bean.PayObject;
+import com.example.administrator.sportsFitness.model.bean.UpLoadStatusNetBean;
+import com.example.administrator.sportsFitness.model.bean.WechatPayContentNetBean;
+import com.example.administrator.sportsFitness.model.bean.ZfbPayContentNetBean;
 import com.example.administrator.sportsFitness.model.db.entity.SearchDBInfo;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.rxtools.RxBus;
+import com.example.administrator.sportsFitness.rxtools.RxUtil;
 import com.example.administrator.sportsFitness.ui.view.FlowLayout;
+import com.example.administrator.sportsFitness.widget.CommonSubscriber;
+import com.example.administrator.sportsFitness.widget.OnLinePayBuilder;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
+import com.google.gson.Gson;
 
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -34,6 +48,7 @@ public class ControllerHome extends ControllerClassObserver implements View.OnKe
     FlowLayout history_search_layout;
     FrameLayout frameLayout;
     private LayoutInflater mInflater;
+    private OnLinePayBuilder onLinePayBuilder;
 
     public ControllerHome(EditText search_edit, FlowLayout history_search_layout, FrameLayout frameLayout) {
         this.search_edit = search_edit;
@@ -45,8 +60,22 @@ public class ControllerHome extends ControllerClassObserver implements View.OnKe
     protected void registerEvent(CommonEvent commonevent) {
         switch (commonevent.getCode()) {
             case EventCode.SEARCH_CLEAR_ALL_COMMITE:
-                dataManager.deleteSearchDBInfo(DataClass.USERID);
+                if (DataClass.USERID.isEmpty()) {
+                    dataManager.deleteSearchDBInfo(DataClass.STANDARD_USER);
+                } else {
+                    dataManager.deleteSearchDBInfo(DataClass.USERID);
+                }
                 HistorySearchView();
+                break;
+            case EventCode.REFRESH_MONEY_ABOUT:
+                NetInfoAbout();
+                break;
+            case EventCode.PAY_ACTION:
+                PayObject payObject = (PayObject) commonevent.getBusObject();
+                int payType = payObject.getPayType();
+                String code = payObject.getOrderCode();
+                int payStatus = payObject.getPayStatus();
+                PayNetWork(code, payType, payStatus);
                 break;
         }
     }
@@ -61,7 +90,9 @@ public class ControllerHome extends ControllerClassObserver implements View.OnKe
         super.onClassCreate();
         search_edit.setOnKeyListener(this);
         mInflater = LayoutInflater.from(context);
+        onLinePayBuilder = new OnLinePayBuilder(context);
         HistorySearchView();
+        NetInfoAbout();
     }
 
     @Override
@@ -84,7 +115,12 @@ public class ControllerHome extends ControllerClassObserver implements View.OnKe
     //历史搜索
     private void HistorySearchView() {
         history_search_layout.removeAllViews();
-        List<SearchDBInfo> searchDBInfos = dataManager.querySearchDBInfo(DataClass.USERID);
+        List<SearchDBInfo> searchDBInfos = null;
+        if (DataClass.USERID.isEmpty()) {
+            searchDBInfos = dataManager.querySearchDBInfo(DataClass.USERID);
+        } else {
+            searchDBInfos = dataManager.querySearchDBInfo(DataClass.USERID);
+        }
         for (int i = 0; i < searchDBInfos.size(); i++) {
             if (i > context.getResources().getInteger(R.integer.search_history_log))
                 return;
@@ -107,8 +143,142 @@ public class ControllerHome extends ControllerClassObserver implements View.OnKe
     private void searchAction(String content) {
         RxBus.getDefault().post(new CommonEvent(EventCode.SEARCH_ACTION, content));
         frameLayout.setVisibility(View.VISIBLE);
-        dataManager.insertSearchDBInfo(new SearchDBInfo(DataClass.USERID, content));
+        if (DataClass.USERID.isEmpty()) {
+            dataManager.insertSearchDBInfo(new SearchDBInfo(DataClass.STANDARD_USER, content));
+        } else {
+            dataManager.insertSearchDBInfo(new SearchDBInfo(DataClass.USERID, content));
+        }
         HistorySearchView();
+    }
+
+    //用户相关数据获取
+    private void NetInfoAbout() {
+        HashMap map = new HashMap<>();
+        LinkedHashMap linkedHashMap = new LinkedHashMap();
+        linkedHashMap.put("action", DataClass.USER_CENTER_GET);
+        linkedHashMap.put("userid", DataClass.USERID);
+        String toJson = new Gson().toJson(linkedHashMap);
+        map.put("version", "v1");
+        map.put("vars", toJson);
+        addSubscribe(dataManager.InfoAbout(map)
+                .compose(RxUtil.<InfoAboutNetBean>rxSchedulerHelper())
+                .subscribeWith(new CommonSubscriber<InfoAboutNetBean>(toastUtil) {
+                    @Override
+                    public void onNext(InfoAboutNetBean infoAboutNetBean) {
+                        if (infoAboutNetBean.getStatus() == 1) {
+                            DataClass.MONEY = infoAboutNetBean.getResult().getMoneytotal();
+                        } else {
+                            toastUtil.showToast(infoAboutNetBean.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "Throwable : " + e.toString());
+                        super.onError(e);
+                    }
+                }));
+    }
+
+    /**
+     * 支付
+     */
+    public void PayNetWork(String orderCode, int payType, final int payStaus) {
+        String payTypeText = "";
+        switch (payType) {
+            case 0:
+                payTypeText = context.getString(R.string.zfb_pay);
+                break;
+            case 1:
+                payTypeText = context.getString(R.string.wechat_pay);
+                break;
+            case 2:
+                payTypeText = context.getString(R.string.balance_pay);
+                break;
+        }
+        HashMap map = new HashMap<>();
+        LinkedHashMap linkedHashMap = new LinkedHashMap();
+        linkedHashMap.put("action", DataClass.ORDER_PAY_SET);
+        linkedHashMap.put("ordercode", orderCode);
+        linkedHashMap.put("paytype", payTypeText);
+        String toJson = new Gson().toJson(linkedHashMap);
+        map.put("version", "v1");
+        map.put("vars", toJson);
+        switch (payType) {
+            case 0:
+                addSubscribe(dataManager.ZfbPayContent(map)
+                        .compose(RxUtil.<ZfbPayContentNetBean>rxSchedulerHelper())
+                        .subscribeWith(new CommonSubscriber<ZfbPayContentNetBean>(toastUtil) {
+                            @Override
+                            public void onNext(ZfbPayContentNetBean zfbPayContentNetBean) {
+                                if (zfbPayContentNetBean.getStatus() == 1) {
+                                    String content = new StringBuffer().append(context.getString(R.string.app_name)).append(context.getString(R.string.pay_prompt)).toString();
+                                    ZfbPayContentNetBean.PrepayinfoBean prepayinfo = zfbPayContentNetBean.getPrepayinfo();
+                                    onLinePayBuilder.doAlipay(content, content,
+                                            prepayinfo.getOrderCode(),
+                                            prepayinfo.getUrl_notify(),
+                                            prepayinfo.getPartner(),
+                                            prepayinfo.getSeller(),
+                                            prepayinfo.getPrivate_key(),
+                                            prepayinfo.getTotalmoney(), payStaus);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.e(TAG, "Throwable : " + e.toString());
+                                super.onError(e);
+                            }
+                        }));
+                break;
+            case 1:
+                addSubscribe(dataManager.WechatPayContent(map)
+                        .compose(RxUtil.<WechatPayContentNetBean>rxSchedulerHelper())
+                        .subscribeWith(new CommonSubscriber<WechatPayContentNetBean>(toastUtil) {
+                            @Override
+                            public void onNext(WechatPayContentNetBean wechatPayContentNetBean) {
+                                if (wechatPayContentNetBean.getStatus() == 1) {
+                                    WechatPayContentNetBean.PrepayinfoBean prepayinfo = wechatPayContentNetBean.getPrepayinfo();
+                                    DataClass.PAY_RETURN_STATUS = payStaus;
+                                    onLinePayBuilder.doWeiXinPay(prepayinfo.getAppid(),
+                                            prepayinfo.getPartnerid(),
+                                            prepayinfo.getPrepayid(),
+                                            prepayinfo.getNoncestr(),
+                                            prepayinfo.getTimestamp(),
+                                            prepayinfo.getPackageX(),
+                                            prepayinfo.getSign());
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.e(TAG, "Throwable : " + e.toString());
+                                super.onError(e);
+                            }
+                        }));
+                break;
+            case 2:
+                addSubscribe(dataManager.UpLoadStatusNetBean(map)
+                        .compose(RxUtil.<UpLoadStatusNetBean>rxSchedulerHelper())
+                        .subscribeWith(new CommonSubscriber<UpLoadStatusNetBean>(toastUtil) {
+                            @Override
+                            public void onNext(UpLoadStatusNetBean upLoadStatusNetBean) {
+                                if (upLoadStatusNetBean.getStatus() == 1) {
+                                    RxBus.getDefault().post(new CommonEvent(payStaus));
+                                    RxBus.getDefault().post(new CommonEvent(EventCode.REFRESH_MONEY_ABOUT));
+                                } else {
+                                    toastUtil.showToast(upLoadStatusNetBean.getMessage());
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.e(TAG, "Throwable : " + e.toString());
+                                super.onError(e);
+                            }
+                        }));
+                break;
+        }
     }
 
 

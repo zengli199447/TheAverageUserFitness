@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
+import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.ui.controller.ControllerCardPage;
 
@@ -69,6 +70,7 @@ public class CardPageActivity extends BaseActivity {
     protected void initView() {
         title_name.setText(getString(R.string.card));
         title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.doubt_icon));
+        card_bind_phone_number.setText(DataClass.PHONE);
     }
 
     @Override

@@ -14,11 +14,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.CommentsNetBean;
 import com.example.administrator.sportsFitness.ui.holder.MyViewHolder;
 import com.example.administrator.sportsFitness.ui.view.ShinyView;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,27 +32,53 @@ import java.util.List;
 public class ControllerCommentsAdapter extends RecyclerView.Adapter<MyViewHolder> implements RecyclerChildAdapter.ChildClickListener {
 
     Context context;
-    List<Object> list;
+    List<CommentsNetBean.ResultBean.CommentBean> list;
     boolean status;
     int visibilityCount;
 
-    public ControllerCommentsAdapter(Context context, List<Object> list, boolean status) {
+    private final int TYPE_ITEM = 1;
+    private final int TYPE_FOOTER = 2;
+    private int loadState = 2;
+    public final int LOADING_COMPLETE = 2;
+    public final int LOADING_END = 3;
+    public final int LOADING = 1;
+
+    public ControllerCommentsAdapter(Context context, List<CommentsNetBean.ResultBean.CommentBean> list, boolean status) {
         this.context = context;
         this.list = list;
         this.status = status;
     }
 
-    public ControllerCommentsAdapter(Context context, List<Object> list, boolean status, int visibilityCount) {
+    public ControllerCommentsAdapter(Context context, List<CommentsNetBean.ResultBean.CommentBean> list, boolean status, int visibilityCount) {
         this.context = context;
         this.list = list;
         this.status = status;
         this.visibilityCount = visibilityCount;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        int Type = 0;
+        if (position == list.size()) {
+            Type = TYPE_FOOTER;
+        } else {
+            Type = TYPE_ITEM;
+        }
+        return Type;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_controller_comments, parent, false);
+        View view = null;
+        switch (viewType) {
+            case 1:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_controller_comments, parent, false);
+                break;
+            case 2:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_view, parent, false);
+                break;
+        }
         return new MyViewHolder(view);
     }
 
@@ -66,35 +94,75 @@ public class ControllerCommentsAdapter extends RecyclerView.Adapter<MyViewHolder
         RecyclerView recycler_view = holder.itemView.findViewById(R.id.recycler_view);
         TextView commtens_about = holder.itemView.findViewById(R.id.commtens_about);
         View line = holder.itemView.findViewById(R.id.line);
+        View line_placeholder = holder.itemView.findViewById(R.id.line_placeholder);
 
+        RelativeLayout progress_bar = holder.itemView.findViewById(R.id.progress_bar);
 
-        Glide.with(context).load(SystemUtil.JudgeUrl(DataClass.USERPHOTO)).error(R.drawable.banner_off).into(user_img);
+        if (position == list.size()) {
+            switch (loadState) {
+                case LOADING:
+                    progress_bar.setVisibility(View.VISIBLE);
+                    break;
+                case LOADING_COMPLETE:
+                    progress_bar.setVisibility(View.INVISIBLE);
+                    break;
+                case LOADING_END:
+                    progress_bar.setVisibility(View.GONE);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            CommentsNetBean.ResultBean.CommentBean commentBean = list.get(position);
 
-        user_name.setText(DataClass.UNAME);
+            Glide.with(context).load(SystemUtil.JudgeUrl(commentBean.getPhoto())).error(R.drawable.banner_off).into(user_img);
 
-        comments_content.setText("一组超棒的按摩指南，累了、睡前都可以做，做完非常舒服~~ get");
+            user_name.setText(commentBean.getSecondname());
 
-        SystemUtil.textMagicTool(context, commtens_about, context.getString(R.string.comments_additional), "评论内容",
-                R.dimen.dp14, R.dimen.dp12, R.color.blue_bar, R.color.black_overlay, "\n");
+            shiny_view.setStarMark(Float.valueOf(commentBean.getScore()));
 
-        recycler_view_layout.setVisibility(View.VISIBLE);
+            creat_time.setText(commentBean.getCreatedate());
 
-        initRecyclerView(recycler_view, Arrays.asList(context.getResources().getStringArray(R.array.photo_list)));
+            comments_content.setText(commentBean.getRemark());
 
+            if (commentBean.getRemark_again().isEmpty()) {
+                commtens_about.setVisibility(View.GONE);
+            } else {
+                commtens_about.setVisibility(View.VISIBLE);
+                SystemUtil.textMagicTool(context, commtens_about, context.getString(R.string.comments_additional), commentBean.getRemark_again(),
+                        R.dimen.dp14, R.dimen.dp12, R.color.blue_bar, R.color.black_overlay, "\n");
+            }
 
-        initCheckClickListener(user_img, position);
-        initCheckClickListener(holder.itemView, position);
+            List<CommentsNetBean.ResultBean.CommentBean.ImgBean> imgBeanList = commentBean.getImg();
+            if (imgBeanList.size() > 0) {
+                recycler_view_layout.setVisibility(View.VISIBLE);
+                List<String> photoList = new ArrayList<>();
+                for (CommentsNetBean.ResultBean.CommentBean.ImgBean imgBean : imgBeanList) {
+                    photoList.add(imgBean.getImgpath());
+                }
+                initRecyclerView(recycler_view, photoList, position);
+            } else {
+                recycler_view_layout.setVisibility(View.GONE);
+            }
 
-        ViewBuilder.ChangeLinearLayoutViewMagin(context, comments_content, 50, 5, 0, 0);
-        ViewBuilder.ChangeLinearLayoutViewMagin(context, recycler_view_layout, 50, 10, 0, 0);
-        ViewBuilder.ChangeLinearLayoutViewMagin(context, commtens_about, 65, 0, 0, 10);
+            initCheckClickListener(user_img, position);
+            initCheckClickListener(holder.itemView, position);
 
-        if (status && visibilityCount == 1)
-            line.setVisibility(View.GONE);
+            ViewBuilder.ChangeLinearLayoutViewMagin(context, comments_content, 50, 5, 0, 0);
+            ViewBuilder.ChangeLinearLayoutViewMagin(context, recycler_view_layout, 50, 10, 0, 0);
+            ViewBuilder.ChangeLinearLayoutViewMagin(context, commtens_about, 65, 10, 15, 10);
+
+            if (status || position == list.size() - 1 || commentBean.getRemark_again().isEmpty()) {
+                line.setVisibility(View.GONE);
+            } else {
+                line.setVisibility(View.VISIBLE);
+            }
+        }
+
     }
 
     //类图模式(单张、两张、更多)
-    private void initRecyclerView(RecyclerView recycler_view, List<String> imgList) {
+    private void initRecyclerView(RecyclerView recycler_view, List<String> imgList, int parentIndex) {
         int spanCount = 0;
         if (imgList.size() == 1) {
             spanCount = 1;
@@ -104,7 +172,7 @@ public class ControllerCommentsAdapter extends RecyclerView.Adapter<MyViewHolder
             spanCount = 3;
         }
         recycler_view.setLayoutManager(ViewBuilder.getFullyGridLayoutManager(context, false, spanCount));
-        RecyclerChildAdapter recyclerChildAdapter = new RecyclerChildAdapter(context, imgList, true);
+        RecyclerChildAdapter recyclerChildAdapter = new RecyclerChildAdapter(context, imgList, true, parentIndex);
         recycler_view.setAdapter(recyclerChildAdapter);
         recyclerChildAdapter.notifyDataSetChanged();
         recyclerChildAdapter.setChildClickListener(this);
@@ -127,20 +195,26 @@ public class ControllerCommentsAdapter extends RecyclerView.Adapter<MyViewHolder
         if (status) {
             size = visibilityCount;
         } else {
-            size = 6;
+            size = list.size() + 1;
         }
-        return list == null ? size : list.size();
+        return list.size() == 0 ? 0 : size;
+    }
+
+    public void setLoadState(int loadState) {
+        this.loadState = loadState;
+        if (!status)
+            notifyItemChanged(list.size());
     }
 
     @Override
-    public void onChildClickListener(int position, String object) {
+    public void onChildClickListener(int position, int parentIndex) {
         if (commentsParentClickListener != null)
-            commentsParentClickListener.onCommentsChildClickListener(position, object);
+            commentsParentClickListener.onCommentsChildClickListener(position, parentIndex);
     }
 
 
     public interface CommentsParentClickListener {
-        void onCommentsChildClickListener(int position, String object);
+        void onCommentsChildClickListener(int position, int parentIndex);
 
         void onCommentsCheckClickListener(int position, int id);
     }
@@ -150,6 +224,5 @@ public class ControllerCommentsAdapter extends RecyclerView.Adapter<MyViewHolder
     public void setCommentsParentClickListener(CommentsParentClickListener commentsParentClickListener) {
         this.commentsParentClickListener = commentsParentClickListener;
     }
-
 
 }

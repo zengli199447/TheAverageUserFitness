@@ -15,13 +15,20 @@ import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.LoginInfoNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.ui.activity.component.BindPhoneActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.ModifyThePassWordActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.RegisteredAccountActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerLogin;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.utils.LogUtil;
+import com.example.administrator.sportsFitness.widget.CalendarBuilder;
 import com.example.administrator.sportsFitness.widget.UmComprehensiveBuilder;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
 
+import java.text.ParseException;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -32,15 +39,10 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class LoginActivity extends BaseActivity implements UmComprehensiveBuilder.onCompleteListener {
+public class LoginActivity extends BaseActivity implements UmComprehensiveBuilder.onCompleteListener, ControllerLogin.LoginAndRegistereNetWorkListener {
 
     @BindView(R.id.title_name)
     TextView title_name;
-    @BindView(R.id.layout_login_content)
-    RelativeLayout layout_login_content;
-    @BindView(R.id.layout_forget_pass_word)
-    LinearLayout layout_forget_pass_word;
-
     @BindView(R.id.edit_user_name)
     EditText edit_user_name;
     @BindView(R.id.edit_pass_word)
@@ -48,28 +50,20 @@ public class LoginActivity extends BaseActivity implements UmComprehensiveBuilde
     @BindView(R.id.password_check)
     CheckBox password_check;
 
-    @BindView(R.id.edit_first_pass_word)
-    EditText edit_first_pass_word;
-    @BindView(R.id.first_password_check)
-    CheckBox first_password_check;
-    @BindView(R.id.edit_commite_pass_word)
-    EditText edit_commite_pass_word;
-    @BindView(R.id.commite_password_check)
-    CheckBox commite_password_check;
-
-    @BindView(R.id.edit_you_phone)
-    EditText edit_you_phone;
-    @BindView(R.id.edit_verification_code)
-    EditText edit_verification_code;
-
-
-    private boolean returnStatus;
     private ControllerLogin controllerLogin;
     private UmComprehensiveBuilder umComprehensiveBuilder;
+    private DataClass dataClass;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
-
+        switch (commonevent.getCode()) {
+            case EventCode.ACTION_HOME:
+                ActionStart();
+                break;
+            case EventCode.BIND_SUCCESSFUL:
+                finish();
+                break;
+        }
     }
 
     @Override
@@ -86,6 +80,7 @@ public class LoginActivity extends BaseActivity implements UmComprehensiveBuilde
     protected void initClass() {
         controllerLogin = new ControllerLogin();
         umComprehensiveBuilder = new UmComprehensiveBuilder(this, toastUtil);
+        dataClass = new DataClass(dataManager);
     }
 
     @Override
@@ -100,40 +95,32 @@ public class LoginActivity extends BaseActivity implements UmComprehensiveBuilde
 
     @Override
     protected void initView() {
-        swichTexttitle(0);
+        title_name.setText(getString(R.string.login_));
+        edit_user_name.setText("15972121636");
+        edit_pass_word.setText("123456");
     }
 
     @Override
     protected void initListener() {
         umComprehensiveBuilder.setOnCompleteListener(this);
+        controllerLogin.setLoginAndRegistereNetWorkListener(this);
     }
 
-    @OnClick({R.id.img_btn_black, R.id.registered, R.id.forgot_password, R.id.password_check,
-            R.id.first_password_check, R.id.commite_password_check, R.id.login, R.id.qq, R.id.wechat})
+    @OnClick({R.id.img_btn_black, R.id.registered, R.id.forgot_password, R.id.password_check, R.id.login, R.id.qq, R.id.wechat})
     @Override
     protected void onClickAble(View view) {
         switch (view.getId()) {
             case R.id.img_btn_black:
-                if (!returnStatus) {
-                    finish();
-                } else {
-                    swichTexttitle(0);
-                }
+                finish();
                 break;
             case R.id.registered:
                 startActivity(new Intent(this, RegisteredAccountActivity.class));
                 break;
             case R.id.forgot_password:
-                swichTexttitle(1);
+                startActivity(new Intent(this, ModifyThePassWordActivity.class));
                 break;
             case R.id.password_check:
                 ViewBuilder.seeChecklListener(password_check, edit_pass_word);
-                break;
-            case R.id.first_password_check:
-                ViewBuilder.seeChecklListener(first_password_check, edit_first_pass_word);
-                break;
-            case R.id.commite_password_check:
-                ViewBuilder.seeChecklListener(commite_password_check, edit_commite_pass_word);
                 break;
             case R.id.login:
                 if (!edit_user_name.getText().toString().isEmpty() && !edit_pass_word.getText().toString().isEmpty()) {
@@ -154,43 +141,25 @@ public class LoginActivity extends BaseActivity implements UmComprehensiveBuilde
         }
     }
 
-    private void swichTexttitle(int type) {
-        switch (type) {
-            case 0:
-                title_name.setText(getString(R.string.login_));
-                layout_login_content.setVisibility(View.VISIBLE);
-                layout_forget_pass_word.setVisibility(View.GONE);
-                returnStatus = false;
-                break;
-            case 1:
-                title_name.setText(getString(R.string.modify_the_password));
-                layout_login_content.setVisibility(View.GONE);
-                layout_forget_pass_word.setVisibility(View.VISIBLE);
-                returnStatus = true;
-                break;
-        }
-    }
-
     @Override
     public void comlete(Map<String, String> data) {
         String qq = "";
-        String qqName = "";
+        String Name = "";
         String wechatId = "";
-        String wechatName = "";
         String photo = "";
         switch (DataClass.LOGINTYPE) {
             case 2:
                 qq = data.get("openid");
-                qqName = data.get("screen_name");
+                Name = data.get("screen_name");
                 photo = data.get("profile_image_url");
                 break;
             case 3:
                 wechatId = data.get("unionid");
-                wechatName = data.get("screen_name");
+                Name = data.get("screen_name");
                 photo = data.get("profile_image_url");
                 break;
         }
-
+        controllerLogin.NetOtherLogin(qq, wechatId, Name, photo);
     }
 
     @Override
@@ -199,16 +168,41 @@ public class LoginActivity extends BaseActivity implements UmComprehensiveBuilde
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (returnStatus) {
-                swichTexttitle(0);
-            } else {
-                finish();
+    public void onRegistereAndLoginNetWorkListener(LoginInfoNetBean.ResultBean result) {
+        if (result.getPhone().isEmpty()) {
+            Intent intent = new Intent(this, BindPhoneActivity.class);
+            intent.putExtra("userId", result.getUserid());
+            startActivity(intent);
+        } else {
+            try {
+                DataClass.UNAME = result.getSecondname();
+                DataClass.USERID = result.getUserid();
+                DataClass.USERPHOTO = result.getPhoto();
+                DataClass.GENDER = result.getSex();
+                DataClass.PHONE = result.getPhone();
+                DataClass.AGE = result.getBrithday();
+                dataClass.initDBData();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                ActionStart();
             }
-            return true;
         }
-        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onVerificationCodeNetWorkListener(String verificationCode) {
+
+    }
+
+    @Override
+    public void onBindPhoneNetWorkListener() {
+
+    }
+
+    private void ActionStart() {
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 
 }

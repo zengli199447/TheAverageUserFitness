@@ -22,9 +22,9 @@ import java.util.List;
 public class GymInfomationAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     Context context;
-    List<Object> list;
+    List<String> list;
 
-    public GymInfomationAdapter(Context context, List<Object> list) {
+    public GymInfomationAdapter(Context context, List<String> list) {
         this.context = context;
         this.list = list;
     }
@@ -32,10 +32,12 @@ public class GymInfomationAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public int getItemViewType(int position) {
         int type = -1;
-        if (position != list.size()) {
-            type = 0;
-        } else {
+        if (position == list.size()) {
+            type = 2;
+        } else if (position == 0) {
             type = 1;
+        } else {
+            type = 0;
         }
         return type;
     }
@@ -49,6 +51,9 @@ public class GymInfomationAdapter extends RecyclerView.Adapter<MyViewHolder> {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym_infomation, parent, false);
                 break;
             case 1:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym_infomation, parent, false);
+                break;
+            case 2:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_footer, parent, false);
                 break;
         }
@@ -58,12 +63,14 @@ public class GymInfomationAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         TextView people_name = holder.itemView.findViewById(R.id.people_name);
-        TextView people_phone = holder.itemView.findViewById(R.id.people_phone);
+        TextView people_index = holder.itemView.findViewById(R.id.people_index);
         TextView add_friend = holder.itemView.findViewById(R.id.add_friend);
-        if (people_name != null) {
-            people_name.setText(DataClass.UNAME);
-            people_phone.setText("10086");
+
+        if (people_index != null) {
+            people_index.setText(new StringBuffer().append(context.getString(R.string.student)).append(": ").append(position + 1).toString());
+            people_name.setText(list.get(position));
         }
+
         if (add_friend != null)
             add_friend.setOnClickListener(new View.OnClickListener() {
                 @Override

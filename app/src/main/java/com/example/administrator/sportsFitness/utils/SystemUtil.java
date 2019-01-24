@@ -181,7 +181,7 @@ public class SystemUtil {
         return pwdLegal;
     }
 
-    public static boolean isPhotoNumberLegal(String password) {
+    public static boolean isPhoneNumberLegal(String password) {
         boolean pwdLegal = password.matches("^[0-9a-zA-Z_]+$");
         if (!pwdLegal || password.length() < 11 || password.length() > 11) {
             pwdLegal = false;
@@ -673,6 +673,27 @@ public class SystemUtil {
         return distanceContent;
     }
 
+    public static String JudgeCount(int count) {
+        String countString;
+        if (count > 999) {
+            countString = new StringBuffer().append(" ").append(999).append("+").toString();
+        } else {
+            countString = new StringBuffer().append(" ").append(count).toString();
+        }
+        return countString;
+    }
+
+    public static String JudgeFormatCount(int count) {
+        String countString;
+        if (count > 9999) {
+            String s = SystemUtil.doubleFormat(Double.valueOf(count) / 1000, "#.0");
+            countString = new StringBuffer().append(s).append("万").toString();
+        } else {
+            countString = String.valueOf(count);
+        }
+        return countString;
+    }
+
     public static String JudgeNull(String content) {
         String theReturnValue;
         if (content == null) {
@@ -683,15 +704,7 @@ public class SystemUtil {
         return theReturnValue;
     }
 
-    public static String JudgeCount(int count) {
-        String countString;
-        if (count > 999) {
-            countString = new StringBuffer().append(" ").append(999).append("+").toString();
-        } else {
-            countString = new StringBuffer().append(" ").append(count).toString();
-        }
-        return countString;
-    }
+
 
     /**
      * 返回当前程序版本名

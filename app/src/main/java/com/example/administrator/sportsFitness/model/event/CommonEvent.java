@@ -2,6 +2,7 @@ package com.example.administrator.sportsFitness.model.event;
 
 
 import com.example.administrator.sportsFitness.model.bean.BusObject;
+import com.example.administrator.sportsFitness.model.bean.BusSelectDicersifiedBean;
 
 /**
  * Created by Administrator on 2018/1/5.
@@ -14,10 +15,17 @@ public class CommonEvent {
     private int temp_value;
     private boolean temp_boolean;
 
-    private BusObject busObject;
+    private Object busObject;
+
+    private BusSelectDicersifiedBean busSelectDicersifiedBean;
 
     public CommonEvent(int code) {
         this.code = code;
+    }
+
+    public CommonEvent(int code, BusSelectDicersifiedBean busSelectDicersifiedBean) {
+        this.code = code;
+        this.busSelectDicersifiedBean = busSelectDicersifiedBean;
     }
 
     public CommonEvent(int code, String temp_str) {
@@ -48,9 +56,17 @@ public class CommonEvent {
         this.temp_boolean = temp_boolean;
     }
 
-    public CommonEvent(int code, BusObject busObject) {
+    public CommonEvent(int code, Object busObject) {
         this.code = code;
         this.busObject = busObject;
+    }
+
+    public BusSelectDicersifiedBean getBusSelectDicersifiedBean() {
+        return busSelectDicersifiedBean;
+    }
+
+    public void setBusSelectDicersifiedBean(BusSelectDicersifiedBean busSelectDicersifiedBean) {
+        this.busSelectDicersifiedBean = busSelectDicersifiedBean;
     }
 
     public int getCode() {
@@ -85,11 +101,11 @@ public class CommonEvent {
         this.temp_boolean = temp_boolean;
     }
 
-    public BusObject getBusObject() {
+    public Object getBusObject() {
         return busObject;
     }
 
-    public void setBusObject(BusObject busObject) {
+    public void setBusObject(Object busObject) {
         this.busObject = busObject;
     }
 

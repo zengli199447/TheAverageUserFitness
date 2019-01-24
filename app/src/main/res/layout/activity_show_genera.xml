@@ -12,5 +12,6 @@
 
     <include layout="@layout/layout_add_frieds"/>
 
+    <include layout="@layout/layout_account_management"/>
 
 </LinearLayout>

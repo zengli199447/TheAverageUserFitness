@@ -14,9 +14,11 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.global.MyApplication;
 import com.example.administrator.sportsFitness.model.db.entity.AppDBInfo;
 import com.example.administrator.sportsFitness.model.db.entity.LoginUserInfo;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.utils.LocationUtils;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 
 import java.util.ArrayList;
@@ -76,7 +78,13 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initClass() {
-        Glide.with(this).load(R.drawable.splash).error(R.drawable.banner_off).into(splash_img);
+        MyApplication.executorService.submit(new Runnable() {
+            @Override
+            public void run() {
+                LocationUtils.getCNBylocation(WelcomeActivity.this);
+            }
+        });
+        Glide.with(this).load(R.drawable.splash_bg).error(R.drawable.banner_off).into(splash_img);
         dataClass = new DataClass(dataManager);
         if (dataManager.queryLoginUserInfo(DataClass.STANDARD_USER) != null) {
             LoginUserInfo admin = dataManager.queryLoginUserInfo(DataClass.STANDARD_USER);

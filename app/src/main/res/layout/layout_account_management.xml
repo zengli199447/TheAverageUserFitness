@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_account_management"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:id="@+id/modify_the_password"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp15"
+            android:gravity="center"
+            android:text="@string/modify_the_password"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp13" />
+
+        <ImageView
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp50"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/dp20"
+            android:src="@drawable/right_icon" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/login_out"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="@string/login_out"
+        android:textColor="@color/black_overlay"
+        android:textSize="@dimen/dp14" />
+
+
+</LinearLayout>

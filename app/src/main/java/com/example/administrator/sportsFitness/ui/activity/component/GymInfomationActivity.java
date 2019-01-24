@@ -3,6 +3,7 @@ package com.example.administrator.sportsFitness.ui.activity.component;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
@@ -14,12 +15,20 @@ import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.InfoGymNetBean;
+import com.example.administrator.sportsFitness.model.bean.PayObject;
+import com.example.administrator.sportsFitness.model.bean.TopUpNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.rxtools.RxBus;
 import com.example.administrator.sportsFitness.ui.controller.ControllerGymInfomation;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.CustomPayPopupWindow;
 import com.example.administrator.sportsFitness.ui.view.SlideRecyclerView;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,7 +38,8 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class GymInfomationActivity extends BaseActivity implements CustomPayPopupWindow.OnItemSelectClickListener, CustomPayPopupWindow.OnDismissListener {
+public class GymInfomationActivity extends BaseActivity implements CustomPayPopupWindow.OnItemSelectClickListener, CustomPayPopupWindow.OnDismissListener,
+        ControllerGymInfomation.OnRefreshCountListener {
 
     @BindView(R.id.title_name)
     TextView title_name;
@@ -47,11 +57,23 @@ public class GymInfomationActivity extends BaseActivity implements CustomPayPopu
     TextView total_content;
     private ControllerGymInfomation controllerGymInfomation;
     private CustomPayPopupWindow customPayPopupWindow;
+    private Bundle gymInfo;
+    private int price = 1;
+    private String allPrice;
+    TopUpNetBean.ResultBean result;
+    private ShowDialog instance;
 
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
-
+        switch (commonevent.getCode()) {
+            case EventCode.GYM_CONVENTION:
+                instance.showHelpfulHintsDialog(this, getString(R.string.convention_successful), EventCode.GYM_CONVENTION_SUCCESSFUL);
+                break;
+            case EventCode.GYM_CONVENTION_SUCCESSFUL:
+                finish();
+                break;
+        }
     }
 
     @Override
@@ -66,9 +88,10 @@ public class GymInfomationActivity extends BaseActivity implements CustomPayPopu
 
     @Override
     protected void initClass() {
-        controllerGymInfomation = new ControllerGymInfomation(recycler_view);
+        gymInfo = getIntent().getBundleExtra("GYMInfo");
+        controllerGymInfomation = new ControllerGymInfomation(recycler_view, this.gymInfo);
         customPayPopupWindow = new CustomPayPopupWindow(this);
-
+        instance = ShowDialog.getInstance();
     }
 
     @Override
@@ -78,11 +101,13 @@ public class GymInfomationActivity extends BaseActivity implements CustomPayPopu
 
     @Override
     protected void initData() {
+        price = Integer.valueOf(gymInfo.getString("Price"));
 
     }
 
     @Override
     protected void initView() {
+        title_name.setText(getString(R.string.convention_gym));
         recycler_view.setFocusable(false);
         refreshView();
     }
@@ -91,18 +116,17 @@ public class GymInfomationActivity extends BaseActivity implements CustomPayPopu
     protected void initListener() {
         customPayPopupWindow.setOnSelectItemClickListener(this);
         customPayPopupWindow.setOnDismissListener(this);
+        controllerGymInfomation.setOnRefreshCountListener(this);
     }
 
     @SuppressLint("WrongConstant")
     @OnClick({R.id.pay_order, R.id.img_btn_black})
     @Override
     protected void onClickAble(View view) {
-        Intent intent = new Intent(this, SelectDiversifiedFormActivity.class);
         switch (view.getId()) {
             case R.id.pay_order:
-                customPayPopupWindow.refreshPageView(20, 0);
-                customPayPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                SystemUtil.windowToDark(this);
+                controllerGymInfomation.NetConvention();
+
                 break;
             case R.id.img_btn_black:
                 finish();
@@ -112,28 +136,50 @@ public class GymInfomationActivity extends BaseActivity implements CustomPayPopu
 
     private void refreshView() {
 
-        SystemUtil.textMagicTool(this, gym_content, "HKOCH", "武汉市洪山区光谷创业街",
+        SystemUtil.textMagicTool(this, gym_content, gymInfo.getString("Shopname"), gymInfo.getString("Fulladdress"),
                 R.dimen.dp14, R.dimen.dp13, R.color.black, R.color.black_overlay, "\n");
 
-        SystemUtil.textMagicTool(this, standard, "20", "元/次",
+        SystemUtil.textMagicTool(this, standard, gymInfo.getString("Price"), getString(R.string.price_prompt),
                 R.dimen.dp15, R.dimen.dp10, R.color.red_text, R.color.red_text, "");
 
-        Glide.with(this).load(SystemUtil.JudgeUrl(DataClass.USERPHOTO)).error(R.drawable.banner_off).into(gym_img);
+        Glide.with(this).load(SystemUtil.JudgeUrl(gymInfo.getString("Photo"))).error(R.drawable.banner_off).into(gym_img);
 
-        SystemUtil.textMagicTool(this, total_content, "20", "元",
-                R.dimen.dp15, R.dimen.dp13, R.color.red_text, R.color.black_overlay, "");
+        refreshStatistical(1);
 
-        people_count.setText("");
+        people_count.setText("1");
     }
+
 
     @Override
     public void setOnItemClick(int index) {
-        toastUtil.showToast("index : " + index);
+        PayObject payObject = new PayObject(index, EventCode.GYM_CONVENTION, result.getOrdercode());
+        RxBus.getDefault().post(new CommonEvent(EventCode.PAY_ACTION, payObject));
     }
 
     @Override
     public void onDismiss() {
         SystemUtil.windowToLight(this);
+    }
+
+
+    @Override
+    public void onRefreshCountListener(int count) {
+        refreshStatistical(count);
+    }
+
+    @Override
+    public void onPayActionListener(TopUpNetBean.ResultBean result) {
+        this.result = result;
+        customPayPopupWindow.refreshPageView(Double.valueOf(allPrice), Double.valueOf(DataClass.MONEY));
+        customPayPopupWindow.showAtLocation(recycler_view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        SystemUtil.windowToDark(this);
+    }
+
+    private void refreshStatistical(int count) {
+        people_count.setText(String.valueOf(count));
+        allPrice = String.valueOf(count * price);
+        SystemUtil.textMagicTool(this, total_content, allPrice, getString(R.string.price_unit),
+                R.dimen.dp15, R.dimen.dp13, R.color.red_text, R.color.black_overlay, "");
     }
 
 }

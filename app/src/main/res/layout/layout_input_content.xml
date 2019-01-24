@@ -20,7 +20,7 @@
         android:layout_marginTop="@dimen/dp10"
         android:background="@drawable/corners_hollow_edit_reply">
 
-        <com.example.administrator.sportsFitness.ui.view.ClearEditTextView
+        <EditText
             android:id="@+id/input_reply"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,8 +1,10 @@
 package com.example.administrator.sportsFitness.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 
+import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
@@ -11,6 +13,7 @@ import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumFile;
+import com.yanzhenjie.album.api.widget.Widget;
 
 import java.util.ArrayList;
 
@@ -32,7 +35,7 @@ public class AlbumBuilder {
      * 单选
      */
     public void ImageSingleSelection() {
-        Album.image(context).singleChoice().camera(true).columnCount(3).onResult(new Action<ArrayList<AlbumFile>>() {
+        Album.image(context).singleChoice().camera(true).columnCount(3).widget(initWidget(context)).onResult(new Action<ArrayList<AlbumFile>>() {
             @Override
             public void onAction(@NonNull ArrayList<AlbumFile> result) {
                 String theAssignment = result.get(0).getPath();
@@ -55,7 +58,7 @@ public class AlbumBuilder {
      * @param count 数量限制
      */
     public void ImageSelection(int count) {
-        Album.image(context).multipleChoice().camera(true).columnCount(3).selectCount(count).checkedList(DataClass.AlbumFileList)
+        Album.image(context).multipleChoice().camera(true).columnCount(3).selectCount(count).widget(initWidget(context)).checkedList(DataClass.AlbumFileList)
                 .onResult(new Action<ArrayList<AlbumFile>>() {
                     @Override
                     public void onAction(@NonNull ArrayList<AlbumFile> result) {
@@ -99,6 +102,20 @@ public class AlbumBuilder {
                     }
                 })
                 .start();
+    }
+
+    //Album样式
+    private Widget initWidget(Context context) {
+        Widget widget = Widget.newDarkBuilder(context)
+                .title("媒体浏览")
+                .statusBarColor(context.getResources().getColor(R.color.blue_bar))
+                .toolBarColor(context.getResources().getColor(R.color.blue_bar))
+                .navigationBarColor(Color.WHITE)
+                .mediaItemCheckSelector(Color.WHITE, Color.WHITE)
+                .bucketItemCheckSelector(Color.WHITE, Color.WHITE)
+                .buttonStyle(Widget.ButtonStyle.newDarkBuilder(context).setButtonSelector(Color.WHITE, Color.WHITE).build()).build();
+
+        return widget;
     }
 
 }

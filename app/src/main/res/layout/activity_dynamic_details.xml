@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_"
     android:orientation="vertical">
 
     <include layout="@layout/layout_title_bar" />
@@ -10,6 +11,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp50"
         android:layout_below="@+id/layout_title_bar">
 
         <LinearLayout
@@ -26,9 +28,10 @@
 
             <TextView
                 android:id="@+id/all_comments"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/dp40"
-                android:gravity="center"
+                android:background="@color/white"
+                android:gravity="center_vertical"
                 android:paddingLeft="@dimen/dp15"
                 android:paddingRight="@dimen/dp15"
                 android:text="@string/all_comments"
@@ -38,15 +41,14 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_comments"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp15"
-                android:layout_marginRight="@dimen/dp15"
-                android:minHeight="@dimen/dp300" />
+                android:layout_height="wrap_content" />
+
+            <include layout="@layout/item_footer_view" />
 
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
-    <include layout="@layout/layout_input_content"/>
+    <include layout="@layout/layout_input_content" />
 
 </RelativeLayout>

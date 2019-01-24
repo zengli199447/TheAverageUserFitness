@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_title_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_img_tag" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_marginRight="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp10">
+
+                <TextView
+                    android:id="@+id/title_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:lineSpacingExtra="@dimen/dp5"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp15" />
+
+                <TextView
+                    android:id="@+id/standard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="￥159"
+                    android:textColor="@color/red_text"
+                    android:textSize="@dimen/dp14" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp10"
+                android:background="@color/gray_" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_marginRight="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp10">
+
+                <com.example.administrator.sportsFitness.ui.view.CircleImageView
+                    android:id="@+id/user_img"
+                    android:layout_width="@dimen/dp50"
+                    android:layout_height="@dimen/dp50"
+                    android:src="@drawable/placeholder" />
+
+                <TextView
+                    android:id="@+id/user_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_toRightOf="@+id/user_img"
+                    android:lineSpacingExtra="@dimen/dp5"
+                    android:minHeight="@dimen/dp50"
+                    android:text="用户信息"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp14" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp10"
+                android:background="@color/gray_" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_marginRight="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp10"
+                android:drawablePadding="@dimen/dp10"
+                android:text="@string/course_arrange"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp14" />
+
+            <include layout="@layout/layout_course_arrange" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@color/gray_" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_marginRight="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp10"
+                android:drawablePadding="@dimen/dp10"
+                android:text="@string/course_description"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_light" />
+
+            <TextView
+                android:id="@+id/course_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_toRightOf="@+id/user_img"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:minHeight="@dimen/dp15"
+                android:text="说明内容"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp13" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@color/gray_" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_marginRight="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp10"
+                android:drawablePadding="@dimen/dp10"
+                android:text="@string/course_instructions"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_light" />
+
+            <TextView
+                android:id="@+id/course_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_toRightOf="@+id/user_img"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:minHeight="@dimen/dp15"
+                android:text="课程须知"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp13" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@color/gray_" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp5"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_marginRight="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp15">
+
+                <TextView
+                    android:id="@+id/comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/comments"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="@dimen/dp14" />
+
+                <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                    android:id="@+id/comments_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dp5"
+                    android:drawableRight="@drawable/right_icon"
+                    android:text="@string/more"
+                    android:textColor="@color/gray_light_text"
+                    android:textSize="@dimen/dp12" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:minHeight="@dimen/dp15"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <RelativeLayout
+        android:id="@+id/controller_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="-30dp"
+        android:layout_marginRight="-30dp"
+        android:background="@drawable/corners_immersed_in_blue">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp30"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/controller_life"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp10"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/online_information"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp13" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/controller_right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp10"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/appointment_now"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp13" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_light" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

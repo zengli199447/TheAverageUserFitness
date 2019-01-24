@@ -5,16 +5,24 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseFragment;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.HomePageNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.rxtools.RxBus;
 import com.example.administrator.sportsFitness.ui.activity.component.CityScreeningActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerArrange;
+import com.example.administrator.sportsFitness.widget.QrBuilder;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,12 +32,14 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements ControllerArrange.OnHomePageListener{
 
     @BindView(R.id.banner_layout)
     RelativeLayout banner_layout;
     @BindView(R.id.recycler_view)
     RecyclerView recycler_view;
+    @BindView(R.id.slogan)
+    TextView slogan;
 
     private ControllerArrange controllerArrange;
 
@@ -71,7 +81,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initListener() {
-
+        controllerArrange.setOnHomePageListener(this);
 
     }
 
@@ -83,7 +93,7 @@ public class HomeFragment extends BaseFragment {
                 getActivity().startActivity(new Intent(getActivity(), CityScreeningActivity.class));
                 break;
             case R.id.qr_code:
-
+                QrBuilder.Integrator(getActivity());
                 break;
             case R.id.search_layout:
                 RxBus.getDefault().post(new CommonEvent(EventCode.OPEN_SEARCH, true));
@@ -91,5 +101,10 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void OnHomePageListener(HomePageNetBean.ResultBean result) {
+        HomePageNetBean.ResultBean.NoticeBean notice = result.getNotice();
+        slogan.setText(notice.getContent());
+    }
 
 }

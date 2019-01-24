@@ -11,7 +11,7 @@
         android:layout_marginRight="@dimen/dp15">
 
         <TextView
-            android:id="@+id/people_name"
+            android:id="@+id/people_index"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -20,7 +20,7 @@
             android:textSize="@dimen/dp13" />
 
         <TextView
-            android:id="@+id/people_phone"
+            android:id="@+id/people_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

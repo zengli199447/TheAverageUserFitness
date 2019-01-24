@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
+import com.example.administrator.sportsFitness.model.bean.FriendsCircleSelectBean;
 import com.example.administrator.sportsFitness.ui.holder.MyViewHolder;
 
 import java.util.List;
@@ -21,9 +22,9 @@ import java.util.List;
 public class FriendsCircleSelectAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     Context context;
-    List<String> list;
+    List<FriendsCircleSelectBean> list;
 
-    public FriendsCircleSelectAdapter(Context context, List<String> list) {
+    public FriendsCircleSelectAdapter(Context context, List<FriendsCircleSelectBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -39,8 +40,15 @@ public class FriendsCircleSelectAdapter extends RecyclerView.Adapter<MyViewHolde
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         TextView content = holder.itemView.findViewById(R.id.content);
         View line = holder.itemView.findViewById(R.id.line);
+        final FriendsCircleSelectBean friendsCircleSelectBean = list.get(position);
+        content.setText(friendsCircleSelectBean.getTypeName());
 
-        content.setText(list.get(position));
+        if (friendsCircleSelectBean.isStatus()) {
+            content.setTextColor(context.getResources().getColor(R.color.blue_bar));
+        } else {
+            content.setTextColor(context.getResources().getColor(R.color.black_overlay));
+        }
+
         if (position == list.size() - 1) {
             line.setVisibility(View.GONE);
         } else {
@@ -51,7 +59,7 @@ public class FriendsCircleSelectAdapter extends RecyclerView.Adapter<MyViewHolde
             @Override
             public void onClick(View v) {
                 if (friendsCircleSelectListener != null)
-                    friendsCircleSelectListener.onFriendsCircleSelectListener(list.get(position));
+                    friendsCircleSelectListener.onFriendsCircleSelectListener(friendsCircleSelectBean.getTypeName(), position);
             }
         });
 
@@ -63,7 +71,7 @@ public class FriendsCircleSelectAdapter extends RecyclerView.Adapter<MyViewHolde
     }
 
     public interface FriendsCircleSelectListener {
-        void onFriendsCircleSelectListener(String content);
+        void onFriendsCircleSelectListener(String content, int position);
     }
 
     private FriendsCircleSelectListener friendsCircleSelectListener;

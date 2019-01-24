@@ -30,6 +30,7 @@
     <integer name="anim_duration_medium">300</integer>
     <integer name="anim_duration_long">400</integer>
 
+    <integer name="title_bar_margin_min">20</integer>
     <integer name="title_bar_margin">25</integer>
     <integer name="title_bar_margin_max">45</integer>
 
@@ -37,5 +38,7 @@
 
     <integer name="tablayout_factor">2</integer>
     <integer name="tablayout_animation_duration">300</integer>
+
+    <integer name="scan_time_out">15000</integer>
 
 </resources>

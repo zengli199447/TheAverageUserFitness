@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.model.bean.CategoryNetBean;
+import com.example.administrator.sportsFitness.model.bean.GymTypeNetBean;
 import com.example.administrator.sportsFitness.ui.holder.MyViewHolder;
 
 import java.util.List;
@@ -22,9 +23,9 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     Context context;
-    List<CategoryNetBean> list;
+    List<GymTypeNetBean.ResultBean.ShopclassBean> list;
 
-    public CategoryAdapter(Context context, List<CategoryNetBean> list) {
+    public CategoryAdapter(Context context, List<GymTypeNetBean.ResultBean.ShopclassBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -38,10 +39,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        CategoryNetBean categoryNetBean = list.get(position);
+        GymTypeNetBean.ResultBean.ShopclassBean shopclassBean = list.get(position);
         View tag_life = holder.itemView.findViewById(R.id.tag_life);
         TextView category = holder.itemView.findViewById(R.id.category);
-        if (categoryNetBean.isSelectStatus()) {
+        if (shopclassBean.isSelectStatus()) {
             tag_life.setVisibility(View.VISIBLE);
             category.setBackground(context.getResources().getDrawable(R.drawable.white));
             category.setTextColor(context.getResources().getColor(R.color.blue_bar));
@@ -50,7 +51,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
             category.setBackground(context.getResources().getDrawable(R.drawable.gray_light));
             category.setTextColor(context.getResources().getColor(R.color.black_overlay));
         }
-        category.setText(categoryNetBean.getType());
+        category.setText(shopclassBean.getShopclassname());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,5 +77,4 @@ public class CategoryAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public void setCategroyItemClickListener(CategroyItemClickListener categroyItemClickListener) {
         this.categroyItemClickListener = categroyItemClickListener;
     }
-
 }

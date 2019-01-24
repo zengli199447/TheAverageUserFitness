@@ -44,8 +44,17 @@
                 android:layout_centerVertical="true"
                 android:padding="@dimen/dp8"
                 android:src="@drawable/more_icon"
-                android:textColor="@color/gray_light_text"
-                android:textSize="@dimen/dp13" />
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/clear_dynamic"
+                android:layout_width="@dimen/dp30"
+                android:layout_height="@dimen/dp30"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp8"
+                android:src="@drawable/basket_icon"
+                android:visibility="gone" />
 
         </RelativeLayout>
 

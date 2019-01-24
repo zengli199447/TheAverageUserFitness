@@ -122,6 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp10" />
 
+            <include layout="@layout/item_footer_view" />
 
         </LinearLayout>
 

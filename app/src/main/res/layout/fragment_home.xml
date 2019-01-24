@@ -23,6 +23,7 @@
                 android:layout_height="@dimen/dp200" />
 
             <com.example.administrator.sportsFitness.ui.view.ImmersedTextView
+                android:id="@+id/slogan"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp40"
                 android:layout_marginLeft="@dimen/dp10"

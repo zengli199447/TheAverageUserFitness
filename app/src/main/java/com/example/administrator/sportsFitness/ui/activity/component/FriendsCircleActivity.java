@@ -1,16 +1,19 @@
 package com.example.administrator.sportsFitness.ui.activity.component;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
+import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.ui.adapter.TabPageIndicatorAdapter;
 import com.example.administrator.sportsFitness.ui.fragment.im.FriendsCircleRelatedFragment;
@@ -33,6 +36,8 @@ public class FriendsCircleActivity extends BaseActivity implements TabLayout.OnT
 
     @BindView(R.id.title_name)
     TextView title_name;
+    @BindView(R.id.title_about_img)
+    ImageView title_about_img;
     @BindView(R.id.tab_layout)
     TabLayout tab_layout;
     @BindView(R.id.view_pager)
@@ -44,6 +49,7 @@ public class FriendsCircleActivity extends BaseActivity implements TabLayout.OnT
     private TabPageIndicatorAdapter tabPageIndicatorAdapter;
     private List<String> titleList = new ArrayList<>();
     private int[] ids = {R.id.life_radio_button, R.id.center_radio_button, R.id.right_radio_button};
+    private int flags = 0;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
@@ -62,7 +68,7 @@ public class FriendsCircleActivity extends BaseActivity implements TabLayout.OnT
 
     @Override
     protected void initClass() {
-        tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getSupportFragmentManager(), titleList, mFragments);
+        tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getSupportFragmentManager(), titleList, mFragments, false);
         view_pager.setAdapter(tabPageIndicatorAdapter);
         tab_layout.setupWithViewPager(view_pager);
 
@@ -70,12 +76,13 @@ public class FriendsCircleActivity extends BaseActivity implements TabLayout.OnT
 
     @Override
     protected void initData() {
-
+        flags = getIntent().getFlags();
     }
 
     @Override
     protected void initView() {
         title_name.setText(getText(R.string.friends_circle));
+        title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.message_icon));
         titleList.addAll(Arrays.asList(getResources().getStringArray(R.array.friends_circle_all_type)));
         for (int i = 0; i < titleList.size(); i++) {
             FriendsCircleRelatedFragment friendsCircleRelatedFragment = new FriendsCircleRelatedFragment();
@@ -88,6 +95,9 @@ public class FriendsCircleActivity extends BaseActivity implements TabLayout.OnT
         }
         ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin_max), getResources().getInteger(R.integer.title_bar_margin_max));
         tabPageIndicatorAdapter.notifyDataSetChanged();
+
+        view_pager.setCurrentItem(flags);
+        group_view.check(ids[flags]);
     }
 
     @Override
@@ -96,12 +106,18 @@ public class FriendsCircleActivity extends BaseActivity implements TabLayout.OnT
         tab_layout.addOnTabSelectedListener(this);
     }
 
-    @OnClick({R.id.img_btn_black})
+    @OnClick({R.id.img_btn_black, R.id.title_about_img})
     @Override
     protected void onClickAble(View view) {
         switch (view.getId()) {
             case R.id.img_btn_black:
                 finish();
+                break;
+            case R.id.title_about_img:
+                Intent webIntent = new Intent(this, WebConcentratedActivity.class);
+                webIntent.putExtra("link", new StringBuffer().append("do=friend&userid=").append(DataClass.USERID).toString());
+                webIntent.putExtra("titleName", getString(R.string.friends_apply_form));
+                startActivity(webIntent);
                 break;
         }
     }

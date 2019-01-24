@@ -18,6 +18,8 @@ import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.ui.activity.LoginActivity;
+import com.example.administrator.sportsFitness.ui.activity.WelcomeActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerShowGenera;
 import com.example.administrator.sportsFitness.ui.view.CustomSharePopupWindow;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
@@ -63,15 +65,27 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
     @BindView(R.id.add_friend_validation)
     EditText add_friend_validation;
 
+    @BindView(R.id.layout_account_management)
+    LinearLayout layout_account_management;
+    @BindView(R.id.modify_the_password)
+    RelativeLayout modify_the_password;
+    @BindView(R.id.login_out)
+    TextView login_out;
 
     private int flags;
     private CustomSharePopupWindow customSharePopupWindow;
     private ControllerShowGenera controllerShowGenera;
     private String addFriendsId;
+    private String addFriendsUserName;
+    private String addFriendsPhoto;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
-
+        switch (commonevent.getCode()) {
+            case EventCode.COMMITE_SUCCESSFUL:
+                finish();
+                break;
+        }
     }
 
     @Override
@@ -87,7 +101,6 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
     @Override
     protected void initClass() {
         flags = getIntent().getFlags();
-        addFriendsId = getIntent().getStringExtra("addFriendsId");
         controllerShowGenera = new ControllerShowGenera(flags);
         customSharePopupWindow = new CustomSharePopupWindow(this);
 
@@ -100,6 +113,9 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
 
     @Override
     protected void initData() {
+        addFriendsId = getIntent().getStringExtra("addFriendsId");
+        addFriendsUserName = getIntent().getStringExtra("addFriendsUserName");
+        addFriendsPhoto = getIntent().getStringExtra("addFriendsPhoto");
 
     }
 
@@ -117,17 +133,22 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
             case EventCode.MY_QR_CODE:
                 title_name.setText(getString(R.string.my_qr_code));
                 layout_qr_code.setVisibility(View.VISIBLE);
-                Glide.with(this).load(DataClass.USERPHOTO).error(R.drawable.banner_off).into(user_img);
+                Glide.with(this).load(SystemUtil.JudgeUrl(DataClass.USERPHOTO)).error(R.drawable.banner_off).into(user_img);
                 user_name.setText(DataClass.UNAME);
-                qr_code.setImageBitmap(QrBuilder.createQRCodeWithLogo("DataClass.USERID", 200, BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher)));
+                String code = new StringBuffer().append(getString(R.string.fitness)).append("-").append(DataClass.USERID).toString();
+                qr_code.setImageBitmap(QrBuilder.createQRCodeWithLogo(code, 200, BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher)));
                 break;
             case EventCode.ADD_VALIDATION:
                 title_name.setText(getString(R.string.apply_for_friend));
                 layout_add_friends.setVisibility(View.VISIBLE);
-                Glide.with(this).load(DataClass.USERPHOTO).error(R.drawable.banner_off).into(add_user_img);
-                add_user_name.setText(DataClass.UNAME);
+                Glide.with(this).load(SystemUtil.JudgeUrl(addFriendsPhoto)).error(R.drawable.banner_off).into(add_user_img);
+                add_user_name.setText(addFriendsUserName);
                 title_about_text.setText(getString(R.string.send));
                 title_about_text.setTextColor(getResources().getColor(R.color.blue_bar));
+                break;
+            case EventCode.ACCOUNT_MANAGEMENT:
+                title_name.setText(getString(R.string.account_management));
+                layout_account_management.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -139,7 +160,7 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
     }
 
     @SuppressLint("WrongConstant")
-    @OnClick({R.id.select_site, R.id.select_share, R.id.title_about_text})
+    @OnClick({R.id.select_site, R.id.select_share, R.id.title_about_text, R.id.modify_the_password, R.id.login_out, R.id.img_btn_black})
     @Override
     protected void onClickAble(View view) {
         switch (view.getId()) {
@@ -153,16 +174,25 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
             case R.id.title_about_text:
                 switch (flags) {
                     case EventCode.ADD_VALIDATION:
-
+                        controllerShowGenera.NetAddFriends(addFriendsId, add_friend_validation.getText().toString());
                         break;
                 }
+                break;
+            case R.id.modify_the_password:
+                startActivity(new Intent(ShowGeneraActivity.this, ModifyThePassWordActivity.class));
+                break;
+            case R.id.login_out:
+                startActivity(new Intent(ShowGeneraActivity.this, LoginActivity.class));
+                finish();
+                break;
+            case R.id.img_btn_black:
+                finish();
                 break;
         }
     }
 
     @Override
     public void setOnItemClick(int index) {
-        toastUtil.showToast("index : " + index);
         switch (index) {
             case 0:
 

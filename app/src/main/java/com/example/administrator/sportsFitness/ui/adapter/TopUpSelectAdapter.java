@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.model.bean.VipTopUpSelectNetBean;
+import com.example.administrator.sportsFitness.model.bean.WalletLogNetBean;
 import com.example.administrator.sportsFitness.ui.holder.MyViewHolder;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 
@@ -24,9 +25,9 @@ import java.util.List;
 public class TopUpSelectAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     Context context;
-    List<VipTopUpSelectNetBean> list;
+    List<WalletLogNetBean.ResultBean.MoneyinConfigBean> list;
 
-    public TopUpSelectAdapter(Context context, List<VipTopUpSelectNetBean> list) {
+    public TopUpSelectAdapter(Context context, List<WalletLogNetBean.ResultBean.MoneyinConfigBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -51,25 +52,25 @@ public class TopUpSelectAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     }
 
-    public void refreshView(MyViewHolder holder, VipTopUpSelectNetBean vipTopUpSelectNetBean) {
+    public void refreshView(MyViewHolder holder, WalletLogNetBean.ResultBean.MoneyinConfigBean moneyinConfigBean) {
         RelativeLayout bg_layout = holder.itemView.findViewById(R.id.bg_layout);
         TextView money = holder.itemView.findViewById(R.id.money);
         TextView preferential = holder.itemView.findViewById(R.id.preferential);
-        if (vipTopUpSelectNetBean.isSelectStatus()) {
+        if (moneyinConfigBean.isSelectStatus()) {
             bg_layout.setBackground(context.getResources().getDrawable(R.drawable.corners_immersed_square_blue));
             SystemUtil.textMagicToolTypeFace(context, money, context.getString(R.string.money),
-                    String.valueOf(vipTopUpSelectNetBean.getPrice()), R.dimen.dp10, R.dimen.dp15, R.color.white, R.color.white, "", false);
+                    String.valueOf(moneyinConfigBean.getMoney_in()), R.dimen.dp10, R.dimen.dp15, R.color.white, R.color.white, "", false);
 
             preferential.setTextColor(context.getResources().getColor(R.color.white));
-            preferential.setText(new StringBuffer().append(context.getString(R.string.giving)).append(vipTopUpSelectNetBean.getPreferential()).toString());
+            preferential.setText(new StringBuffer().append(context.getString(R.string.giving)).append(moneyinConfigBean.getMoney_gift()).toString());
 
         } else {
             bg_layout.setBackground(context.getResources().getDrawable(R.drawable.corners_hollow_bg_gray));
             SystemUtil.textMagicToolTypeFace(context, money, context.getString(R.string.money),
-                    String.valueOf(vipTopUpSelectNetBean.getPrice()), R.dimen.dp10, R.dimen.dp15, R.color.black, R.color.black, "", false);
+                    String.valueOf(moneyinConfigBean.getMoney_in()), R.dimen.dp10, R.dimen.dp15, R.color.black, R.color.black, "", false);
 
             preferential.setTextColor(context.getResources().getColor(R.color.red_text));
-            preferential.setText(new StringBuffer().append(context.getString(R.string.giving)).append(vipTopUpSelectNetBean.getPreferential()).toString());
+            preferential.setText(new StringBuffer().append(context.getString(R.string.giving)).append(moneyinConfigBean.getMoney_gift()).toString());
 
         }
     }

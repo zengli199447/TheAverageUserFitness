@@ -50,7 +50,7 @@ public class InitializeService extends IntentService {
         //媒体配置
         initAlbum();
         //异常捕获
-//        initCrashHandler();
+        initCrashHandler();
         //初始化网络变化监听服务
         initNetworkListenService();
         //X5内核配置

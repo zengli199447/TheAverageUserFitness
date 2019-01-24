@@ -30,6 +30,8 @@ public class FriendsCircleFragment extends BaseFragment {
     RecyclerView recycler_view;
     private ControllerFriendsCircle controllerFriendsCircle;
 
+    int type;
+    String userId;
 
     @Override
     protected void initInject() {
@@ -48,7 +50,7 @@ public class FriendsCircleFragment extends BaseFragment {
 
     @Override
     protected void initClass() {
-        controllerFriendsCircle = new ControllerFriendsCircle(swipe_layout, empty_layout, recycler_view);
+        controllerFriendsCircle = new ControllerFriendsCircle(swipe_layout, empty_layout, recycler_view ,type, userId);
     }
 
     @Override

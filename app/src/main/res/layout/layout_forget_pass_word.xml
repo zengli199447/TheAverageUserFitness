@@ -51,6 +51,7 @@
                 android:background="@color/gray_light" />
 
             <TextView
+                android:id="@+id/to_obtain_code"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
@@ -200,7 +201,7 @@
         android:layout_marginLeft="@dimen/dp60"
         android:layout_marginRight="@dimen/dp60"
         android:layout_marginTop="@dimen/dp30"
-        android:background="@drawable/corners_soild_layout_blue"
+        android:background="@drawable/corners_soild_20_layout_blue"
         android:gravity="center"
         android:text="@string/commite_modify"
         android:textSize="@dimen/dp16" />

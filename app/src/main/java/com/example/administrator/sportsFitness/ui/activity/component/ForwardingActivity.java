@@ -1,5 +1,6 @@
 package com.example.administrator.sportsFitness.ui.activity.component;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -7,9 +8,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
+import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.DynamicDetailsNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.ui.controller.ControllerForwarding;
+import com.example.administrator.sportsFitness.ui.dialog.ProgressDialog;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
+import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.StickyBoContentTextBuilder;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -19,7 +31,7 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class ForwardingActivity extends BaseActivity implements StickyBoContentTextBuilder.OnStickyBoContentTextClickListener {
+public class ForwardingActivity extends BaseActivity implements StickyBoContentTextBuilder.OnStickyBoContentTextClickListener, ControllerForwarding.OnDynamicDetailsListener {
 
     @BindView(R.id.title_name)
     TextView title_name;
@@ -34,10 +46,22 @@ public class ForwardingActivity extends BaseActivity implements StickyBoContentT
 
     private String forwardingId;
     private StickyBoContentTextBuilder stickyBoContentTextBuilder;
+    private ControllerForwarding controllerForwarding;
+    private ShowDialog instance;
+    private Map<String, String> ForwardingMap = new HashMap<>();
+    private String text;
+    private List<DynamicDetailsNetBean.ResultBean.DetailBean.UserZhuanBean> user_zhuan;
+    private DynamicDetailsNetBean.ResultBean.DetailBean detail;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
-
+        switch (commonevent.getCode()) {
+            case EventCode.FORWARDING_DYNAMIC_SUCCESSFUL:
+            case EventCode.FORWARDING_ERROR:
+                finish();
+                break;
+        }
     }
 
     @Override
@@ -52,14 +76,21 @@ public class ForwardingActivity extends BaseActivity implements StickyBoContentT
 
     @Override
     protected void initClass() {
+        forwardingId = getIntent().getStringExtra("forwardingId");
+        controllerForwarding = new ControllerForwarding(forwardingId);
         stickyBoContentTextBuilder = new StickyBoContentTextBuilder();
+        instance = ShowDialog.getInstance();
+        progressDialog = instance.showProgressStatus(this);
+        progressDialog.show();
+    }
+
+    @Override
+    protected BaseLifecycleObserver initLifecycleObserver() {
+        return controllerForwarding;
     }
 
     @Override
     protected void initData() {
-        forwardingId = getIntent().getStringExtra("forwardingId");
-        String string = new StringBuffer().append(DataClass.FORWARDING_TAG).append(DataClass.UNAME).append(" ").append("是的,我也这么觉得...").toString();
-        insights.setText(stickyBoContentTextBuilder.getWeiBoContent(string, this, insights));
 
     }
 
@@ -68,13 +99,13 @@ public class ForwardingActivity extends BaseActivity implements StickyBoContentT
         title_name.setText(getString(R.string.forwarding));
         title_about_text.setText(getString(R.string.release));
         title_about_text.setTextColor(getResources().getColor(R.color.blue_bar));
-        refreshView();
+
     }
 
     @Override
     protected void initListener() {
         stickyBoContentTextBuilder.setOnStickyBoContentTextClickListener(this);
-
+        controllerForwarding.setOnDynamicDetailsListener(this);
     }
 
     @OnClick({R.id.img_btn_black, R.id.title_about_text})
@@ -82,7 +113,13 @@ public class ForwardingActivity extends BaseActivity implements StickyBoContentT
     protected void onClickAble(View view) {
         switch (view.getId()) {
             case R.id.title_about_text:
-
+                if (user_zhuan != null && user_zhuan.size() == 0 && detail.getUserid().equals(DataClass.USERID)) {
+                    instance.showHelpfulHintsDialog(this, getString(R.string.forwarding_error), EventCode.FORWARDING_ERROR);
+                } else if (ForwardingMap.containsValue(DataClass.USERID)) {
+                    instance.showHelpfulHintsDialog(this, getString(R.string.forwarding_error), EventCode.FORWARDING_ERROR);
+                } else {
+                    controllerForwarding.NetForwarding();
+                }
                 break;
             case R.id.img_btn_black:
                 finish();
@@ -90,15 +127,40 @@ public class ForwardingActivity extends BaseActivity implements StickyBoContentT
         }
     }
 
-    private void refreshView() {
-        Glide.with(this).load(DataClass.USERPHOTO).error(R.drawable.banner_off).into(img);
-        text_content.setText(":武藤游戏 一组超棒的按摩指南，累了、睡前都可以做，做完非常舒服~~ get ...");
-        text_content.setText(stickyBoContentTextBuilder.getWeiBoContent(text_content.getText().toString(), this, insights));
+    @Override
+    public void onStickyBoContentTextClickListener(String content, int index) {
+        Intent theDetailsInformationIntent = new Intent(this, TheDetailsInformationActivity.class);
+        theDetailsInformationIntent.putExtra("userId", ForwardingMap.get(new StringBuffer().append(content).append(" ").toString()));
+        theDetailsInformationIntent.putExtra("userName", content);
+        startActivity(theDetailsInformationIntent);
     }
 
     @Override
-    public void onStickyBoContentTextClickListener(String content) {
-        toastUtil.showToast(content);
+    public void onDynamicDetailsListener(DynamicDetailsNetBean.ResultBean result) {
+        progressDialog.dismiss();
+        detail = result.getDetail();
+        List<DynamicDetailsNetBean.ResultBean.DetailBean.ImgpathjsonBean> imgpathjson = detail.getImgpathjson();
+        if (imgpathjson.size() > 0) {
+            img.setVisibility(View.VISIBLE);
+            Glide.with(this).load(SystemUtil.JudgeUrl(imgpathjson.get(0).getImgpath())).error(R.drawable.banner_off).into(img);
+        }
+
+        user_zhuan = detail.getUser_zhuan();
+        if (user_zhuan.size() > 0) {
+            String sizeLine = "";
+            for (int i = 0; i < detail.getUser_zhuan().size(); i++) {
+                String content = new StringBuffer().append(DataClass.FORWARDING_TAG).append(user_zhuan.get(i).getSecondname()).append(" ").toString();
+                sizeLine = new StringBuffer().append(sizeLine).append(content).toString();
+                ForwardingMap.put(content, user_zhuan.get(i).getUserid());
+            }
+            String currentText = new StringBuffer().append(DataClass.FORWARDING_TAG).append(detail.getSecondname()).append(" ").toString();
+            ForwardingMap.put(currentText, detail.getUserid());
+            text = new StringBuffer().append(sizeLine).append(currentText).append(detail.getContent()).toString();
+        } else {
+            text = new StringBuffer().append(DataClass.FORWARDING_TAG).append(detail.getSecondname()).append(" ").append(detail.getContent()).toString();
+        }
+        text_content.setText(stickyBoContentTextBuilder.getWeiBoContent(text, this, text_content, -1));
     }
+
 
 }

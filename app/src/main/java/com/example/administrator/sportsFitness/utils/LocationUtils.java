@@ -75,14 +75,13 @@ public class LocationUtils {
         }
         Location location = locationManager.getLastKnownLocation(provider);
         queryedCity = updateWithNewLocation(location);
-        if (queryedCity.isEmpty())
+        if (queryedCity.isEmpty()) {
             queryedCity = GetAddr(location.getLatitude(), location.getLongitude());
-        if ((queryedCity != null) && (0 != queryedCity.length())) {
-            cityName = new StringBuffer().append(queryedCity).append("市").toString();
-            DataClass.CITY = cityName;
-            DataClass.LATITUDE = location.getLatitude();
-            DataClass.LONGITUDE = location.getLongitude();
         }
+        cityName = new StringBuffer().append(queryedCity).append("市").toString();
+        DataClass.CITY = cityName;
+        DataClass.LATITUDE = location.getLatitude();
+        DataClass.LONGITUDE = location.getLongitude();
 
         /*
          * 第二个参数表示更新的周期，单位为毫秒；第三个参数的含义表示最小距离间隔，单位是米

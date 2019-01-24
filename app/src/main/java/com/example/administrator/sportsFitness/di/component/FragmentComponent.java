@@ -9,8 +9,10 @@ import com.example.administrator.sportsFitness.ui.fragment.HomeFragment;
 import com.example.administrator.sportsFitness.ui.fragment.MineFragment;
 import com.example.administrator.sportsFitness.ui.fragment.SearchFragment;
 import com.example.administrator.sportsFitness.ui.fragment.SocialFragment;
+import com.example.administrator.sportsFitness.ui.fragment.collection.CollectionFragment;
 import com.example.administrator.sportsFitness.ui.fragment.detailsinfo.IntroduceFragment;
 import com.example.administrator.sportsFitness.ui.fragment.im.FriendsCircleRelatedFragment;
+import com.example.administrator.sportsFitness.ui.fragment.order.OrderFormFragment;
 import com.example.administrator.sportsFitness.ui.fragment.search.SearchTypeFragment;
 import com.example.administrator.sportsFitness.ui.fragment.social.FriendsCircleFragment;
 import com.example.administrator.sportsFitness.ui.fragment.social.MessageFragment;
@@ -43,5 +45,9 @@ public interface FragmentComponent {
     void inject(IntroduceFragment introduceFragment);
 
     void inject(FriendsCircleRelatedFragment friendsCircleRelatedFragment);
+
+    void inject(OrderFormFragment orderFormFragment);
+
+    void inject(CollectionFragment collectionFragment);
 
 }

@@ -3,6 +3,7 @@ package com.example.administrator.sportsFitness.ui.controller;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -10,18 +11,31 @@ import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.ControllerClassObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.bean.ArrangeBean;
+import com.example.administrator.sportsFitness.model.bean.HomePageNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.rxtools.RxUtil;
+import com.example.administrator.sportsFitness.ui.activity.component.EmbeddedWebActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.FriendsCircleActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.GeneralFormActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.InfoCoachPrivateActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.InfoCourseActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.InfoGymActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.PrivateGeneralFormActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.ShowGeneraActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.WebConcentratedActivity;
 import com.example.administrator.sportsFitness.ui.adapter.ArrangeAdapter;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.ImageSlideshow;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
+import com.example.administrator.sportsFitness.widget.CommonSubscriber;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -36,6 +50,8 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
     ArrayList<ArrangeBean> arrangeBeanArrayList = new ArrayList<>();
     private ArrangeAdapter arrangeAdapter;
     private ImageSlideshow easyBanner;
+    private List<HomePageNetBean.ResultBean.BannerBean> banner;
+    private ShowDialog instance;
 
     public ControllerArrange(RelativeLayout banner_layout, RecyclerView recycler_view) {
         this.banner_layout = banner_layout;
@@ -55,9 +71,11 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
     @Override
     protected void onClassCreate() {
         super.onClassCreate();
+        instance = ShowDialog.getInstance();
         initDate();
         initAdapter();
-        initImageSlideshow();
+        NetHomePage();
+
     }
 
     private void initAdapter() {
@@ -90,8 +108,8 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
         easyBanner.setDotSize(12);
         easyBanner.setDelay(3000);
         banner_layout.addView(easyBanner);
-        for (int i = 0; i < 2; i++) {
-            easyBanner.addImageUrl((SystemUtil.JudgeUrl("http://wx1.sinaimg.cn/orj360/006pnLoLgy1ft6yichmarj30j60j675x.jpg")).toString());
+        for (int i = 0; i < banner.size(); i++) {
+            easyBanner.addImageUrl((SystemUtil.JudgeUrl(banner.get(i).getPhoto()).toString()));
         }
         easyBanner.commit();
     }
@@ -101,7 +119,7 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
     public void OnItenClickListener(int position) {
         switch (arrangeBeanArrayList.get(position).getIndex()) {
             case 0:
-
+                context.startActivity(new Intent(context, FriendsCircleActivity.class).setFlags(2));
                 break;
             case 1:
                 context.startActivity(new Intent(context, ShowGeneraActivity.class).setFlags(EventCode.TREAT));
@@ -120,8 +138,82 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
 
     @Override
     public void onItemClick(View view, int position) {
-
+        HomePageNetBean.ResultBean.BannerBean bannerBean = banner.get(position);
+        switch (bannerBean.getIntamount()) {
+            case 1:
+                Intent webIntent = new Intent(context, EmbeddedWebActivity.class);
+                webIntent.setFlags(0);
+                webIntent.putExtra("link", bannerBean.getContent());
+                webIntent.putExtra("titleName", context.getString(R.string.news));
+                context.startActivity(webIntent);
+                break;
+            case 2:
+                Intent infoCoachPrivateIntent = new Intent(context, InfoCoachPrivateActivity.class);
+                infoCoachPrivateIntent.putExtra("CoachId", bannerBean.getIntamount2());
+                context.startActivity(infoCoachPrivateIntent);
+                break;
+            case 3:
+                Intent infoCourseIntent = new Intent(context, InfoCourseActivity.class);
+                infoCourseIntent.putExtra("CoursesId", bannerBean.getIntamount2());
+                context.startActivity(infoCourseIntent);
+                break;
+            case 4:
+                Intent infoGymIntent = new Intent(context, InfoGymActivity.class);
+                infoGymIntent.putExtra("GYMId", bannerBean.getIntamount2());
+                context.startActivity(infoGymIntent);
+                break;
+        }
     }
 
+    /**
+     * 首页
+     */
+    public void NetHomePage() {
+        HashMap map = new HashMap<>();
+        LinkedHashMap linkedHashMap = new LinkedHashMap();
+        linkedHashMap.put("action", DataClass.HOMEPAGE_GET);
+        linkedHashMap.put("userid", DataClass.USERID);
+        linkedHashMap.put("versionvalue", SystemUtil.getAppVersionName(context, false));
+        linkedHashMap.put("systemtype", 1);
+        linkedHashMap.put("city", DataClass.CITY);
+        linkedHashMap.put("longitude", DataClass.LONGITUDE);
+        linkedHashMap.put("latitude", DataClass.LATITUDE);
+        map.put("version", "v1");
+        map.put("vars", new Gson().toJson(linkedHashMap));
+        addSubscribe(dataManager.HomePage(map)
+                .compose(RxUtil.<HomePageNetBean>rxSchedulerHelper())
+                .subscribeWith(new CommonSubscriber<HomePageNetBean>(toastUtil) {
+                    @Override
+                    public void onNext(HomePageNetBean homePageNetBean) {
+                        if (homePageNetBean.getStatus() == 1) {
+                            HomePageNetBean.ResultBean result = homePageNetBean.getResult();
+                            banner = result.getBanner();
+                            HomePageNetBean.ResultBean.NewversionBean newversion = result.getNewversion();
+//                            DataClass.URL = result.getRootPath();
+                            initImageSlideshow();
+                            if (onHomePageListener != null)
+                                onHomePageListener.OnHomePageListener(result);
+                        } else {
+                            toastUtil.showToast(homePageNetBean.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "Throwable : " + e.toString());
+                        super.onError(e);
+                    }
+                }));
+    }
+
+    public interface OnHomePageListener {
+        void OnHomePageListener(HomePageNetBean.ResultBean result);
+    }
+
+    private OnHomePageListener onHomePageListener;
+
+    public void setOnHomePageListener(OnHomePageListener onHomePageListener) {
+        this.onHomePageListener = onHomePageListener;
+    }
 
 }

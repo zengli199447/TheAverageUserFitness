@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray_">
+    android:background="@color/gray_"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,28 +36,30 @@
             android:gravity="center"
             android:text="@string/cp"
             android:textColor="@color/black_overlay"
-            android:textSize="@dimen/dp10" />
+            android:textSize="@dimen/dp12" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
-            android:id="@+id/user_img"
-            android:layout_width="@dimen/dp60"
-            android:layout_height="@dimen/dp60"
+        <RelativeLayout
+            android:id="@+id/img_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/creat_time"
             android:layout_marginLeft="@dimen/dp15"
-            android:layout_marginTop="@dimen/dp10"
-            android:src="@drawable/placeholder" />
+            android:layout_marginTop="@dimen/dp10">
 
+            <com.example.administrator.sportsFitness.ui.view.CircleImageView
+                android:id="@+id/user_img"
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp60"
+                android:src="@drawable/placeholder" />
 
-        <ImageView
-            android:id="@+id/gym_img"
-            android:layout_width="@dimen/dp60"
-            android:layout_height="@dimen/dp60"
-            android:layout_below="@+id/creat_time"
-            android:layout_marginLeft="@dimen/dp15"
-            android:layout_marginTop="@dimen/dp10"
-            android:scaleType="centerCrop"
-            android:src="@drawable/placeholder" />
+            <ImageView
+                android:id="@+id/gym_img"
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp60"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder" />
 
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/content"
@@ -65,13 +68,17 @@
             android:layout_below="@+id/creat_time"
             android:layout_marginLeft="@dimen/dp15"
             android:layout_marginTop="@dimen/dp15"
-            android:layout_toRightOf="@+id/user_img"
+            android:layout_toRightOf="@+id/img_layout"
             android:lineSpacingExtra="@dimen/dp10"
             android:text="文本"
             android:textColor="@color/black_overlay" />
 
-
     </RelativeLayout>
 
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp10"
+        android:background="@color/gray_" />
 
-</RelativeLayout>
+</LinearLayout>

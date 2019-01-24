@@ -33,10 +33,12 @@ public class FlowLayoutBuilder {
     private List<String> list = new ArrayList<>();
     private List<Drawable> colorList = new ArrayList<>();
     private List<View> viewList = new ArrayList<>();
+    private int type;
 
-    public FlowLayoutBuilder(Context context, FlowLayout flowLayout) {
+    public FlowLayoutBuilder(Context context, FlowLayout flowLayout, int type) {
         this.context = context;
         this.flowLayout = flowLayout;
+        this.type = type;
         mInflater = LayoutInflater.from(context);
         random = new Random();
         initColors();
@@ -53,25 +55,28 @@ public class FlowLayoutBuilder {
         colorList.add(context.getResources().getDrawable(R.drawable.corners_soild_layout_colorful_yellow));
     }
 
-    public void initLayout(List<Object> objectList, boolean status) {
-        list.clear();
+    public void initLayout(List<String> list, boolean status, boolean deleteStatus) {
         flowLayout.removeAllViews();
-        list.addAll(Arrays.asList(context.getResources().getStringArray(R.array.arrange)));
         for (int i = 0; i < list.size(); i++) {
             if (i > context.getResources().getInteger(R.integer.search_history_log))
                 return;
             FrameLayout inflate = (FrameLayout) mInflater.inflate(R.layout.item_tag_label, flowLayout, false);
             TextView contentTextView = inflate.findViewById(R.id.contentTextView);
-            contentTextView.setBackground(colorList.get(random.nextInt(colorList.size()) + 0));
+            if (i == list.size() - 1 && status) {
+                contentTextView.setBackground(context.getResources().getDrawable(R.drawable.corners_hollow_bg_gray));
+                contentTextView.setTextColor(context.getResources().getColor(R.color.gray_light_text));
+            } else {
+                contentTextView.setBackground(colorList.get(random.nextInt(colorList.size()) + 0));
+                contentTextView.setTextColor(context.getResources().getColor(R.color.white));
+            }
             ImageView delete = inflate.findViewById(R.id.delete);
-            if (status)
-                delete.setVisibility(View.GONE);
+            if (deleteStatus)
+                delete.setVisibility(View.VISIBLE);
             contentTextView.setText(list.get(i));
             flowLayout.addView(inflate);
             OnClickListener(contentTextView, i);
             OnClickListener(delete, i);
         }
-
     }
 
     private void OnClickListener(View view, final int position) {
@@ -79,13 +84,13 @@ public class FlowLayoutBuilder {
             @Override
             public void onClick(View v) {
                 if (flowClickListener != null)
-                    flowClickListener.onFlowClickListener(v, position);
+                    flowClickListener.onFlowClickListener(v, position, type);
             }
         });
     }
 
     public interface FlowClickListener {
-        void onFlowClickListener(View view, final int position);
+        void onFlowClickListener(View view, final int position, int type);
     }
 
     private FlowClickListener flowClickListener;

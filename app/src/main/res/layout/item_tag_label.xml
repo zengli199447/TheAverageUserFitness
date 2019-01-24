@@ -22,6 +22,6 @@
         android:layout_height="@dimen/dp10"
         android:layout_gravity="right"
         android:src="@drawable/clear_icon"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </FrameLayout>

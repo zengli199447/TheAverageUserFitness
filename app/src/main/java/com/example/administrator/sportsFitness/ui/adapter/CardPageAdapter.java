@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
+import com.example.administrator.sportsFitness.model.bean.CardFormNetBean;
 import com.example.administrator.sportsFitness.ui.holder.MyViewHolder;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 
@@ -22,9 +23,9 @@ import java.util.List;
 public class CardPageAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     Context context;
-    List<Object> list;
+    List<CardFormNetBean.ResultBean.CardBean> list;
 
-    public CardPageAdapter(Context context, List<Object> list) {
+    public CardPageAdapter(Context context, List<CardFormNetBean.ResultBean.CardBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -42,17 +43,19 @@ public class CardPageAdapter extends RecyclerView.Adapter<MyViewHolder> {
         TextView handle_card_status = holder.itemView.findViewById(R.id.handle_card_status);
         TextView price = holder.itemView.findViewById(R.id.price);
 
-        price.setText("价格");
+        CardFormNetBean.ResultBean.CardBean cardBean = list.get(position);
 
-        if (position == 0) {
+        price.setText(new StringBuffer().append(cardBean.getPrice()).append(context.getString(R.string.price_unit)).toString());
+
+        if (!cardBean.getEnddate().isEmpty()) {
             handle_card_status.setText(context.getString(R.string.renewal));
             handle_card_status.setBackground(context.getResources().getDrawable(R.drawable.corners_immersed_in_gray));
-            SystemUtil.textMagicTool(context, card_info, "卡种类型", "截止日期",
+            SystemUtil.textMagicTool(context, card_info, cardBean.getDatatype(), new StringBuffer().append(context.getString(R.string.end_date)).append(" ").append(cardBean.getEnddate()).toString(),
                     R.dimen.dp14, R.dimen.dp12, R.color.black, R.color.gray_light_text, "\n");
         } else {
             handle_card_status.setText(context.getString(R.string.handle_card));
             handle_card_status.setBackground(context.getResources().getDrawable(R.drawable.corners_immersed_in_blue));
-            card_info.setText("卡种类型");
+            card_info.setText(cardBean.getDatatype());
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

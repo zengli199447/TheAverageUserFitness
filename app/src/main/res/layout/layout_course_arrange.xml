@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp15"
+    android:layout_marginRight="@dimen/dp15"
+    android:background="@color/white">
+
+    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+        android:id="@+id/calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/calendar_icon"
+        android:drawablePadding="@dimen/dp15"
+        android:gravity="center_vertical"
+        android:text="09.20-10.22"
+        android:textColor="@color/black_overlay"
+        android:textSize="@dimen/dp13" />
+
+    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_toRightOf="@+id/calendar"
+        android:drawableLeft="@drawable/time_max_icon"
+        android:drawablePadding="@dimen/dp15"
+        android:gravity="center_vertical"
+        android:text="09.20-10.22"
+        android:textColor="@color/black_overlay"
+        android:textSize="@dimen/dp13" />
+
+    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+        android:id="@+id/people_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calendar"
+        android:layout_marginTop="@dimen/dp15"
+        android:drawableLeft="@drawable/people_icon"
+        android:drawablePadding="@dimen/dp15"
+        android:gravity="center_vertical"
+        android:text="09.20-10.22"
+        android:textColor="@color/black_overlay"
+        android:textSize="@dimen/dp13" />
+
+    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+        android:id="@+id/heat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calendar"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_toRightOf="@+id/people_count"
+        android:drawableLeft="@drawable/hot_icon"
+        android:drawablePadding="@dimen/dp15"
+        android:gravity="center_vertical"
+        android:text="09.20-10.22"
+        android:textColor="@color/black_overlay"
+        android:textSize="@dimen/dp13" />
+
+    <TextView
+        android:id="@+id/nervous_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/people_count"
+        android:layout_marginLeft="@dimen/dp40"
+        android:text="(仅剩2个名额)"
+        android:textColor="@color/red_text"
+        android:textSize="@dimen/dp12" />
+
+    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+        android:id="@+id/store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nervous_tag"
+        android:layout_marginTop="@dimen/dp15"
+        android:drawableLeft="@drawable/store_icon"
+        android:drawablePadding="@dimen/dp15"
+        android:gravity="center_vertical"
+        android:text="店铺名称"
+        android:textColor="@color/black_overlay"
+        android:textSize="@dimen/dp13" />
+
+    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+        android:id="@+id/student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/store"
+        android:layout_marginTop="@dimen/dp25"
+        android:drawableLeft="@drawable/student_icon"
+        android:drawablePadding="@dimen/dp15"
+        android:gravity="center_vertical"
+        android:text=""
+        android:textColor="@color/black_overlay"
+        android:textSize="@dimen/dp13" />
+
+    <RelativeLayout
+        android:id="@+id/course_student_layout"
+        android:layout_width="@dimen/dp180"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/store"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_toRightOf="@+id/student">
+
+        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            android:id="@+id/img1"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/placeholder"
+            android:visibility="invisible"
+            app:border_color="@color/white"
+            app:border_width="1dp" />
+
+        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            android:id="@+id/img2"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginRight="-5dp"
+            android:layout_toLeftOf="@+id/img1"
+            android:src="@drawable/placeholder"
+            android:visibility="invisible"
+            app:border_color="@color/white"
+            app:border_width="1dp" />
+
+        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            android:id="@+id/img3"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginRight="-5dp"
+            android:layout_toLeftOf="@+id/img2"
+            android:src="@drawable/placeholder"
+            android:visibility="invisible"
+            app:border_color="@color/white"
+            app:border_width="1dp" />
+
+        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            android:id="@+id/img4"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginRight="-5dp"
+            android:layout_toLeftOf="@+id/img3"
+            android:src="@drawable/placeholder"
+            android:visibility="invisible"
+            app:border_color="@color/white"
+            app:border_width="1dp" />
+
+        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            android:id="@+id/img5"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginRight="-5dp"
+            android:layout_toLeftOf="@+id/img4"
+            android:src="@drawable/placeholder"
+            android:visibility="invisible"
+            app:border_color="@color/white"
+            app:border_width="1dp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

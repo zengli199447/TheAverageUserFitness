@@ -56,9 +56,11 @@ public class StickyBoContentTextBuilder {
 
     private static final String ALL = "(" + AT + ")" + "|" + "(" + TOPIC + ")";
 
-    @SuppressLint("ClickableViewAccessibility")
-    public SpannableStringBuilder getWeiBoContent(final String source, final Context context, final TextView textView) {
+    private int Index;
 
+    @SuppressLint("ClickableViewAccessibility")
+    public SpannableStringBuilder getWeiBoContent(final String source, final Context context, final TextView textView, final int Index) {
+        this.Index = Index;
         final ArrayList<Section> sections = new ArrayList<>();
         final SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(source);
         //设置正则
@@ -176,7 +178,7 @@ public class StickyBoContentTextBuilder {
                             if (downSection != null) {
                                 String name = downSection.name;
                                 if (onStickyBoContentTextClickListener != null) {
-                                    onStickyBoContentTextClickListener.onStickyBoContentTextClickListener(name);
+                                    onStickyBoContentTextClickListener.onStickyBoContentTextClickListener(name,Index);
                                 }
                                 downSection = null;
                             } else {
@@ -197,7 +199,7 @@ public class StickyBoContentTextBuilder {
     }
 
     public interface OnStickyBoContentTextClickListener {
-        void onStickyBoContentTextClickListener(String content);
+        void onStickyBoContentTextClickListener(String content, int position);
     }
 
     private OnStickyBoContentTextClickListener onStickyBoContentTextClickListener;

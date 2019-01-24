@@ -46,8 +46,11 @@
 
     <color name="purple">#9f53ec</color>
 
+    <color name="progress_bg">#BAE1F1</color>
+
     <drawable name="gray_light">#ffe3e2e2</drawable>
     <drawable name="red_text">#cc3333</drawable>
+    <drawable name="blue_bar">#0CC5BF</drawable>
 
     <color name="translucent">#39080808</color>
 

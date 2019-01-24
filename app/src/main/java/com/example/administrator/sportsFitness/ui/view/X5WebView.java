@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
+import android.webkit.JavascriptInterface;
 
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -35,13 +36,15 @@ public class X5WebView extends WebView {
         webSetting.setSupportZoom(false);
         webSetting.setBuiltInZoomControls(false);
         webSetting.setUseWideViewPort(true);
-        webSetting.setSupportMultipleWindows(true);
+//        webSetting.setSupportMultipleWindows(true);
         webSetting.setAppCacheEnabled(true);
         webSetting.setDomStorageEnabled(true);
         webSetting.setGeolocationEnabled(true);
         webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
         webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
         webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webSetting.setDisplayZoomControls(false);
+        this.addJavascriptInterface(new JSInterface(), "fitness");
         this.setWebChromeClient(webChromeClient);
     }
 
@@ -73,7 +76,7 @@ public class X5WebView extends WebView {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             if (x5LoadingListener != null)
-                x5LoadingListener.onProgressChanged();
+                x5LoadingListener.onProgressChanged(newProgress);
         }
     };
 
@@ -98,12 +101,30 @@ public class X5WebView extends WebView {
         }
     };
 
+    private final class JSInterface {
+
+        @JavascriptInterface
+        public void gochat(String fromUserid, String toUserid) {
+            x5LoadingListener.onActionListener(0, fromUserid, toUserid);
+        }
+
+        @JavascriptInterface
+        public void chathistory(String userid, String chat_id) {
+            x5LoadingListener.onActionListener(1, userid, chat_id);
+        }
+
+
+    }
+
     public interface X5LoadingListener {
         void onPageFinished();
 
         void onPageStarted();
 
-        void onProgressChanged();
+        void onProgressChanged(int newProgress);
+
+        void onActionListener(int type, String firstContent, String lastContent);
+
     }
 
     private X5LoadingListener x5LoadingListener;

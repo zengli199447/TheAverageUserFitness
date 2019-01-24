@@ -39,6 +39,7 @@ public class CustomTimeChoicePopupWindow extends PopupWindow implements View.OnC
     private TextView title_name;
     private TextView time_hour_title;
     private TextView time_minute_title;
+    private TextView clear_time;
     private int currentYear;
     private List<String> yearList;
     private List<String> monthList;
@@ -70,11 +71,11 @@ public class CustomTimeChoicePopupWindow extends PopupWindow implements View.OnC
         currentSelectDay = Integer.valueOf(calendarBuilder.queryDay()) - 1;
         currentSelectHour = Integer.valueOf(calendarBuilder.queryHour());
         initData(selectStatus);
-        init(status);
+        init(status, selectStatus);
         setPopupWindow();
     }
 
-    private void init(boolean status) {
+    private void init(boolean status, boolean selectStatus) {
         LayoutInflater inflater = LayoutInflater.from(context);
         mPopView = inflater.inflate(R.layout.custom_time_choice_popup_window, null);
         loop_view_year = mPopView.findViewById(R.id.loop_view_year);
@@ -86,6 +87,7 @@ public class CustomTimeChoicePopupWindow extends PopupWindow implements View.OnC
         title_name = mPopView.findViewById(R.id.title_name);
         time_hour_title = mPopView.findViewById(R.id.time_hour_title);
         time_minute_title = mPopView.findViewById(R.id.time_minute_title);
+        clear_time = mPopView.findViewById(R.id.clear_time);
 
         if (status) {
             time_hour_title.setVisibility(View.VISIBLE);
@@ -93,6 +95,9 @@ public class CustomTimeChoicePopupWindow extends PopupWindow implements View.OnC
             loop_view_hour.setVisibility(View.VISIBLE);
             loop_view_minute.setVisibility(View.VISIBLE);
         }
+
+        if (selectStatus)
+            clear_time.setVisibility(View.VISIBLE);
 
         initDay(currentSelectDay);
 
@@ -125,6 +130,7 @@ public class CustomTimeChoicePopupWindow extends PopupWindow implements View.OnC
         loop_view_minute.setNotLoop();
 
         confirm.setOnClickListener(this);
+        clear_time.setOnClickListener(this);
     }
 
     private void setLoopView(LoopView view, List<String> list, int currentPosition, final int currentIndex) {

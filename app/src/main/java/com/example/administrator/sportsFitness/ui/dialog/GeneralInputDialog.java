@@ -67,6 +67,10 @@ public class GeneralInputDialog extends BaseDialog implements View.OnClickListen
                 content_text.setHint(context.getString(R.string.input_corners_tag));
                 title.setText(context.getString(R.string.add_tag));
                 break;
+            case EventCode.SIGNATURE:
+                content_text.setHint(context.getString(R.string.modify_signature));
+                title.setText(context.getString(R.string.signature));
+                break;
         }
         handler.sendEmptyMessageDelayed(0, 100);
     }

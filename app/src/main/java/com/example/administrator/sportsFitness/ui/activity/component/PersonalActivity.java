@@ -11,17 +11,27 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
+import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.UserInfoNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.ui.controller.ControllerPersonalContent;
+import com.example.administrator.sportsFitness.ui.dialog.ProgressDialog;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.CustomSingleChoicePopupWindow;
 import com.example.administrator.sportsFitness.ui.view.CustomTimeChoicePopupWindow;
+import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.AlbumBuilder;
 import com.example.administrator.sportsFitness.widget.CalendarBuilder;
+import com.example.administrator.sportsFitness.widget.MultipartBuilder;
+import com.yanzhenjie.album.AlbumFile;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,7 +41,8 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class PersonalActivity extends BaseActivity implements CustomSingleChoicePopupWindow.OnItemClickListener, PopupWindow.OnDismissListener, CustomTimeChoicePopupWindow.OnItemClickListener {
+public class PersonalActivity extends BaseActivity implements CustomSingleChoicePopupWindow.OnItemClickListener, PopupWindow.OnDismissListener,
+        CustomTimeChoicePopupWindow.OnItemClickListener, ControllerPersonalContent.OnPersonalListener, MultipartBuilder.UpLoadFileListener {
 
     @BindView(R.id.title_name)
     TextView title_name;
@@ -55,6 +66,7 @@ public class PersonalActivity extends BaseActivity implements CustomSingleChoice
     TextView dynamic_visible;
     @BindView(R.id.face_recognition)
     ImageView face_recognition;
+
     private AlbumBuilder albumBuilder;
 
     private int SelectType = -1;
@@ -64,6 +76,12 @@ public class PersonalActivity extends BaseActivity implements CustomSingleChoice
     private String selectDynamicVisible;
     private CustomSingleChoicePopupWindow customSingleChoicePopupWindow;
     private CustomTimeChoicePopupWindow customTimeChoicePopupWindow;
+    private ControllerPersonalContent controllerPersonalContent;
+    private List<String> dynamicVisibleList;
+    private int DynamicVisibleIndex = 1;
+    private ArrayList<AlbumFile> list = new ArrayList<>();
+    private MultipartBuilder multipartBuilder;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
@@ -79,6 +97,9 @@ public class PersonalActivity extends BaseActivity implements CustomSingleChoice
                         Glide.with(this).load(commonevent.getTemp_str()).error(R.drawable.banner_off).into(face_recognition);
                         break;
                 }
+                break;
+            case EventCode.PERSONAL_CHANGE_REFRESH:
+                finish();
                 break;
         }
     }
@@ -98,6 +119,14 @@ public class PersonalActivity extends BaseActivity implements CustomSingleChoice
         albumBuilder = new AlbumBuilder(this);
         customSingleChoicePopupWindow = new CustomSingleChoicePopupWindow(this);
         customTimeChoicePopupWindow = new CustomTimeChoicePopupWindow(this, new CalendarBuilder(Calendar.getInstance()), false, false);
+        controllerPersonalContent = new ControllerPersonalContent();
+        multipartBuilder = new MultipartBuilder(this, 1, list);
+        progressDialog = ShowDialog.getInstance().showProgressStatus(this);
+    }
+
+    @Override
+    protected BaseLifecycleObserver initLifecycleObserver() {
+        return controllerPersonalContent;
     }
 
     @Override
@@ -108,6 +137,7 @@ public class PersonalActivity extends BaseActivity implements CustomSingleChoice
 
     @Override
     protected void initData() {
+        dynamicVisibleList = Arrays.asList(getResources().getStringArray(R.array.dynamic_visible));
 
     }
 
@@ -125,6 +155,8 @@ public class PersonalActivity extends BaseActivity implements CustomSingleChoice
         customSingleChoicePopupWindow.setOnDismissListener(this);
         customTimeChoicePopupWindow.setOnItemClickListener(this);
         customTimeChoicePopupWindow.setOnDismissListener(this);
+        controllerPersonalContent.setOnPersonalListener(this);
+        multipartBuilder.setUpLoadFileListener(this);
 
     }
 
@@ -166,16 +198,26 @@ public class PersonalActivity extends BaseActivity implements CustomSingleChoice
                 albumBuilder.ImageSingleSelection();
                 break;
             case R.id.save:
-
+                if (userPhoto.isEmpty() || faceRecognitionPhoto.isEmpty()) {
+                    toastUtil.showToast(getString(R.string.photo_img_error));
+                } else if (nick_name.getText().toString().trim().isEmpty()) {
+                    toastUtil.showToast(getString(R.string.nicek_name_empty_error));
+                } else {
+                    progressDialog.show();
+                    list.clear();
+                    AlbumFile userPhotoAlbum = new AlbumFile();
+                    AlbumFile faceRecognitionPhotoAlbum = new AlbumFile();
+                    userPhotoAlbum.setPath(userPhoto);
+                    faceRecognitionPhotoAlbum.setPath(faceRecognitionPhoto);
+                    list.add(userPhotoAlbum);
+                    list.add(faceRecognitionPhotoAlbum);
+                    multipartBuilder.arrangementUpLoad();
+                }
                 break;
             case R.id.img_btn_black:
                 finish();
                 break;
         }
-    }
-
-    private void refreshView() {
-
     }
 
     @Override
@@ -193,14 +235,48 @@ public class PersonalActivity extends BaseActivity implements CustomSingleChoice
             case 1:
                 selectDynamicVisible = Arrays.asList(getResources().getStringArray(R.array.dynamic_visible)).get(currentIndex);
                 dynamic_visible.setText(selectDynamicVisible);
+                DynamicVisibleIndex = currentIndex + 1;
                 break;
         }
     }
 
     @Override
     public void setOnItemClick(View v, String year, String month, String day, String hour, String minute, int selectType) {
+        birthday.setText(new StringBuffer().append(year).append("-").append(month).append("-").append(day).toString());
+
+    }
 
 
+    @Override
+    public void OnPersonalListener(UserInfoNetBean.ResultBean result) {
+        account.setText(result.getPhone());
+        gender.setText(result.getSex());
+        nick_name.setText(result.getSecondname());
+        birthday.setText(result.getBrithday());
+        location.setText(result.getCity());
+
+        userPhoto = result.getPhoto();
+        faceRecognitionPhoto = result.getFace();
+
+        DynamicVisibleIndex = Integer.valueOf(result.getNewsshow());
+        dynamic_visible.setText(dynamicVisibleList.get(DynamicVisibleIndex - 1));
+        Glide.with(this).load(SystemUtil.JudgeUrl(result.getPhoto())).error(R.drawable.banner_off).into(user_photo);
+        Glide.with(this).load(SystemUtil.JudgeUrl(result.getFace())).error(R.drawable.banner_off).into(face_recognition);
+    }
+
+    @Override
+    public void onUpLoadFileListener(String url, List<String> list) {
+        LogUtil.e(TAG, "list.get(0) : " + list.get(0));
+        LogUtil.e(TAG, "list.get(1) : " + list.get(1));
+        progressDialog.dismiss();
+        controllerPersonalContent.personalChangeNetWork(
+                list.get(0),
+                nick_name.getText().toString().trim(),
+                gender.getText().toString().trim(),
+                birthday.getText().toString().trim(),
+                location.getText().toString().trim(),
+                list.get(1),
+                DynamicVisibleIndex);
     }
 
 

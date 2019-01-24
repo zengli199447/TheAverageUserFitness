@@ -5,21 +5,27 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseFragment;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
+import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.rxtools.RxBus;
 import com.example.administrator.sportsFitness.ui.activity.component.ReleaseNewDynamicActivity;
 import com.example.administrator.sportsFitness.ui.adapter.TabPageIndicatorAdapter;
 import com.example.administrator.sportsFitness.ui.controller.ControllerSocial;
 import com.example.administrator.sportsFitness.ui.fragment.social.FriendsCircleFragment;
 import com.example.administrator.sportsFitness.ui.fragment.social.MessageFragment;
+import com.example.administrator.sportsFitness.ui.view.CustomSelectFriendsPopupWindow;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
 
@@ -35,7 +41,7 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelectedListener {
+public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, CustomSelectFriendsPopupWindow.OnItemSelectClickListener, PopupWindow.OnDismissListener {
 
     @BindView(R.id.tab_layout)
     TabLayout tab_layout;
@@ -47,16 +53,12 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
     @BindView(R.id.message_select)
     TextView message_select;
 
-    @BindView(R.id.layout_dynamic_select)
-    LinearLayout layout_dynamic_select;
-    @BindView(R.id.recycler_view)
-    RecyclerView recycler_view;
-
     private List<String> titleList;
     private List<Fragment> mFragments = new ArrayList<>();
     private TabPageIndicatorAdapter tabPageIndicatorAdapter;
     private boolean viewStatus;
     private ControllerSocial controllerSocial;
+    private CustomSelectFriendsPopupWindow customSelectFriendsPopupWindow;
 
     @Override
     protected void initInject() {
@@ -74,10 +76,16 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     protected void initClass() {
         mFragments.add(new FriendsCircleFragment());
         mFragments.add(new MessageFragment());
-        controllerSocial = new ControllerSocial(layout_dynamic_select, recycler_view);
+        controllerSocial = new ControllerSocial();
+        customSelectFriendsPopupWindow = new CustomSelectFriendsPopupWindow(getActivity());
     }
 
     @Override
@@ -93,7 +101,7 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
 
     @Override
     protected void initView() {
-        tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getChildFragmentManager(), titleList, mFragments);
+        tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getChildFragmentManager(), titleList, mFragments, true);
         view_page.setAdapter(tabPageIndicatorAdapter);
         tab_layout.setupWithViewPager(view_page);
         ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin), getResources().getInteger(R.integer.title_bar_margin));
@@ -102,7 +110,8 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
     @Override
     protected void initListener() {
         tab_layout.setOnTabSelectedListener(this);
-
+        customSelectFriendsPopupWindow.setOnSelectItemClickListener(this);
+        customSelectFriendsPopupWindow.setOnDismissListener(this);
     }
 
     @OnClick({R.id.title_about_img, R.id.dynamic_select, R.id.message_select})
@@ -160,9 +169,22 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
 
     private void refreshView(boolean viewStatus) {
         if (viewStatus) {
-            layout_dynamic_select.setVisibility(View.VISIBLE);
+            customSelectFriendsPopupWindow.showAtLocation(tab_layout, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, SystemUtil.dp2px(getActivity(),70));
+            SystemUtil.windowToDark(getActivity());
         } else {
-            layout_dynamic_select.setVisibility(View.GONE);
+            customSelectFriendsPopupWindow.dismiss();
+            SystemUtil.windowToLight(getActivity());
         }
     }
+
+    @Override
+    public void onDismiss() {
+        SystemUtil.windowToLight(getActivity());
+    }
+
+    @Override
+    public void setOnItemClick(String content) {
+        RxBus.getDefault().post(new CommonEvent(EventCode.DYNAMIC_SELECT, content));
+    }
+
 }

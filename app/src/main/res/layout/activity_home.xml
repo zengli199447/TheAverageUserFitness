@@ -53,7 +53,7 @@
                 android:drawablePadding="3dp"
                 android:drawableTop="@drawable/icon_social_selector"
                 android:gravity="center"
-                android:text="@string/social"
+                android:text="@string/find_friend"
                 android:textColor="@drawable/text_color_selector"
                 android:textSize="@dimen/dp10" />
 
@@ -71,7 +71,7 @@
                 android:drawablePadding="3dp"
                 android:drawableTop="@drawable/icon_course_selector"
                 android:gravity="center"
-                android:text="@string/course"
+                android:text="@string/find_course"
                 android:textColor="@drawable/text_color_selector"
                 android:textSize="@dimen/dp10" />
 
@@ -97,7 +97,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/dp15"
-            android:src="@drawable/dynamic_add_icon" />
+            android:src="@drawable/me_icon" />
 
         <include layout="@layout/layout_add_action" />
 

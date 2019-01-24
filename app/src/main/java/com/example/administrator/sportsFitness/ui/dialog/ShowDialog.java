@@ -1,6 +1,8 @@
 package com.example.administrator.sportsFitness.ui.dialog;
 
 import android.content.Context;
+import android.view.Gravity;
+import android.view.Window;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
@@ -42,6 +44,22 @@ public class ShowDialog {
         confirmOrNoDialog.show();
         SystemUtil.windowToDark(context);
         return confirmOrNoDialog;
+    }
+
+    public void showHelpfulHintsDialog(final Context context, String content, int eventCode) {
+        final HelpfulHintsDialog helpfulHintsDialog = new HelpfulHintsDialog(context, R.style.dialog, content, eventCode);
+        helpfulHintsDialog.show();
+        SystemUtil.windowToDark(context);
+    }
+
+    public ProgressDialog showProgressStatus(final Context context) {
+        final ProgressDialog progressDialog = new ProgressDialog(context, R.style.dialog);
+        progressDialog.setCanceledOnTouchOutside(true);
+        Window window = progressDialog.getWindow();
+        if (window != null) {
+            window.setGravity(Gravity.CENTER);//此处可以设置dialog显示的位置
+        }
+        return progressDialog;
     }
 
 }

@@ -13,6 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.sportsFitness.R;
+import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.rxtools.RxBus;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 
 import java.util.ArrayList;
@@ -49,6 +52,7 @@ public class CustomPayPopupWindow extends PopupWindow implements View.OnClickLis
     public CustomPayPopupWindow(Context context) {
         super(context);
         this.context = context;
+        RxBus.getDefault().post(new CommonEvent(EventCode.REFRESH_MONEY_ABOUT));
         initView();
     }
 
@@ -154,17 +158,22 @@ public class CustomPayPopupWindow extends PopupWindow implements View.OnClickLis
     }
 
     //余额状态
-    public void refreshPageView(int currentPay, int containsPay) {
-        if (currentPay > containsPay) {
-            page_pay_layout.setEnabled(false);
-            SystemUtil.textMagicTool(context, page_pay, new StringBuffer().append(context.getString(R.string.page_pay))
-                            .append("(").append(context.getString(R.string.remaining)).append(context.getString(R.string.money))
-                            .append(containsPay).append(")").toString(), new StringBuffer().append("  ").append(context.getString(R.string.lack_of_balance)).toString(),
-                    R.dimen.dp14, R.dimen.dp12, R.color.gray_light_text, R.color.red_text, "");
-        } else {
-            page_pay.setTextColor(context.getResources().getColor(R.color.black_overlay));
-            page_pay.setText(context.getString(R.string.page_pay));
-            page_pay_layout.setEnabled(true);
+    public void refreshPageView(Double currentPay, Double containsPay) {
+        if (containsPay != -1) {
+            if (currentPay > containsPay) {
+                page_pay_layout.setEnabled(false);
+                SystemUtil.textMagicTool(context, page_pay, new StringBuffer().append(context.getString(R.string.page_pay))
+                                .append("(").append(context.getString(R.string.remaining)).append(context.getString(R.string.money))
+                                .append(containsPay).append(")").toString(), new StringBuffer().append("  ").append(context.getString(R.string.lack_of_balance)).toString(),
+                        R.dimen.dp14, R.dimen.dp12, R.color.gray_light_text, R.color.red_text, "");
+            } else {
+                page_pay.setTextColor(context.getResources().getColor(R.color.black_overlay));
+                page_pay.setText(context.getString(R.string.page_pay));
+                page_pay_layout.setEnabled(true);
+            }
+            page_pay_layout.setVisibility(View.VISIBLE);
+        }else {
+            page_pay_layout.setVisibility(View.GONE);
         }
     }
 

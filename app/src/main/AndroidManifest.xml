@@ -16,13 +16,19 @@
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
 
     <application
         android:name=".global.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -35,7 +41,11 @@
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -47,11 +57,7 @@
             android:name=".ui.activity.HomeActivity"
             android:launchMode="singleTop"
             android:theme="@style/MainTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -137,6 +143,46 @@
 
         <activity
             android:name=".ui.activity.component.ForwardingActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.ModifyThePassWordActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.OrderFormActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.plugin.CustomScanActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.SingleConditionsSelectActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.MoreDataReferenceActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.GymClassSelectActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.CourseInformationActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.InfoCourseActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.BindPhoneActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.activity.component.CollectionActivity"
             android:theme="@style/MainTheme" />
 
         <service android:name=".server.InitializeService" />

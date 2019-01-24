@@ -11,14 +11,12 @@ import android.widget.RelativeLayout;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseFragment;
-import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.adapter.TabPageIndicatorAdapter;
 import com.example.administrator.sportsFitness.ui.fragment.search.SearchTypeFragment;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -98,15 +96,17 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
     }
 
     private void initViewLayout() {
-        view_pager.removeAllViews();
-        tab_layout.removeAllTabs();
-        tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getChildFragmentManager(), titleList, mFragments);
+        tabPageIndicatorAdapter = new TabPageIndicatorAdapter(getChildFragmentManager(), titleList, mFragments,true);
         view_pager.setAdapter(tabPageIndicatorAdapter);
         tab_layout.setupWithViewPager(view_pager);
-        MeasurementIndicator();
+        ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin_max), getResources().getInteger(R.integer.title_bar_margin_max));
+        tabPageIndicatorAdapter.notifyDataSetChanged();
+        view_pager.setOffscreenPageLimit(mFragments.size());
     }
 
     private void initDiversifiedFragment() {
+        view_pager.removeAllViews();
+        tab_layout.removeAllTabs();
         titleList.clear();
         if (OPEN_SEARCH_STATUS) {
             titleList.addAll(Arrays.asList(getResources().getStringArray(R.array.search_type)));
@@ -115,6 +115,7 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
                 SearchTypeFragment searchTypeFragment = new SearchTypeFragment();
                 Bundle data = new Bundle();
                 data.putString("typeId", titleList.get(i));
+                data.putString("relatedId", "");
                 searchTypeFragment.setArguments(data);
                 mFragments.add(searchTypeFragment);
                 RadioButton radioButton = (RadioButton) group_view.getChildAt(i);
@@ -126,6 +127,7 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
             SearchTypeFragment searchTypeFragment = new SearchTypeFragment();
             Bundle data = new Bundle();
             data.putString("typeId", getString(R.string.course));
+            data.putString("relatedId", "");
             searchTypeFragment.setArguments(data);
             mFragments.add(searchTypeFragment);
         }
@@ -145,11 +147,6 @@ public class SearchFragment extends BaseFragment implements TabLayout.OnTabSelec
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
-    }
-
-    private void MeasurementIndicator() {
-        ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin_max), getResources().getInteger(R.integer.title_bar_margin_max));
-        tabPageIndicatorAdapter.notifyDataSetChanged();
     }
 
     @Override

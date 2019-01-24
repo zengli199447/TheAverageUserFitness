@@ -6,7 +6,7 @@
 
     <include layout="@layout/layout_title_bar" />
 
-    <include layout="@layout/layout_refresh_waterfall" />
+    <include layout="@layout/layout_refresh_scroll_waterfall" />
 
 
 </LinearLayout>

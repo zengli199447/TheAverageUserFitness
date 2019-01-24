@@ -1,6 +1,7 @@
 package com.example.administrator.sportsFitness.ui.fragment.search;
 
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -26,6 +27,8 @@ public class SearchTypeFragment extends BaseFragment {
     TextView empty_layout;
     @BindView(R.id.recycler_view)
     RecyclerView recycler_view;
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
     private ControllerSearchType controllerSearchType;
 
     @Override
@@ -45,7 +48,10 @@ public class SearchTypeFragment extends BaseFragment {
 
     @Override
     protected void initClass() {
-        controllerSearchType = new ControllerSearchType(empty_layout, recycler_view);
+        Bundle bundle = getArguments();
+        String typeId = bundle != null ? bundle.getString("typeId") : "";
+        String relatedId = bundle != null ? bundle.getString("relatedId") : "";
+        controllerSearchType = new ControllerSearchType(empty_layout, recycler_view, typeId, relatedId);
     }
 
     @Override
@@ -55,15 +61,13 @@ public class SearchTypeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        Bundle bundle = getArguments();
-        String typeId = bundle != null ? bundle.getString("typeId") : "";
-        String relatedId = bundle != null ? bundle.getString("relatedId") : "";
+
 
     }
 
     @Override
     protected void initView() {
-
+        scrollView.setBackgroundColor(getResources().getColor(R.color.gray_));
     }
 
     @Override

@@ -47,7 +47,9 @@ public class FriendsCircleRelatedFragment extends BaseFragment {
 
     @Override
     protected void initClass() {
-        controllerFriendsCircleRelated = new ControllerFriendsCircleRelated(swipe_layout, empty_layout, recycler_view);
+        Bundle bundle = getArguments();
+        type = bundle != null ? bundle.getInt("type") : -1;
+        controllerFriendsCircleRelated = new ControllerFriendsCircleRelated(swipe_layout, empty_layout, recycler_view, type);
 
     }
 
@@ -58,14 +60,13 @@ public class FriendsCircleRelatedFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        Bundle bundle = getArguments();
-        type = bundle != null ? bundle.getInt("type") : -1;
+
 
     }
 
     @Override
     protected void initView() {
-
+        swipe_layout.setBackgroundColor(getResources().getColor(R.color.gray_));
     }
 
     @Override

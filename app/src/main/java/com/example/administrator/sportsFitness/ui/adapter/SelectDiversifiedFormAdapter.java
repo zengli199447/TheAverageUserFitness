@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.FriendsCircleRelatedNetBean;
 import com.example.administrator.sportsFitness.ui.holder.MyViewHolder;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 
@@ -33,12 +34,28 @@ public class SelectDiversifiedFormAdapter extends RecyclerView.Adapter<MyViewHol
         this.list = list;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        int type = -1;
+        Object object = list.get(position);
+        if (object instanceof FriendsCircleRelatedNetBean.ResultBean.UserlistBean) {
+            type = 0;
+        } else {
+            type = 1;
+        }
+        return type;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = null;
-        view = LayoutInflater.from(context).inflate(R.layout.item_select_diversified_form, parent, false);
+        switch (viewType) {
+            case 0:
+                view = LayoutInflater.from(context).inflate(R.layout.item_select_diversified_form, parent, false);
+                break;
 
+        }
         return new MyViewHolder(view);
     }
 
@@ -48,16 +65,15 @@ public class SelectDiversifiedFormAdapter extends RecyclerView.Adapter<MyViewHol
         ImageView friend_img = holder.itemView.findViewById(R.id.friend_img);
         TextView friend_content = holder.itemView.findViewById(R.id.friend_content);
         View line = holder.itemView.findViewById(R.id.line);
-
-        Glide.with(context).load(SystemUtil.JudgeUrl(DataClass.USERPHOTO)).error(R.drawable.banner_off).into(friend_img);
-        SystemUtil.textMagicTool(context, friend_content, DataClass.UNAME, "在健身中不断磨练自己"
-                , R.dimen.dp14, R.dimen.dp12, R.color.black, R.color.black_overlay, "\n");
-
-
-        if (position == 0) {
-            line.setVisibility(View.GONE);
-        } else {
-            line.setVisibility(View.VISIBLE);
+        check_select.setEnabled(false);
+        switch (getItemViewType(position)) {
+            case 0:
+                FriendsCircleRelatedNetBean.ResultBean.UserlistBean userlistBean =(FriendsCircleRelatedNetBean.ResultBean.UserlistBean) list.get(position);
+                Glide.with(context).load(SystemUtil.JudgeUrl(userlistBean.getPhoto())).error(R.drawable.banner_off).into(friend_img);
+                SystemUtil.textMagicTool(context, friend_content, userlistBean.getSecondname(), userlistBean.getSignature()
+                        , R.dimen.dp14, R.dimen.dp12, R.color.black, R.color.black_overlay, "\n");
+                check_select.setChecked(userlistBean.isSelectStatus());
+                break;
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -26,7 +26,7 @@ import butterknife.OnClick;
 /**
  * 作者：真理 Created by Administrator on 2018/12/25.
  * 邮箱：229017464@qq.com
- * remark:
+ * remark: 嵌入复用fragment  或 使用普通列表排版
  */
 public class GeneralFormActivity extends BaseActivity {
 
@@ -71,8 +71,7 @@ public class GeneralFormActivity extends BaseActivity {
         flags = intent.getFlags();
         relatedId = intent.getStringExtra("relatedId");
         relatedName = intent.getStringExtra("relatedName");
-        controllerGeneralForm = new ControllerGeneralForm(swipe_layout, empty_layout, recycler_view, flags, relatedId);
-
+        controllerGeneralForm = new ControllerGeneralForm(recycler_view, flags, relatedId);
     }
 
     @Override
@@ -88,12 +87,6 @@ public class GeneralFormActivity extends BaseActivity {
     @Override
     protected void initView() {
         switch (flags) {
-            case EventCode.DYNAMIC:
-                initSwipeLayout();
-                if (DataClass.USERID.equals(relatedId))
-                    relatedName = "我";
-                title_name.setText(new StringBuffer().append(relatedName).append(getString(R.string.the_personal)).append(getString(R.string.dynamic)).toString());
-                break;
             case EventCode.COACH_PRIVATE:
                 title_name.setText(getString(R.string.coach_private));
                 initFragment();
@@ -102,13 +95,9 @@ public class GeneralFormActivity extends BaseActivity {
                 title_name.setText(getString(R.string.gym));
                 initFragment();
                 break;
-            case EventCode.COMMENTS:
+            case EventCode.ONSTART:
                 initSwipeLayout();
-                title_name.setText(new StringBuffer().append(relatedName).append(getString(R.string.the_related)).append(getString(R.string.comments)).toString());
-                break;
-            case EventCode.COURSE_ZOO:
-                initSwipeLayout();
-                title_name.setText(new StringBuffer().append(relatedName).append(getString(R.string.coures_form)).toString());
+                title_name.setText(new StringBuffer().append(relatedName).append(getString(R.string.about)).toString());
                 break;
         }
     }

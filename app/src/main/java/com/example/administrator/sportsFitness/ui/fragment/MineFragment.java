@@ -12,13 +12,18 @@ import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseFragment;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
+import com.example.administrator.sportsFitness.model.bean.InfoAboutNetBean;
+import com.example.administrator.sportsFitness.model.bean.UserInfoNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.activity.component.CardPageActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.CollectionActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.FriendsCircleActivity;
-import com.example.administrator.sportsFitness.ui.activity.component.GeneralFormActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.MoreDataReferenceActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.ShowGeneraActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsInformationActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.WalletActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.WebConcentratedActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerMine;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 
@@ -30,7 +35,7 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class MineFragment extends BaseFragment {
+public class MineFragment extends BaseFragment implements ControllerMine.OnPersonalContentNetWorkListener {
 
     @BindView(R.id.user_photo)
     ImageView user_photo;
@@ -91,35 +96,57 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
-    protected void initListener() {
+    public void onResume() {
+        super.onResume();
+        SystemUtil.textMagicTool(getActivity(), balance, DataClass.MONEY, getString(R.string.balance), R.dimen.dp14, R.dimen.dp12, R.color.red_text, R.color.black_overlay, "\n");
+    }
 
+    @Override
+    protected void initListener() {
+        controllerMine.setOnPersonalContentNetWorkListener(this);
     }
 
     @SuppressLint("WrongConstant")
     @OnClick({R.id.ranking_list, R.id.weekly, R.id.CV, R.id.sign_in, R.id.collection, R.id.friends,
-            R.id.dynamic, R.id.balance, R.id.card, R.id.user_photo})
+            R.id.dynamic, R.id.balance, R.id.card, R.id.user_photo, R.id.setting})
     @Override
     protected void onClickAble(View view) {
+        Intent webIntent = new Intent(getActivity(), WebConcentratedActivity.class);
         switch (view.getId()) {
             case R.id.ranking_list:
+                webIntent.putExtra("link", new StringBuffer().append("do=ranklist1&userid=").append(DataClass.USERID).toString());
+                webIntent.putExtra("titleName", getString(R.string.ranking_list));
+                startActivity(webIntent);
                 break;
             case R.id.weekly:
+                webIntent.putExtra("link", new StringBuffer().append("do=week_bao&userid=").append(DataClass.USERID).toString());
+                webIntent.putExtra("titleName", getString(R.string.weekly));
+                webIntent.putExtra("titleAbout", getString(R.string.the_share));
+                startActivity(webIntent);
                 break;
             case R.id.CV:
+                webIntent.putExtra("link", new StringBuffer().append("do=record&userid=").append(DataClass.USERID).toString());
+                webIntent.putExtra("titleName", getString(R.string.CV));
+                startActivity(webIntent);
                 break;
             case R.id.sign_in:
+                webIntent.putExtra("link_all", new StringBuffer().append(DataClass.URL).append("pf_wx.php?act=qiandao&do=qiandao&uid=").append(DataClass.USERID).toString());
+                webIntent.putExtra("titleName", getString(R.string.sign_in));
+                startActivity(webIntent);
                 break;
             case R.id.collection:
+                getActivity().startActivity(new Intent(getActivity(), CollectionActivity.class));
                 break;
             case R.id.friends:
-                getActivity().startActivity(new Intent(getActivity(), FriendsCircleActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), FriendsCircleActivity.class).setFlags(0));
                 break;
             case R.id.dynamic:
-                Intent generalFormIntent = new Intent(getActivity(), GeneralFormActivity.class);
-                generalFormIntent.setFlags(EventCode.DYNAMIC);
-                generalFormIntent.putExtra("relatedId", DataClass.USERID);
-                generalFormIntent.putExtra("relatedName", DataClass.UNAME);
-                getActivity().startActivity(generalFormIntent);
+                Intent moreDataReferenceIntent = new Intent(getActivity(), MoreDataReferenceActivity.class);
+                moreDataReferenceIntent.setFlags(EventCode.DYNAMIC);
+                moreDataReferenceIntent.putExtra("relatedId", DataClass.USERID);
+                moreDataReferenceIntent.putExtra("relatedName", DataClass.UNAME);
+                moreDataReferenceIntent.putExtra("relatedType", "3");
+                getActivity().startActivity(moreDataReferenceIntent);
                 break;
             case R.id.balance:
                 getActivity().startActivity(new Intent(getActivity(), WalletActivity.class));
@@ -129,30 +156,43 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.user_photo:
                 Intent theDetailsInformationIntent = new Intent(getActivity(), TheDetailsInformationActivity.class);
-                theDetailsInformationIntent.setFlags(EventCode.PERSONLA);
                 theDetailsInformationIntent.putExtra("userId", DataClass.USERID);
+                theDetailsInformationIntent.putExtra("userName", DataClass.UNAME);
                 getActivity().startActivity(theDetailsInformationIntent);
+                break;
+            case R.id.setting:
+                getActivity().startActivity(new Intent(getActivity(), ShowGeneraActivity.class).setFlags(EventCode.ACCOUNT_MANAGEMENT));
                 break;
         }
     }
 
     public void refreshView() {
-        Glide.with(getActivity()).load(DataClass.USERPHOTO).error(R.drawable.banner_off).into(user_photo);
+
+    }
+
+    @Override
+    public void onPersonalContentNetWorkListener(UserInfoNetBean.ResultBean result) {
+
+        Glide.with(getActivity()).load(SystemUtil.JudgeUrl(result.getPhoto())).error(R.drawable.banner_off).into(user_photo);
 
         user_nice_name.setText(DataClass.UNAME);
 
-        user_content.setText("身体是革命的本钱，全民健身动起来！加油加油加油！");
+        user_content.setText(result.getSignature_show());
 
-        SystemUtil.textMagicTool(getActivity(), collection, "352", getString(R.string.collection), R.dimen.dp14, R.dimen.dp12, R.color.white, R.color.white, "\n");
+    }
 
-        SystemUtil.textMagicTool(getActivity(), friends, "62", getString(R.string.friends), R.dimen.dp14, R.dimen.dp12, R.color.white, R.color.white, "\n");
+    @Override
+    public void onNetInfoAboutListener(InfoAboutNetBean.ResultBean result) {
 
-        SystemUtil.textMagicTool(getActivity(), dynamic, "19", getString(R.string.dynamic), R.dimen.dp14, R.dimen.dp12, R.color.white, R.color.white, "\n");
+        SystemUtil.textMagicTool(getActivity(), collection, result.getCollect(), getString(R.string.collection), R.dimen.dp14, R.dimen.dp12, R.color.white, R.color.white, "\n");
 
-        SystemUtil.textMagicTool(getActivity(), balance, "165.50", getString(R.string.balance), R.dimen.dp14, R.dimen.dp12, R.color.red_text, R.color.black_overlay, "\n");
+        SystemUtil.textMagicTool(getActivity(), friends, result.getFriend(), getString(R.string.friends), R.dimen.dp14, R.dimen.dp12, R.color.white, R.color.white, "\n");
 
-        SystemUtil.textMagicTool(getActivity(), card, "月卡", getString(R.string.card), R.dimen.dp15, R.dimen.dp12, R.color.red_text, R.color.black_overlay, "\n");
+        SystemUtil.textMagicTool(getActivity(), dynamic, result.getNews(), getString(R.string.dynamic), R.dimen.dp14, R.dimen.dp12, R.color.white, R.color.white, "\n");
 
+        SystemUtil.textMagicTool(getActivity(), balance, result.getMoneytotal(), getString(R.string.balance), R.dimen.dp14, R.dimen.dp12, R.color.red_text, R.color.black_overlay, "\n");
+
+        SystemUtil.textMagicTool(getActivity(), card, result.getCardtype(), getString(R.string.card), R.dimen.dp15, R.dimen.dp12, R.color.red_text, R.color.black_overlay, "\n");
 
     }
 
