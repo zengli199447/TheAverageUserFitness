@@ -46,10 +46,11 @@ public class ShowDialog {
         return confirmOrNoDialog;
     }
 
-    public void showHelpfulHintsDialog(final Context context, String content, int eventCode) {
+    public HelpfulHintsDialog showHelpfulHintsDialog(final Context context, String content, int eventCode) {
         final HelpfulHintsDialog helpfulHintsDialog = new HelpfulHintsDialog(context, R.style.dialog, content, eventCode);
         helpfulHintsDialog.show();
         SystemUtil.windowToDark(context);
+        return helpfulHintsDialog;
     }
 
     public ProgressDialog showProgressStatus(final Context context) {

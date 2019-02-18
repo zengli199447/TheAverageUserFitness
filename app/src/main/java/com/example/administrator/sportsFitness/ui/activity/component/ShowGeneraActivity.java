@@ -18,6 +18,7 @@ import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
 import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.rxtools.RxBus;
 import com.example.administrator.sportsFitness.ui.activity.LoginActivity;
 import com.example.administrator.sportsFitness.ui.activity.WelcomeActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerShowGenera;
@@ -182,6 +183,8 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
                 startActivity(new Intent(ShowGeneraActivity.this, ModifyThePassWordActivity.class));
                 break;
             case R.id.login_out:
+                RxBus.getDefault().post(new CommonEvent(EventCode.FINISH));
+                DataClass.USERID = "";
                 startActivity(new Intent(ShowGeneraActivity.this, LoginActivity.class));
                 finish();
                 break;

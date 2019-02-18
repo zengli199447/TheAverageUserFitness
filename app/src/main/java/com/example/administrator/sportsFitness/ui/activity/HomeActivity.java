@@ -105,6 +105,9 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 layout_search.setVisibility(View.VISIBLE);
                 returnStatus = true;
                 break;
+            case EventCode.FINISH:
+                finish();
+                break;
         }
     }
 

@@ -24,6 +24,7 @@ import com.example.administrator.sportsFitness.ui.activity.component.ForwardingA
 import com.example.administrator.sportsFitness.ui.activity.component.TheTagModifyActivity;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerCommentsAdapter;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerFriendsAdapter;
+import com.example.administrator.sportsFitness.ui.dialog.HelpfulHintsDialog;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.CustomConditionsPopupWindow;
 import com.example.administrator.sportsFitness.ui.view.FlowLayout;
@@ -66,6 +67,7 @@ public class ControllerIntroduce extends ControllerClassObserver implements Cont
     ArrayList<CommentsNetBean.ResultBean.CommentBean> commentsList = new ArrayList<>();
     private String tags;
     private List<String> tagList = new ArrayList<>();
+    private HelpfulHintsDialog helpfulHintsDialog;
 
     public ControllerIntroduce(RecyclerView dynamic_recycler_view, RecyclerView comments_recycler_view, FlowLayout flow_layout, String userId) {
         this.dynamic_recycler_view = dynamic_recycler_view;
@@ -86,6 +88,8 @@ public class ControllerIntroduce extends ControllerClassObserver implements Cont
             case EventCode.TAG_REFRSH:
             case EventCode.DELET_DYNAMIC_SUCCESSFUL:
                 NetHomePage();
+                if (helpfulHintsDialog != null)
+                    helpfulHintsDialog.dismiss();
                 break;
         }
     }
@@ -389,7 +393,7 @@ public class ControllerIntroduce extends ControllerClassObserver implements Cont
                     public void onNext(UpLoadStatusNetBean upLoadStatusNetBean) {
                         if (upLoadStatusNetBean.getStatus() == 1) {
                             NetHomePage();
-                            instance.showHelpfulHintsDialog(context, context.getString(R.string.delet_dynamic), EventCode.DELET_DYNAMIC_SUCCESSFUL);
+                            helpfulHintsDialog = instance.showHelpfulHintsDialog(context, context.getString(R.string.delet_dynamic), EventCode.DELET_DYNAMIC_SUCCESSFUL);
                         } else {
                             toastUtil.showToast(upLoadStatusNetBean.getMessage());
                         }

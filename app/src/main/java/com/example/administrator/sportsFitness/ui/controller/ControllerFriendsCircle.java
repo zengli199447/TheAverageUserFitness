@@ -24,6 +24,7 @@ import com.example.administrator.sportsFitness.ui.activity.component.DynamicDeta
 import com.example.administrator.sportsFitness.ui.activity.component.ForwardingActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsInformationActivity;
 import com.example.administrator.sportsFitness.ui.adapter.ControllerFriendsAdapter;
+import com.example.administrator.sportsFitness.ui.dialog.HelpfulHintsDialog;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.CustomConditionsPopupWindow;
 import com.example.administrator.sportsFitness.utils.LogUtil;
@@ -62,6 +63,7 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
     private int selectIndex;
     private ShowDialog instance;
     private FriendsCircleNetBean.ResultBean.NewsBean newsBean;
+    private HelpfulHintsDialog helpfulHintsDialog;
 
     public ControllerFriendsCircle(SwipeRefreshLayout swipe_layout, TextView empty_layout, RecyclerView recycler_view, int type, String userId) {
         this.swipe_layout = swipe_layout;
@@ -83,7 +85,8 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
                 NetFriendsCircle();
                 break;
             case EventCode.DELET_DYNAMIC:
-                NetDeletDynamic();
+                if (newsBean != null)
+                    NetDeletDynamic();
                 break;
             case EventCode.DYNAMIC_SELECT:
                 pageNumber = 1;
@@ -381,7 +384,7 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
                             } else {
                                 controllerFriendsAdapter.notifyDataSetChanged();
                             }
-                            instance.showHelpfulHintsDialog(context, context.getString(R.string.delet_dynamic_successful), EventCode.DELET_DYNAMIC_SUCCESSFUL);
+                            helpfulHintsDialog = instance.showHelpfulHintsDialog(context, context.getString(R.string.delet_dynamic_successful), EventCode.DELET_DYNAMIC_SUCCESSFUL);
                         } else {
                             toastUtil.showToast(upLoadStatusNetBean.getMessage());
                         }

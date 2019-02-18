@@ -50,6 +50,7 @@ public class EventCode {
 
     public static final int ORDER_PAY = 3017;
 
+    public static final int FINISH = 3018;
 
     //-----------------------SWICH---------------------------------
     public static final int DYNAMIC = 4000;
