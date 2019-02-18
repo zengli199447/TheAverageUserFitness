@@ -4,27 +4,37 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.webkit.JavascriptInterface;
 
+import com.example.administrator.sportsFitness.widget.AlbumBuilder;
 import com.tencent.smtt.export.external.interfaces.JsResult;
+import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+
+import java.net.URI;
 
 /**
  * 作者：真理 Created by Administrator on 2018/12/19.
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class X5WebView extends WebView {
+public class X5WebView extends WebView implements AlbumBuilder.OnReturnPhotoListener {
+
+    private AlbumBuilder albumBuilder;
+    private ValueCallback<Uri[]> valueCallbacks;
 
     @SuppressLint("SetJavaScriptEnabled")
     public X5WebView(Context arg0, AttributeSet arg1) {
         super(arg0, arg1);
         this.setWebViewClient(webViewClient);
         initWebViewSettings();
+        albumBuilder = new AlbumBuilder(getContext());
+        albumBuilder.setOnReturnPhotoListener(this);
     }
 
     private void initWebViewSettings() {
@@ -46,6 +56,8 @@ public class X5WebView extends WebView {
         webSetting.setDisplayZoomControls(false);
         this.addJavascriptInterface(new JSInterface(), "fitness");
         this.setWebChromeClient(webChromeClient);
+
+
     }
 
     public X5WebView(Context arg0) {
@@ -78,7 +90,30 @@ public class X5WebView extends WebView {
             if (x5LoadingListener != null)
                 x5LoadingListener.onProgressChanged(newProgress);
         }
+
+        @Override
+        public void openFileChooser(ValueCallback<Uri> valueCallback, String acceptType, String capture) {
+            super.openFileChooser(valueCallback, acceptType, capture);
+        }
+
+        @Override
+        public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> valueCallback, FileChooserParams fileChooserParams) {
+            albumBuilder.ImageSingleSelection();
+            valueCallbacks = valueCallback;
+            return true; //super.onShowFileChooser(webView, valueCallback, fileChooserParams)
+
+        }
     };
+
+    @Override
+    public void onReturnPhotoListener(String photo) {
+        Uri[] results = null;
+        if (photo != null) {
+            Uri uriData = Uri.parse(photo);
+            results = new Uri[]{uriData};
+        }
+        valueCallbacks.onReceiveValue(results);
+    }
 
     private WebViewClient webViewClient = new WebViewClient() {
 
@@ -100,6 +135,7 @@ public class X5WebView extends WebView {
             return true;
         }
     };
+
 
     private final class JSInterface {
 

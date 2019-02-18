@@ -42,10 +42,14 @@ public class AlbumBuilder {
                 DataClass.USERPHOTO = theAssignment;
                 RxBus.getDefault().post(new CommonEvent(EventCode.PICTURE, theAssignment));
                 LogUtil.e(TAG, "albumFile : " + "file://" + theAssignment);
+                if (onReturnPhotoListener != null)
+                    onReturnPhotoListener.onReturnPhotoListener(new StringBuffer().append("file://").append(theAssignment).toString());
             }
         }).onCancel(new Action<String>() {
             @Override
             public void onAction(@NonNull String result) {
+                if (onReturnPhotoListener != null)
+                    onReturnPhotoListener.onReturnPhotoListener(null);
             }
         }).start();
 
@@ -117,5 +121,16 @@ public class AlbumBuilder {
 
         return widget;
     }
+
+    public interface OnReturnPhotoListener {
+        void onReturnPhotoListener(String photo);
+    }
+
+    private OnReturnPhotoListener onReturnPhotoListener;
+
+    public void setOnReturnPhotoListener(OnReturnPhotoListener onReturnPhotoListener) {
+        this.onReturnPhotoListener = onReturnPhotoListener;
+    }
+
 
 }

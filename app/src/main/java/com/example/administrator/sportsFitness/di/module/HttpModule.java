@@ -3,10 +3,15 @@ package com.example.administrator.sportsFitness.di.module;
 
 import com.bumptech.glide.integration.okhttp.BuildConfig;
 import com.example.administrator.sportsFitness.di.qualifier.MyUrl;
+import com.example.administrator.sportsFitness.global.MyApplication;
 import com.example.administrator.sportsFitness.model.http.api.MyApis;
 import com.example.administrator.sportsFitness.model.manager.RetrofitUrlManager;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.Constants;
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -146,11 +151,10 @@ public class HttpModule {
                 .build();
         builder.addInterceptor(commonInterceptor);
 
-//        //设置cookie管理
-//        ClearableCookieJar cookieJar =
-//                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyApplication.getInstance().getApplicationContext()));
-//
-//        builder.cookieJar(cookieJar);
+        //设置cookie管理
+        ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyApplication.getInstance().getApplicationContext()));
+
+        builder.cookieJar(cookieJar);
 
         //设置缓存
         builder.addNetworkInterceptor(cacheInterceptor);
