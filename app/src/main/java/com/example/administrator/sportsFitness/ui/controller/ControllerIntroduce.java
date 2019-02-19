@@ -79,10 +79,10 @@ public class ControllerIntroduce extends ControllerClassObserver implements Cont
     @Override
     protected void registerEvent(CommonEvent commonevent) {
         switch (commonevent.getCode()) {
-            case EventCode.REPORT_INPUT:
+            case EventCode.REPORT_INPUT_DETAILS:
                 NetCodeViolation(commonevent.getTemp_str());
                 break;
-            case EventCode.DELET_DYNAMIC:
+            case EventCode.DELET_DYNAMIC_DETAILS:
                 NetDeletDynamic();
                 break;
             case EventCode.TAG_REFRSH:
@@ -198,7 +198,7 @@ public class ControllerIntroduce extends ControllerClassObserver implements Cont
                 NetOrSupport();
                 break;
             case R.id.clear_dynamic:
-                instance.showConfirmOrNoDialog(context, context.getString(R.string.clear_dynamic), EventCode.ONSTART, EventCode.DELET_DYNAMIC, EventCode.ONSTART);
+                instance.showConfirmOrNoDialog(context, context.getString(R.string.clear_dynamic), EventCode.ONSTART, EventCode.DELET_DYNAMIC_DETAILS, EventCode.ONSTART);
                 break;
         }
     }
@@ -208,7 +208,7 @@ public class ControllerIntroduce extends ControllerClassObserver implements Cont
     public void setOnItemClick(View v) {
         switch (v.getId()) {
             case R.id.report:
-                ShowDialog.getInstance().showInputDialog(context, EventCode.REPORT_INPUT);
+                ShowDialog.getInstance().showInputDialog(context, EventCode.REPORT_INPUT_DETAILS);
                 break;
         }
     }

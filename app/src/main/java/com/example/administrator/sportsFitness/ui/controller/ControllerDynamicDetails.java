@@ -77,10 +77,10 @@ public class ControllerDynamicDetails extends ControllerClassObserver implements
     @Override
     protected void registerEvent(CommonEvent commonevent) {
         switch (commonevent.getCode()) {
-            case EventCode.REPORT_INPUT:
+            case EventCode.REPORT_INPUT_DETAILS:
                 NetCodeViolation(commonevent.getTemp_str());
                 break;
-            case EventCode.DELET_DYNAMIC:
+            case EventCode.DELET_DYNAMIC_DETAILS:
                 NetDeletDynamic();
                 break;
         }

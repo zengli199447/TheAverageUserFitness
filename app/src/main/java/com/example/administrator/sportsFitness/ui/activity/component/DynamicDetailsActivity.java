@@ -98,7 +98,11 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
-
+        switch (commonevent.getCode()) {
+            case EventCode.DELET_DYNAMIC_SUCCESSFUL:
+                finish();
+                break;
+        }
     }
 
     @Override
@@ -186,7 +190,7 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
                 controllerDynamicDetails.NetSendComments(input_reply.getText().toString().trim());
                 break;
             case R.id.clear_dynamic:
-                instance.showConfirmOrNoDialog(this, getString(R.string.clear_dynamic), EventCode.ONSTART, EventCode.DELET_DYNAMIC, EventCode.ONSTART);
+                instance.showConfirmOrNoDialog(this, getString(R.string.clear_dynamic), EventCode.ONSTART, EventCode.DELET_DYNAMIC_DETAILS, EventCode.ONSTART);
                 break;
         }
 
@@ -201,7 +205,7 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
     public void setOnItemClick(View v) {
         switch (v.getId()) {
             case R.id.report:
-                instance.showInputDialog(this, EventCode.REPORT_INPUT);
+                instance.showInputDialog(this, EventCode.REPORT_INPUT_DETAILS);
                 break;
             case R.id.cancle:
                 break;

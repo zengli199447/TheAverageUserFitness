@@ -52,6 +52,8 @@ public class EventCode {
 
     public static final int FINISH = 3018;
 
+    public static final int REPORT_INPUT_DETAILS = 3019;
+
     //-----------------------SWICH---------------------------------
     public static final int DYNAMIC = 4000;
     public static final int COMMENTS = 4003;
@@ -98,8 +100,8 @@ public class EventCode {
     public static final int BIND_SUCCESSFUL = 4035;
     public static final int STUDENT_FORM = 4036;
     public static final int COACH_STUDENT_FORM = 4037;
-
-
+    public static final int DELET_DYNAMIC_DETAILS = 4038;
+    public static final int DYNAMIC_DELETE_STATUS = 4039;
 
     //-----------------------PAY---------------------------------
     public static final int WALLET_TOP_UP_PAY = 5001;

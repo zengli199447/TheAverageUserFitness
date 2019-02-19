@@ -19,6 +19,7 @@ import com.example.administrator.sportsFitness.model.bean.PraiseStatusNetBean;
 import com.example.administrator.sportsFitness.model.bean.UpLoadStatusNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.rxtools.RxBus;
 import com.example.administrator.sportsFitness.rxtools.RxUtil;
 import com.example.administrator.sportsFitness.ui.activity.component.DynamicDetailsActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.ForwardingActivity;
@@ -71,18 +72,23 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
         this.recycler_view = recycler_view;
         this.type = type;
         this.userId = userId;
+        RxBus.getDefault().post(new CommonEvent(EventCode.DYNAMIC_DELETE_STATUS)); // 注意 由于事件总线绑定在一起 设计策略原因采取当前补救措施
     }
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
         switch (commonevent.getCode()) {
             case EventCode.REPORT_INPUT:
-                NetCodeViolation(commonevent.getTemp_str());
+                if (newsBean != null)
+                    NetCodeViolation(commonevent.getTemp_str());
                 break;
             case EventCode.DYNAMIC_REFRESH:
             case EventCode.FORWARDING_DYNAMIC_SUCCESSFUL:
+            case EventCode.DELET_DYNAMIC_SUCCESSFUL:
                 pageNumber = 1;
                 NetFriendsCircle();
+                if (helpfulHintsDialog != null)
+                    helpfulHintsDialog.dismiss();
                 break;
             case EventCode.DELET_DYNAMIC:
                 if (newsBean != null)
@@ -96,6 +102,9 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
                     type = 1;
                 }
                 NetFriendsCircle();
+                break;
+            case EventCode.DYNAMIC_DELETE_STATUS: // 注意 由于事件总线绑定在一起 设计策略原因采取当前补救措施
+                newsBean = null;
                 break;
         }
     }

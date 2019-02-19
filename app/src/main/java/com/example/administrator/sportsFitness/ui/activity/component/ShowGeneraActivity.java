@@ -184,6 +184,7 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
                 break;
             case R.id.login_out:
                 RxBus.getDefault().post(new CommonEvent(EventCode.FINISH));
+                dataManager.deleteLoginUserInfo(DataClass.STANDARD_USER);
                 DataClass.USERID = "";
                 startActivity(new Intent(ShowGeneraActivity.this, LoginActivity.class));
                 finish();
