@@ -154,7 +154,8 @@ public class OrderFormAdapter extends RecyclerView.Adapter<MyViewHolder> {
         if (orderBean.getState().equals(context.getString(R.string.already_complete)) || orderBean.getState().equals(context.getString(R.string.already_cancle)) || orderBean.getState().equals(context.getString(R.string.waiting_complete))) {
 
             if (orderBean.getState().equals(context.getString(R.string.waiting_complete))) {
-                controller_right.setVisibility(View.GONE);
+                controller_right.setVisibility(View.VISIBLE);
+                controller_life.setVisibility(View.GONE);
                 controller_right.setText(context.getString(R.string.complete_order));
             }
 

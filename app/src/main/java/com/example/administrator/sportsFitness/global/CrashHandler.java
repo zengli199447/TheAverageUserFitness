@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.example.administrator.sportsFitness.ui.activity.MainActivity;
+import com.example.administrator.sportsFitness.utils.LogUtil;
 
 
 /**
@@ -14,7 +15,8 @@ import com.example.administrator.sportsFitness.ui.activity.MainActivity;
  */
 
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
-    private static final String TAG = "CrashHandler";
+
+    private String TAG = getClass().getSimpleName();
 
     // CrashHandler 实例
     private static CrashHandler INSTANCE = new CrashHandler();
@@ -85,6 +87,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         if (ex == null) {
             return false;
         }
+
+        LogUtil.e(TAG, "HandleException : " + ex.getMessage().trim().toString());
 
         new Thread() {
             @Override

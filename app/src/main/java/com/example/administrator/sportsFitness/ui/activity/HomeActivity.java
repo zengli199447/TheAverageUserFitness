@@ -36,8 +36,10 @@ import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.Constants;
 import com.example.administrator.sportsFitness.widget.QrBuilder;
+import com.example.administrator.sportsFitness.widget.UmPushBuilder;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.umeng.message.PushAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -126,6 +128,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         controllerHome = new ControllerHome(search_edit, history_search_layout, frameLayout);
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         showDialog = ShowDialog.getInstance();
+
     }
 
     @Override

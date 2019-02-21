@@ -11,6 +11,7 @@ import com.example.administrator.sportsFitness.di.module.AppModule;
 import com.example.administrator.sportsFitness.di.module.HttpModule;
 import com.example.administrator.sportsFitness.server.InitializeService;
 import com.example.administrator.sportsFitness.utils.LogUtil;
+import com.example.administrator.sportsFitness.widget.UmPushBuilder;
 import com.luoxudong.app.threadpool.ThreadPoolHelp;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
@@ -44,6 +45,7 @@ public class MyApplication extends Application {
         InitializeService.start(this);
         //友盟初始化
         initUm();
+        new UmPushBuilder(this).initPushSetting();
     }
 
     private void initUm() {

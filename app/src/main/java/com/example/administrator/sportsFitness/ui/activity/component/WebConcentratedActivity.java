@@ -14,6 +14,7 @@ import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.ui.dialog.ProgressDialog;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.X5WebView;
+import com.example.administrator.sportsFitness.widget.UmShareBuilder;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,6 +39,7 @@ public class WebConcentratedActivity extends BaseActivity implements X5WebView.X
     private ProgressDialog progressDialog;
     private String titleAbout;
     private String Uid;
+    private UmShareBuilder umShareBuilder;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
@@ -58,6 +60,7 @@ public class WebConcentratedActivity extends BaseActivity implements X5WebView.X
     protected void initClass() {
         progressDialog = ShowDialog.getInstance().showProgressStatus(this);
         progressDialog.show();
+        umShareBuilder = new UmShareBuilder(this);
     }
 
     @Override
@@ -118,7 +121,7 @@ public class WebConcentratedActivity extends BaseActivity implements X5WebView.X
                     theDetailsInformationIntent.putExtra("userName", titleName);
                     this.startActivity(theDetailsInformationIntent);
                 } else if (titleAbout.equals(getString(R.string.the_share))) {
-
+                    umShareBuilder.initUmUrlShare(1,"",url,getString(R.string.app_name),"健身周报");
                 }
                 break;
         }

@@ -2,7 +2,9 @@ package com.example.administrator.sportsFitness.widget;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.example.administrator.sportsFitness.utils.ToastUtil;
 import com.umeng.socialize.ShareAction;
@@ -26,6 +28,7 @@ public class UmComprehensiveBuilder {
     private String TAG = getClass().getSimpleName();
     private Activity activity;
     private ToastUtil toastUtil;
+    private Bitmap bitmap;
 
     public UmComprehensiveBuilder(Activity activity, ToastUtil toastUtil) {
         this.activity = activity;
@@ -135,8 +138,9 @@ public class UmComprehensiveBuilder {
     }
 
     //分享链接可以使用UMWeb进行分享：
-    public void initUmUrlShare(int shareType, Bitmap bitmap, String img_url, String url, String title, String description) {
+    public void initUmUrlShare(int shareType, String img_url, String url, String title, String description) {
 //        url = "http://e.hiphotos.baidu.com/image/pic/item/d0c8a786c9177f3eeb8bedb57ccf3bc79e3d56ce.jpg";
+        bitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_launcher);
         UMWeb web = new UMWeb(url);
         web.setTitle(title);//标题
         if (img_url.isEmpty()) {
