@@ -35,6 +35,7 @@
     <drawable name="white">#ffffffff</drawable>
     <color name="orange_text">#ef8200</color>
     <color name="red_text">#cc3333</color>
+    <color name="gray_s">#ececec</color>
 
     <color name="blue_the_gradient_f">#029793</color>
     <color name="blue_the_gradient_c">#36c9c4</color>
@@ -53,7 +54,7 @@
     <drawable name="blue_bar">#0CC5BF</drawable>
 
     <color name="translucent">#39080808</color>
-
+    <drawable name="translucent">#39080808</drawable>
 
 
 </resources>

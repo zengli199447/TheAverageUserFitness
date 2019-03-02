@@ -10,11 +10,13 @@ import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.rxtools.RxBus;
 import com.example.administrator.sportsFitness.utils.LogUtil;
+import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumFile;
 import com.yanzhenjie.album.api.widget.Widget;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -53,7 +55,30 @@ public class AlbumBuilder {
             }
         }).start();
 
+    }
 
+    /**
+     * 视频单选
+     */
+    public void VideoSingleSelection() {
+        Album.video(context).singleChoice()
+                .camera(true)
+                .columnCount(3)
+                .widget(initWidget(context))
+                .onResult(new Action<ArrayList<AlbumFile>>() {
+                    @Override
+                    public void onAction(@NonNull ArrayList<AlbumFile> result) {
+                        LogUtil.e(TAG, "albumFile : " + "file://" + result.get(0).getPath());
+                        DataClass.AlbumVideoFileList.clear();
+                        DataClass.AlbumVideoFileList.addAll(result);
+                        RxBus.getDefault().post(new CommonEvent(EventCode.PHOTO_REFRESH));
+                    }
+                }).onCancel(new Action<String>() {
+            @Override
+            public void onAction(@NonNull String result) {
+
+            }
+        }).start();
     }
 
     /**

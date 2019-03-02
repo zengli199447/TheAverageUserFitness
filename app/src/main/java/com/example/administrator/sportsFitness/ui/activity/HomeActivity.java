@@ -5,24 +5,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.base.BaseActivity;
 import com.example.administrator.sportsFitness.base.BaseLifecycleObserver;
-import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
-import com.example.administrator.sportsFitness.ui.activity.component.FriendsCircleActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.QueryFriendsActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.ReleaseNewDynamicActivity;
-import com.example.administrator.sportsFitness.ui.activity.component.ShowGeneraActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.ReleaseNewVideoDynamicActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsInformationActivity;
 import com.example.administrator.sportsFitness.ui.controller.ControllerHome;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
@@ -31,15 +30,13 @@ import com.example.administrator.sportsFitness.ui.fragment.HomeFragment;
 import com.example.administrator.sportsFitness.ui.fragment.MineFragment;
 import com.example.administrator.sportsFitness.ui.fragment.SearchFragment;
 import com.example.administrator.sportsFitness.ui.fragment.SocialFragment;
+import com.example.administrator.sportsFitness.ui.view.CustomConditionsPopupWindow;
 import com.example.administrator.sportsFitness.ui.view.FlowLayout;
-import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.Constants;
 import com.example.administrator.sportsFitness.widget.QrBuilder;
-import com.example.administrator.sportsFitness.widget.UmPushBuilder;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.umeng.message.PushAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,7 +47,8 @@ import me.yokeyword.fragmentation.SupportFragment;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener ,CustomConditionsPopupWindow.OnItemClickListener,
+        PopupWindow.OnDismissListener{
 
     @BindView(R.id.group_view)
     RadioGroup group_view;
@@ -76,6 +74,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private ControllerHome controllerHome;
     private FragmentTransaction fragmentTransaction;
     private ShowDialog showDialog;
+    private CustomConditionsPopupWindow customConditionsPopupWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,7 +127,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         controllerHome = new ControllerHome(search_edit, history_search_layout, frameLayout);
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         showDialog = ShowDialog.getInstance();
-
+        customConditionsPopupWindow = new CustomConditionsPopupWindow(this);
     }
 
     @Override
@@ -153,11 +152,14 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         data.putInt("flagStatus", EventCode.COURSE);
         courseFragment.setArguments(data);
         fragmentTransaction.commit();
+        customConditionsPopupWindow.refreshView();
     }
 
     @Override
     protected void initListener() {
         group_view.setOnCheckedChangeListener(this);
+        customConditionsPopupWindow.setOnItemClickListener(this);
+        customConditionsPopupWindow.setOnDismissListener(this);
     }
 
     @SuppressLint("WrongConstant")
@@ -174,11 +176,12 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 refreshViewStatus();
                 break;
             case R.id.dynamic_release:
-                startActivity(new Intent(this, ReleaseNewDynamicActivity.class));
+                customConditionsPopupWindow.showAtLocation(frameLayout, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                SystemUtil.windowToDark(this);
                 refreshViewStatus();
                 break;
             case R.id.add_friends:
-                startActivity(new Intent(this, FriendsCircleActivity.class).setFlags(2));
+                startActivity(new Intent(this, QueryFriendsActivity.class));
                 refreshViewStatus();
                 break;
             case R.id.action_qr:
@@ -215,6 +218,23 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         group_view.check(checkedId);
         showHideFragment(getTargetFragment(showFragment), getTargetFragment(hideFragment));
         hideFragment = showFragment;
+    }
+
+    @Override
+    public void onDismiss() {
+        SystemUtil.windowToLight(this);
+    }
+
+    @Override
+    public void setOnItemClick(View v) {
+        switch (v.getId()) {
+            case R.id.release_img:
+                startActivity(new Intent(this, ReleaseNewDynamicActivity.class));
+                break;
+            case R.id.release_video:
+                startActivity(new Intent(this, ReleaseNewVideoDynamicActivity.class));
+                break;
+        }
     }
 
     @Override
@@ -272,6 +292,5 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             System.exit(0);
         }
     }
-
 
 }

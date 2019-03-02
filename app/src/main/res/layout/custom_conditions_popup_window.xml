@@ -23,6 +23,26 @@
             android:textColor="@color/black_overlay"
             android:textSize="@dimen/dp14" />
 
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/release_img"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="@string/release_img"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp14" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/release_video"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="@string/release_video"
+            android:textColor="@color/black_overlay"
+            android:textSize="@dimen/dp14" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp5"

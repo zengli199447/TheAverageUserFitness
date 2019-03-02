@@ -77,6 +77,7 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
     private CustomTimeChoicePopupWindow customTimeChoicePopupWindow;
     private String selectTime = "";
     private int flagStatus;
+    private boolean priceCheckedStatus;
 
     @Override
     protected void initInject() {
@@ -122,12 +123,14 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
             case EventCode.COACH_PRIVATE:
                 layout_title_bar.setVisibility(View.GONE);
                 number_of_people.setVisibility(View.GONE);
+                MaginPriceSort(28);
                 break;
             case EventCode.GYM:
                 layout_title_bar.setVisibility(View.GONE);
                 number_of_people.setVisibility(View.GONE);
                 time_select_layout.setVisibility(View.GONE);
                 score.setVisibility(View.VISIBLE);
+                MaginPriceSort(23);
                 break;
         }
         ViewBuilder.ProgressStyleChange(swipe_layout, SystemUtil.dp2px(getActivity(), 130));
@@ -160,20 +163,29 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        toastUtil.showToast("checkedId");
         controllerCourse.changePageNumber();
         controllerCourse.RefreshNetWorkData(selectTime);
         switch (checkedId) {
             case R.id.price:
-                controllerCourse.changeReason("1");
+                if (priceCheckedStatus) {
+                    controllerCourse.changeReason("4");
+                } else {
+                    controllerCourse.changeReason("1");
+                }
+                RefreshPriceSortView(true);
                 break;
             case R.id.near:
                 controllerCourse.changeReason("2");
+                RefreshPriceSortView(false);
                 break;
             case R.id.number_of_people:
                 controllerCourse.changeReason("3");
+                RefreshPriceSortView(false);
                 break;
             case R.id.score:
                 controllerCourse.changeReason("3");
+                RefreshPriceSortView(false);
                 break;
         }
         refreshDataView();
@@ -196,9 +208,33 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
         typeSelectOpenStatus = !typeSelectOpenStatus;
     }
 
+    //排序类型magin
+    private void MaginPriceSort(int magin) {
+        price.setPadding(SystemUtil.dp2px(getActivity(), magin), 0, SystemUtil.dp2px(getActivity(), magin), 0);
+    }
+
+    //排序类型色值选定保存清除
+    private void RefreshPriceSortView(boolean status) {
+        if (status) {
+            price.setChecked(!status);
+            price.setTextColor(getResources().getColor(R.color.blue_bar));
+            priceCheckedStatus = !priceCheckedStatus;
+            if (priceCheckedStatus) {
+                ViewBuilder.RadioButtonDrawable(price, getActivity(), R.drawable.down_sort_icon, 2);
+            } else {
+                ViewBuilder.RadioButtonDrawable(price, getActivity(), R.drawable.up_sort_icon, 2);
+            }
+        } else {
+            price.setTextColor(getResources().getColor(R.color.black_overlay));
+            ViewBuilder.RadioButtonDrawable(price, getActivity(), R.drawable.default_sort_icon, 2);
+            priceCheckedStatus = true;
+        }
+    }
+
     @Override
     public void onDismiss() {
         refreshSelectView(0);
+        SystemUtil.windowToLight(getActivity());
     }
 
     @Override
@@ -214,6 +250,7 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
         time_select_content.setText(selectTime);
         controllerCourse.RefreshNetWorkData(selectTime);
         refreshDataView();
+        RefreshPriceSortView(false);
     }
 
     private void refreshDataView() {

@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -93,6 +94,25 @@ public class ViewBuilder {
     }
 
     public static void textDrawable(TextView view, Context context, int id, int direction) {
+        Drawable nav_up = context.getResources().getDrawable(id);
+        nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+        switch (direction) {
+            case 0:
+                view.setCompoundDrawables(nav_up, null, null, null);
+                break;
+            case 1:
+                view.setCompoundDrawables(null, nav_up, null, null);
+                break;
+            case 2:
+                view.setCompoundDrawables(null, null, nav_up, null);
+                break;
+            case 3:
+                view.setCompoundDrawables(null, null, null, nav_up);
+                break;
+        }
+    }
+
+    public static void RadioButtonDrawable(RadioButton view, Context context, int id, int direction) {
         Drawable nav_up = context.getResources().getDrawable(id);
         nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
         switch (direction) {

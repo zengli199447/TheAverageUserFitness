@@ -28,7 +28,6 @@ import com.example.administrator.sportsFitness.ui.dialog.HelpfulHintsDialog;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.CustomConditionsPopupWindow;
 import com.example.administrator.sportsFitness.ui.view.FlowLayout;
-import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.AlbumBuilder;
 import com.example.administrator.sportsFitness.widget.CommonSubscriber;
@@ -171,7 +170,15 @@ public class ControllerIntroduce extends ControllerClassObserver implements Cont
         for (FriendsCircleNetBean.ResultBean.NewsBean.ImgpathjsonBean imgpathjsonBean : imgpathjson) {
             photoList.add(SystemUtil.JudgeUrl(imgpathjsonBean.getImgpath()));
         }
-        albumBuilder.ImageTheExhibition(photoList, false, position);
+        if (SystemUtil.JudgeNetFilePathType(imgpathjson.get(0).getImgpath())) {
+            toastUtil.showToast("进入播放");
+            Intent dynamicDetailsIntent = new Intent(context, DynamicDetailsActivity.class);
+            dynamicDetailsIntent.putExtra("userId", dynamicBean.getUserid());
+            dynamicDetailsIntent.putExtra("dynamicId", dynamicBean.getNewsid());
+            context.startActivity(dynamicDetailsIntent);
+        } else {
+            albumBuilder.ImageTheExhibition(photoList, false, position);
+        }
     }
 
     //动态事件

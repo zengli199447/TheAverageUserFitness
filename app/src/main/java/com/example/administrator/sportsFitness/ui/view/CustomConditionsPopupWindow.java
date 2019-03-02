@@ -29,9 +29,12 @@ public class CustomConditionsPopupWindow extends PopupWindow implements View.OnC
 
     private TextView confirm;
     private TextView cancle;
+    private TextView release_img;
+    private TextView release_video;
     private View mPopView;
     private OnItemClickListener mListener;
     private Context context;
+
 
     public CustomConditionsPopupWindow(Context context) {
         super(context);
@@ -44,9 +47,21 @@ public class CustomConditionsPopupWindow extends PopupWindow implements View.OnC
         mPopView = inflater.inflate(R.layout.custom_conditions_popup_window, null);
         confirm = mPopView.findViewById(R.id.report);
         cancle = mPopView.findViewById(R.id.cancle);
+
+        release_img = mPopView.findViewById(R.id.release_img);
+        release_video = mPopView.findViewById(R.id.release_video);
+
         confirm.setOnClickListener(this);
         cancle.setOnClickListener(this);
+        release_img.setOnClickListener(this);
+        release_video.setOnClickListener(this);
         setPopupWindow();
+    }
+
+    public void refreshView() {
+        release_img.setVisibility(View.VISIBLE);
+        release_video.setVisibility(View.VISIBLE);
+        confirm.setVisibility(View.GONE);
     }
 
     /**

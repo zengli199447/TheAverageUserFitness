@@ -161,6 +161,11 @@ public class ReleaseNewDynamicActivity extends BaseActivity implements Multipart
         upLoadReleaseNewDynamic(url);
     }
 
+    @Override
+    public void onUpLoadFileErrorListener() {
+        progressDialog.dismiss();
+    }
+
     private void upLoadReleaseNewDynamic(String url) {
         controllerReleaseNewDynamic.NetNewDynamic("", url, input_content.getText().toString().trim(), LookStatus);
     }

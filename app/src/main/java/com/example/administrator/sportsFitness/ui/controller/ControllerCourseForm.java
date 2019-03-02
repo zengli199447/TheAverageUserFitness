@@ -13,7 +13,6 @@ import com.example.administrator.sportsFitness.model.bean.CommentsNetBean;
 import com.example.administrator.sportsFitness.model.bean.CourseFormNetBean;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.rxtools.RxUtil;
-import com.example.administrator.sportsFitness.ui.adapter.ControllerCommentsAdapter;
 import com.example.administrator.sportsFitness.ui.adapter.FitnessCourseAdapter;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.AlbumBuilder;

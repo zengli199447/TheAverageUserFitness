@@ -86,6 +86,11 @@ public class ControllerTheDetailsInformation extends ControllerClassObserver imp
             NetModifyHomePage(url, "", "", 1);
     }
 
+    @Override
+    public void onUpLoadFileErrorListener() {
+
+    }
+
     //用户主页
     private void NetHomePage() {
         HashMap map = new HashMap<>();

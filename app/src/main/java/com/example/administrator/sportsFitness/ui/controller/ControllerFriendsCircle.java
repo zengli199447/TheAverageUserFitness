@@ -173,10 +173,19 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
     @Override
     public void onChildClickListener(int position, int parentIndex) {
         photoList.clear();
-        for (FriendsCircleNetBean.ResultBean.NewsBean.ImgpathjsonBean imgpathjsonBean : list.get(parentIndex).getImgpathjson()) {
+        List<FriendsCircleNetBean.ResultBean.NewsBean.ImgpathjsonBean> imgpathjson = list.get(parentIndex).getImgpathjson();
+        for (FriendsCircleNetBean.ResultBean.NewsBean.ImgpathjsonBean imgpathjsonBean : imgpathjson) {
             photoList.add(SystemUtil.JudgeUrl(imgpathjsonBean.getImgpath()));
         }
-        albumBuilder.ImageTheExhibition(photoList, false, position);
+        if (SystemUtil.JudgeNetFilePathType(imgpathjson.get(0).getImgpath())) {
+            newsBean = list.get(parentIndex);
+            Intent dynamicDetailsIntent = new Intent(context, DynamicDetailsActivity.class);
+            dynamicDetailsIntent.putExtra("userId", newsBean.getUserid());
+            dynamicDetailsIntent.putExtra("dynamicId", newsBean.getNewsid());
+            context.startActivity(dynamicDetailsIntent);
+        } else {
+            albumBuilder.ImageTheExhibition(photoList, false, position);
+        }
     }
 
     @SuppressLint("WrongConstant")
@@ -188,6 +197,7 @@ public class ControllerFriendsCircle extends ControllerClassObserver implements 
             switch (id) {
                 case -1:
                 case R.id.comments:
+                case R.id.dynamic_content:
                     Intent dynamicDetailsIntent = new Intent(context, DynamicDetailsActivity.class);
                     dynamicDetailsIntent.putExtra("userId", newsBean.getUserid());
                     dynamicDetailsIntent.putExtra("dynamicId", newsBean.getNewsid());

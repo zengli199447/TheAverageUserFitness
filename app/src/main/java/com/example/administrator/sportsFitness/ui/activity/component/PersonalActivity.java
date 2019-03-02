@@ -279,5 +279,10 @@ public class PersonalActivity extends BaseActivity implements CustomSingleChoice
                 DynamicVisibleIndex);
     }
 
+    @Override
+    public void onUpLoadFileErrorListener() {
+        progressDialog.dismiss();
+    }
+
 
 }

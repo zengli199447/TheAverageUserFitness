@@ -168,7 +168,7 @@ public class ImageSlideshow extends FrameLayout {
             layoutParams.leftMargin = dotSpace / 2;
             layoutParams.rightMargin = dotSpace / 2;
             layoutParams.topMargin = dotSpace / 2;
-            layoutParams.bottomMargin = dotSpace / 2;
+            layoutParams.bottomMargin = dotSpace / 2 + 10;
             llDot.addView(view, layoutParams);
             isLarge.put(i, false);
         }

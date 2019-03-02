@@ -30,7 +30,9 @@ import com.example.administrator.sportsFitness.ui.controller.ControllerMessage;
 import com.example.administrator.sportsFitness.ui.controller.ControllerMine;
 import com.example.administrator.sportsFitness.ui.controller.ControllerOrderForm;
 import com.example.administrator.sportsFitness.ui.controller.ControllerPersonalContent;
+import com.example.administrator.sportsFitness.ui.controller.ControllerQueryFriendsAbout;
 import com.example.administrator.sportsFitness.ui.controller.ControllerReleaseNewDynamic;
+import com.example.administrator.sportsFitness.ui.controller.ControllerReleaseNewVideoDynamic;
 import com.example.administrator.sportsFitness.ui.controller.ControllerSearchType;
 import com.example.administrator.sportsFitness.ui.controller.ControllerSelectDiversifiedForm;
 import com.example.administrator.sportsFitness.ui.controller.ControllerShowGenera;
@@ -117,5 +119,9 @@ public interface ControllerComponent {
     void inject(ControllerInfoCourse controllerInfoCourse);
 
     void inject(ControllerCollection controllerCollection);
+
+    void inject(ControllerQueryFriendsAbout controllerQueryFriendsAbout);
+
+    void inject(ControllerReleaseNewVideoDynamic controllerReleaseNewVideoDynamic);
 
 }

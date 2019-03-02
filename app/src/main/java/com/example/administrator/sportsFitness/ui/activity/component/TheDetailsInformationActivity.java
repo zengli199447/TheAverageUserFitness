@@ -87,6 +87,8 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
     View center_line;
     @BindView(R.id.pen)
     View pen;
+    @BindView(R.id.certification_tag)
+    ImageView certification_tag;
 
     private String userId;
     private String userName;
@@ -109,11 +111,22 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
     private HomePageInfoNetBean.ResultBean resultBean;
     private String collectionStatus;
     private ProgressDialog progressDialog;
+    private List<HomePageInfoNetBean.ResultBean.UserBean.ZizhiBean> certificationTagList;
 
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
-
+        switch (commonevent.getCode()) {
+            case EventCode.CERTIFICATION_TAG:
+                if (certificationTagList != null) {
+                    ArrayList<String> strings = new ArrayList<>();
+                    for (HomePageInfoNetBean.ResultBean.UserBean.ZizhiBean zizhiBean : certificationTagList) {
+                        strings.add(SystemUtil.JudgeUrl(zizhiBean.getImgpath()));
+                    }
+                    albumBuilder.ImageTheExhibition(strings, false, 0);
+                }
+                break;
+        }
     }
 
     @Override
@@ -165,7 +178,7 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
 
     @SuppressLint("WrongConstant")
     @OnClick({R.id.img_btn_black, R.id.title_about_img, R.id.user_img, R.id.controller_life, R.id.controller_right, R.id.edit_data,
-            R.id.the_details_img, R.id.user_content, R.id.pen})
+            R.id.the_details_img, R.id.user_content, R.id.pen, R.id.certification_tag})
     @Override
     protected void onClickAble(View view) {
         switch (view.getId()) {
@@ -217,6 +230,9 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
                 if (DataClass.USERID.equals(resultBean.getUser().getUserid()))
                     instance.showInputDialog(this, EventCode.SIGNATURE);
                 break;
+            case R.id.certification_tag:
+                instance.showConfirmOrNoDialog(this, getString(R.string.certification_tag), EventCode.ONSTART, EventCode.CERTIFICATION_TAG, EventCode.ONSTART);
+                break;
         }
     }
 
@@ -251,6 +267,8 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
 
         this.resultBean = resultBean;
         userType = Integer.valueOf(resultBean.getUser().getRole());
+
+        certificationTagList = resultBean.getUser().getZizhi();
 
         SystemUtil.textMagicTool(this, user_content, resultBean.getUser().getSecondname(), resultBean.getUser().getSignature(), R.dimen.dp16, R.dimen.dp12,
                 R.color.black, R.color.gray_light_text, "\n");
@@ -307,6 +325,10 @@ public class TheDetailsInformationActivity extends BaseActivity implements TabLa
                 mFragments.add(personalTrainingFragment);
                 mFragments.add(courseFragment);
                 titleList.addAll(Arrays.asList(getResources().getStringArray(R.array.personal_details_info)));
+
+                if (getString(R.string.audit_sucessful).equals(resultBean.getUser().getState_check()))
+                    certification_tag.setVisibility(View.VISIBLE);
+
                 break;
         }
 

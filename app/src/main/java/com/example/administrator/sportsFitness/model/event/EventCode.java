@@ -102,6 +102,8 @@ public class EventCode {
     public static final int COACH_STUDENT_FORM = 4037;
     public static final int DELET_DYNAMIC_DETAILS = 4038;
     public static final int DYNAMIC_DELETE_STATUS = 4039;
+    public static final int CERTIFICATION_TAG = 4040;
+
 
     //-----------------------PAY---------------------------------
     public static final int WALLET_TOP_UP_PAY = 5001;

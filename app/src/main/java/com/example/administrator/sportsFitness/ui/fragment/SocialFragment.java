@@ -21,10 +21,12 @@ import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.rxtools.RxBus;
 import com.example.administrator.sportsFitness.ui.activity.component.ReleaseNewDynamicActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.ReleaseNewVideoDynamicActivity;
 import com.example.administrator.sportsFitness.ui.adapter.TabPageIndicatorAdapter;
 import com.example.administrator.sportsFitness.ui.controller.ControllerSocial;
 import com.example.administrator.sportsFitness.ui.fragment.social.FriendsCircleFragment;
 import com.example.administrator.sportsFitness.ui.fragment.social.MessageFragment;
+import com.example.administrator.sportsFitness.ui.view.CustomConditionsPopupWindow;
 import com.example.administrator.sportsFitness.ui.view.CustomSelectFriendsPopupWindow;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
@@ -41,7 +43,8 @@ import butterknife.OnClick;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, CustomSelectFriendsPopupWindow.OnItemSelectClickListener, PopupWindow.OnDismissListener {
+public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, CustomSelectFriendsPopupWindow.OnItemSelectClickListener, PopupWindow.OnDismissListener
+        ,CustomConditionsPopupWindow.OnItemClickListener {
 
     @BindView(R.id.tab_layout)
     TabLayout tab_layout;
@@ -59,6 +62,7 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
     private boolean viewStatus;
     private ControllerSocial controllerSocial;
     private CustomSelectFriendsPopupWindow customSelectFriendsPopupWindow;
+    private CustomConditionsPopupWindow customConditionsPopupWindow;
 
     @Override
     protected void initInject() {
@@ -86,6 +90,7 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
         mFragments.add(new MessageFragment());
         controllerSocial = new ControllerSocial();
         customSelectFriendsPopupWindow = new CustomSelectFriendsPopupWindow(getActivity());
+        customConditionsPopupWindow = new CustomConditionsPopupWindow(getActivity());
     }
 
     @Override
@@ -105,6 +110,7 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
         view_page.setAdapter(tabPageIndicatorAdapter);
         tab_layout.setupWithViewPager(view_page);
         ViewBuilder.setIndicator(tab_layout, getResources().getInteger(R.integer.title_bar_margin), getResources().getInteger(R.integer.title_bar_margin));
+        customConditionsPopupWindow.refreshView();
     }
 
     @Override
@@ -112,6 +118,8 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
         tab_layout.setOnTabSelectedListener(this);
         customSelectFriendsPopupWindow.setOnSelectItemClickListener(this);
         customSelectFriendsPopupWindow.setOnDismissListener(this);
+        customConditionsPopupWindow.setOnItemClickListener(this);
+        customConditionsPopupWindow.setOnDismissListener(this);
     }
 
     @OnClick({R.id.title_about_img, R.id.dynamic_select, R.id.message_select})
@@ -119,7 +127,8 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
     protected void onClickAble(View view) {
         switch (view.getId()) {
             case R.id.title_about_img:
-                getActivity().startActivity(new Intent(getActivity(), ReleaseNewDynamicActivity.class));
+                customConditionsPopupWindow.showAtLocation(view_page, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                SystemUtil.windowToDark(getActivity());
                 break;
             case R.id.dynamic_select:
                 refreshView(true);
@@ -185,6 +194,18 @@ public class SocialFragment extends BaseFragment implements TabLayout.OnTabSelec
     @Override
     public void setOnItemClick(String content) {
         RxBus.getDefault().post(new CommonEvent(EventCode.DYNAMIC_SELECT, content));
+    }
+
+    @Override
+    public void setOnItemClick(View v) {
+        switch (v.getId()) {
+            case R.id.release_img:
+                startActivity(new Intent(getActivity(), ReleaseNewDynamicActivity.class));
+                break;
+            case R.id.release_video:
+                startActivity(new Intent(getActivity(), ReleaseNewVideoDynamicActivity.class));
+                break;
+        }
     }
 
 }

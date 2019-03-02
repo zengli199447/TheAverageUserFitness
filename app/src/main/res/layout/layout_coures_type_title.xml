@@ -74,6 +74,9 @@
                 android:checked="false"
                 android:gravity="center"
                 android:text="@string/price"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp10"
+                android:drawableRight="@drawable/default_sort_icon"
                 android:textColor="@drawable/text_color_selector"
                 android:textSize="@dimen/dp14" />
 

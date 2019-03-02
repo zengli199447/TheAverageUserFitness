@@ -11,41 +11,203 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/dp50"
-        android:layout_below="@+id/layout_title_bar">
+        android:layout_below="@+id/layout_title_bar"
+        android:layout_marginBottom="@dimen/dp50">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/item_controller_friends" />
+            <!--<include layout="@layout/controller_video_dynamic" />-->
 
-            <View
+            <LinearLayout
+                android:id="@+id/controller_dynamic_layout"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray_light" />
-
-            <TextView
-                android:id="@+id/all_comments"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp40"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/dp15"
-                android:paddingRight="@dimen/dp15"
-                android:text="@string/all_comments"
-                android:textColor="@color/gray_light_text"
-                android:textSize="@dimen/dp12" />
+                android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_comments"
+                <LinearLayout
+                    android:id="@+id/dynamic_content_params_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_marginRight="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/dynamic_content_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp50">
+
+                        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+                            android:id="@+id/user_img"
+                            android:layout_width="@dimen/dp40"
+                            android:layout_height="@dimen/dp40"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/placeholder" />
+
+                        <TextView
+                            android:id="@+id/user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp10"
+                            android:layout_toRightOf="@+id/user_img"
+                            android:lineSpacingExtra="@dimen/dp5"
+                            android:text="用户昵称"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dp14" />
+
+                        <ImageView
+                            android:id="@+id/about"
+                            android:layout_width="@dimen/dp30"
+                            android:layout_height="@dimen/dp30"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:padding="@dimen/dp8"
+                            android:src="@drawable/more_icon"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/clear_dynamic"
+                            android:layout_width="@dimen/dp30"
+                            android:layout_height="@dimen/dp30"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:padding="@dimen/dp8"
+                            android:src="@drawable/basket_icon"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/dynamic_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:lineSpacingExtra="@dimen/dp5"
+                        android:minHeight="@dimen/dp20"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dp13" />
+
+                    <RelativeLayout
+                        android:id="@+id/recycler_view_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:visibility="visible">
+
+                        <com.example.administrator.sportsFitness.ui.view.GridRecyclerView
+                            android:id="@+id/recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="-5dp"
+                            android:layout_marginTop="@dimen/dp10" />
+
+                        <com.example.administrator.sportsFitness.widget.media.SuperVideoView
+                            android:id="@+id/video_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="@dimen/dp10"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/controller_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp40">
+
+                        <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/support_check"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp20"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:button="@drawable/check_support_select"
+                            android:drawablePadding="@dimen/dp5"
+                            android:gravity="center"
+                            android:text=" 999+"
+                            android:textColor="@color/gray_light_text"
+                            android:textSize="@dimen/dp12" />
+
+                        <TextView
+                            android:id="@+id/comments"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_centerInParent="true"
+                            android:gravity="center_vertical"
+                            android:text="评论 999+"
+                            android:textColor="@color/gray_light_text"
+                            android:textSize="@dimen/dp12" />
+
+                        <TextView
+                            android:id="@+id/forwarding"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+                            android:text="转发 999+"
+                            android:textColor="@color/gray_light_text"
+                            android:textSize="@dimen/dp12" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:background="@color/gray_" />
+
+            </LinearLayout>
+
+
+            <!--&#45;&#45;-->
+
+            <LinearLayout
+                android:id="@+id/comments_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/controller_dynamic_layout"
+                android:orientation="vertical">
 
-            <include layout="@layout/item_footer_view" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray_light" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/all_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp40"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp15"
+                    android:paddingRight="@dimen/dp15"
+                    android:text="@string/all_comments"
+                    android:textColor="@color/gray_light_text"
+                    android:textSize="@dimen/dp12" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include layout="@layout/item_footer_view" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
 

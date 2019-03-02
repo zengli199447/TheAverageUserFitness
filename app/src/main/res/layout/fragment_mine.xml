@@ -94,7 +94,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/dp5"
                 android:layout_marginTop="@dimen/dp30"
-                android:padding="@dimen/dp12"
+                android:padding="@dimen/dp10"
                 android:src="@drawable/setting_icon" />
 
         </RelativeLayout>

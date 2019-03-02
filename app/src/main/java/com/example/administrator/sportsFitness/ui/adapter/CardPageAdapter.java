@@ -50,12 +50,12 @@ public class CardPageAdapter extends RecyclerView.Adapter<MyViewHolder> {
         if (!cardBean.getEnddate().isEmpty()) {
             handle_card_status.setText(context.getString(R.string.renewal));
             handle_card_status.setBackground(context.getResources().getDrawable(R.drawable.corners_immersed_in_gray));
-            SystemUtil.textMagicTool(context, card_info, cardBean.getDatatype(), new StringBuffer().append(context.getString(R.string.end_date)).append(" ").append(cardBean.getEnddate()).toString(),
+            SystemUtil.textMagicTool(context, card_info, cardBean.getTitle(), new StringBuffer().append(context.getString(R.string.end_date)).append(" ").append(cardBean.getEnddate()).toString(),
                     R.dimen.dp14, R.dimen.dp12, R.color.black, R.color.gray_light_text, "\n");
         } else {
             handle_card_status.setText(context.getString(R.string.handle_card));
             handle_card_status.setBackground(context.getResources().getDrawable(R.drawable.corners_immersed_in_blue));
-            card_info.setText(cardBean.getDatatype());
+            card_info.setText(cardBean.getTitle());
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

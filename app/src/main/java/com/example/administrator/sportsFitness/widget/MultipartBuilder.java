@@ -1,15 +1,22 @@
 package com.example.administrator.sportsFitness.widget;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 
+import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.global.MyApplication;
 import com.example.administrator.sportsFitness.model.bean.UpLoadFileNetBean;
+import com.example.administrator.sportsFitness.model.bean.UpLoadVideoFileNetBean;
+import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.utils.LogUtil;
+import com.example.administrator.sportsFitness.utils.SystemUtil;
+import com.example.administrator.sportsFitness.utils.ToastUtil;
 import com.google.gson.Gson;
 import com.yanzhenjie.album.AlbumFile;
 
@@ -48,6 +55,8 @@ public class MultipartBuilder {
     private int size = 0;
     private List<String> stringList = new ArrayList<>();
     public static ArrayList<AlbumFile> AlbumFileList;
+    String fileType = "image";
+    String Heart = DataClass.IMAGE_SAVE_SET;
 
     public MultipartBuilder(Context context, int flags) {
         this.context = context;
@@ -62,6 +71,13 @@ public class MultipartBuilder {
         this.context = context;
         this.flags = flags;
         this.AlbumFileList = AlbumFileList;
+    }
+
+    public MultipartBuilder(Context context, int flags, String fileType, String Heart) {
+        this.context = context;
+        this.flags = flags;
+        this.fileType = fileType;
+        this.Heart = Heart;
     }
 
     @SuppressLint("HandlerLeak")
@@ -101,11 +117,27 @@ public class MultipartBuilder {
                         textParams = new HashMap<>();
                         fileparams = new HashMap<>();
 
-                        File fileUrl = new File(file);
-                        fileparams.put("image", fileUrl);
+                        File oldFileUrl = new File(file);
+                        File fileUrl = null;
+                        if ("image".equals(fileType) && SystemUtil.getFileSize(oldFileUrl) > 2 * 1024 * 1024) {
+                            fileUrl = CompressHelperBuilder.CompressHelperFile(context, oldFileUrl, oldFileUrl.getName());
+                        } else {
+                            fileUrl = oldFileUrl;
+                        }
+
+                        if (!SystemUtil.JudgeNetFilePathType(file))
+                            if (file.contains(".gif")) {
+                                fileType = "file";
+                                Heart = DataClass.FILE_SAVE_SET;
+                            } else {
+                                fileType = "image";
+                                Heart = DataClass.IMAGE_SAVE_SET;
+                            }
+
+                        fileparams.put(fileType, fileUrl);
 
                         LinkedHashMap linkedHashMap = new LinkedHashMap();
-                        linkedHashMap.put("action", DataClass.IMAGE_SAVE_SET);
+                        linkedHashMap.put("action", Heart);
                         String toJson = new Gson().toJson(linkedHashMap);
                         textParams.put("version", "v1");
                         textParams.put("vars", toJson);
@@ -158,16 +190,20 @@ public class MultipartBuilder {
                             }
                         } else {
                             LogUtil.e(TAG, "Exception - responseCode : " + responseCode);
+                            if (upLoadFileListener != null)
+                                upLoadFileListener.onUpLoadFileErrorListener();
                         }
-                    } catch (MalformedURLException e) {
+                    } catch (final Exception e) {
                         e.printStackTrace();
-                        LogUtil.e(TAG, "MalformedURLException : " + e.toString());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        LogUtil.e(TAG, "IOException : " + e.toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        LogUtil.e(TAG, "Exception : " + e.toString());
+                        if (upLoadFileListener != null)
+                            upLoadFileListener.onUpLoadFileErrorListener();
+                        ((Activity) context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ShowDialog.getInstance().showHelpfulHintsDialog(context, context.getString(R.string.up_laod_prompt), EventCode.ONSTART);
+                                LogUtil.e(TAG, "Exception : " + e.toString());
+                            }
+                        });
                     }
                 }
             }
@@ -177,11 +213,20 @@ public class MultipartBuilder {
 
     private String GsonFormatNetData(String result) {
         String url;
-        UpLoadFileNetBean upLoadFileNetBean = new Gson().fromJson(result, UpLoadFileNetBean.class);
-        if (upLoadFileNetBean.getStatus() == 1) {
-            url = upLoadFileNetBean.getSrc();
+        if ("image".equals(fileType)) {
+            UpLoadFileNetBean upLoadFileNetBean = new Gson().fromJson(result, UpLoadFileNetBean.class);
+            if (upLoadFileNetBean.getStatus() == 1) {
+                url = upLoadFileNetBean.getSrc();
+            } else {
+                url = null;
+            }
         } else {
-            url = null;
+            UpLoadVideoFileNetBean upLoadFileNetBean = new Gson().fromJson(result, UpLoadVideoFileNetBean.class);
+            if (upLoadFileNetBean.getStatus() == 1) {
+                url = upLoadFileNetBean.getSrc();
+            } else {
+                url = null;
+            }
         }
         return url;
     }
@@ -269,6 +314,8 @@ public class MultipartBuilder {
 
     public interface UpLoadFileListener {
         void onUpLoadFileListener(String url, List<String> list);
+
+        void onUpLoadFileErrorListener();
     }
 
     private UpLoadFileListener upLoadFileListener;

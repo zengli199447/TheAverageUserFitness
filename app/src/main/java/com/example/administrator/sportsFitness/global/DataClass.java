@@ -2,11 +2,14 @@ package com.example.administrator.sportsFitness.global;
 
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.model.DataManager;
+import com.example.administrator.sportsFitness.model.bean.ChangeViewLayoutParamsBean;
 import com.example.administrator.sportsFitness.model.bean.LoginInfoNetBean;
 import com.example.administrator.sportsFitness.model.db.entity.LoginUserInfo;
 import com.yanzhenjie.album.AlbumFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/3/2 0002.
@@ -42,6 +45,8 @@ public class DataClass {
     public static String USER_PWD_SET = "user_pwd_set";
     //图片保存
     public static String IMAGE_SAVE_SET = "image_save_set";
+    //视频保存
+    public static String FILE_SAVE_SET = "file_save_set";
 
     //首页
     public static String HOMEPAGE_GET = "homepage_get";
@@ -111,7 +116,6 @@ public class DataClass {
     public static String CARD_BUY_SET = "card_buy_set";
 
 
-
     //用户主页
     public static String USER_HOMEPAGE_GET = "user_homepage_get";
     //用户主页设置
@@ -160,6 +164,14 @@ public class DataClass {
     public static ArrayList<AlbumFile> AlbumFileList = new ArrayList<>();
     //用户编辑动态内容
     public static String DYNAMICCONTENT = "";
+
+    //视频集合
+    public static ArrayList<AlbumFile> AlbumVideoFileList = new ArrayList<>();
+    //用户编辑视频动态内容
+    public static String VIDEODYNAMICCONTENT = "";
+
+    //单张图片或封面信息
+    public static HashMap<String, ChangeViewLayoutParamsBean> ChangeViewLayoutParamsHashMap = new HashMap<>();
 
     //转发标记
     public static String FORWARDING_TAG = ":";

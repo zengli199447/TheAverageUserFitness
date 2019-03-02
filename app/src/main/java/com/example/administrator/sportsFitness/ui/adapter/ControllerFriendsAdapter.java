@@ -179,6 +179,7 @@ public class ControllerFriendsAdapter extends RecyclerView.Adapter<MyViewHolder>
             initCheckClickListener(comments, position);
             initCheckClickListener(holder.itemView, position);
             initCheckClickListener(clear_dynamic, position);
+            initCheckClickListener(dynamic_content, position);
 
             ViewBuilder.ChangeLinearLayoutViewMagin(context, dynamic_content, 50, 5, 0, 0);
             ViewBuilder.ChangeLinearLayoutViewMagin(context, recycler_view_layout, 50, 10, 0, 0);

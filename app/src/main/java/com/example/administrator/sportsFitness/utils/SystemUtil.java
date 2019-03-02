@@ -10,6 +10,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.media.MediaMetadataRetriever;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -287,15 +288,15 @@ public class SystemUtil {
             for (int i = 0; i < fileList.length; i++) {
                 if (fileList[i].isDirectory()) {
                     size = size + getFolderSize(fileList[i]);
-
                 } else {
                     size = size + fileList[i].length();
-
                 }
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } finally {
+            size = file.length();
         }
         return size;
     }
@@ -331,6 +332,27 @@ public class SystemUtil {
         }
         BigDecimal result4 = new BigDecimal(teraBytes);
         return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
+    }
+
+    /**
+     * 获取文件大小
+     */
+    public static long getFileSize(File file) {
+        long l = 0;
+        try {
+            if (file.exists()) {
+                FileInputStream fileInputStream = null;
+
+                fileInputStream = new FileInputStream(file);
+
+                l = fileInputStream.available();
+            } else {
+                file.createNewFile();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return l;
     }
 
     public static void openKeybord(EditText mEditText, Context mContext) {
@@ -659,6 +681,7 @@ public class SystemUtil {
         } else {
             url = new StringBuffer().append(DataClass.URL).append(content).toString();
         }
+
         return url;
     }
 
@@ -704,7 +727,21 @@ public class SystemUtil {
         return theReturnValue;
     }
 
-
+    /**
+     * 过滤网络文件类型
+     *
+     * @param path
+     * @return
+     */
+    public static boolean JudgeNetFilePathType(String path) {
+        boolean status = true;
+        if (path.contains(".mp4") | path.contains(".mov") | path.contains(".mkv") | path.contains(".avi") | path.contains(".3gp") | path.contains(".rm")) {
+            status = true;
+        } else {
+            status = false;
+        }
+        return status;
+    }
 
     /**
      * 返回当前程序版本名
@@ -725,5 +762,6 @@ public class SystemUtil {
         }
         return status ? versioncode : versionName;
     }
+
 
 }

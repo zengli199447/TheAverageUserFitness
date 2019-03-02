@@ -120,6 +120,15 @@ public class HomePageInfoNetBean implements Serializable {
             private String userid;
             private String weight;
             private String wxopenid;
+            private List<ZizhiBean> zizhi;
+
+            public List<ZizhiBean> getZizhi() {
+                return zizhi;
+            }
+
+            public void setZizhi(List<ZizhiBean> zizhi) {
+                this.zizhi = zizhi;
+            }
 
             public String getAge() {
                 return age;
@@ -376,6 +385,20 @@ public class HomePageInfoNetBean implements Serializable {
             public void setWxopenid(String wxopenid) {
                 this.wxopenid = wxopenid;
             }
+
+            public static class ZizhiBean {
+
+                private String imgpath;
+
+                public String getImgpath() {
+                    return imgpath;
+                }
+
+                public void setImgpath(String imgpath) {
+                    this.imgpath = imgpath;
+                }
+            }
+
         }
 
         public static class NewsBean {

@@ -220,7 +220,7 @@
 
     <string-array name="mine_tools">
         <item>我的订单</item>
-        <item>客服中心</item>
+        <item>帮助中心</item>
     </string-array>
 
     <string-array name="photo_list">

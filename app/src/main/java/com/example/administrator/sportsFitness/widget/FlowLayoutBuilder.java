@@ -66,8 +66,13 @@ public class FlowLayoutBuilder {
                 contentTextView.setBackground(context.getResources().getDrawable(R.drawable.corners_hollow_bg_gray));
                 contentTextView.setTextColor(context.getResources().getColor(R.color.gray_light_text));
             } else {
-                contentTextView.setBackground(colorList.get(random.nextInt(colorList.size()) + 0));
-                contentTextView.setTextColor(context.getResources().getColor(R.color.white));
+                if (type == 0) {
+                    contentTextView.setBackground(colorList.get(random.nextInt(colorList.size()) + 0));
+                    contentTextView.setTextColor(context.getResources().getColor(R.color.white));
+                } else {
+                    contentTextView.setBackground(context.getResources().getDrawable(R.drawable.corners_hollow_bg_gray));
+                    contentTextView.setTextColor(context.getResources().getColor(R.color.gray_light_text));
+                }
             }
             ImageView delete = inflate.findViewById(R.id.delete);
             if (deleteStatus)

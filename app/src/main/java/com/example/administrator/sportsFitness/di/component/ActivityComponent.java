@@ -29,6 +29,8 @@ import com.example.administrator.sportsFitness.ui.activity.component.MoreDataRef
 import com.example.administrator.sportsFitness.ui.activity.component.OrderFormActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.PersonalActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.PrivateGeneralFormActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.QueryFriendsActivity;
+import com.example.administrator.sportsFitness.ui.activity.component.ReleaseNewVideoDynamicActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.SelectDiversifiedFormActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.RegisteredAccountActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.ReleaseNewDynamicActivity;
@@ -38,6 +40,7 @@ import com.example.administrator.sportsFitness.ui.activity.component.TheDetailsI
 import com.example.administrator.sportsFitness.ui.activity.component.TheTagModifyActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.WalletActivity;
 import com.example.administrator.sportsFitness.ui.activity.component.WebConcentratedActivity;
+import com.example.administrator.sportsFitness.ui.activity.plugin.MediaPlayActivity;
 
 import dagger.Component;
 
@@ -115,5 +118,11 @@ public interface ActivityComponent {
     void inject(BindPhoneActivity bindPhoneActivity);
 
     void inject(CollectionActivity collectionActivity);
+
+    void inject(QueryFriendsActivity queryFriendsActivity);
+
+    void inject(ReleaseNewVideoDynamicActivity releaseNewVideoDynamicActivity);
+
+    void inject(MediaPlayActivity mediaPlayActivity);
 
 }

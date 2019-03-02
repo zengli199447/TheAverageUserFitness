@@ -166,6 +166,15 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
     }
 
     /**
+     * 新版本提示
+     */
+    private void NewVersionPrompt(HomePageNetBean.ResultBean.NewversionBean newversion) {
+        if (!SystemUtil.getAppVersionName(context, false).equals(newversion.getVersionvalue())) {
+            instance.showHelpfulHintsDialog(context, new StringBuffer().append(context.getString(R.string.news_version)).append(":").append(newversion.getVersionvalue()).toString(), EventCode.ONSTART);
+        }
+    }
+
+    /**
      * 首页
      */
     public void NetHomePage() {
@@ -188,7 +197,7 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
                         if (homePageNetBean.getStatus() == 1) {
                             HomePageNetBean.ResultBean result = homePageNetBean.getResult();
                             banner = result.getBanner();
-                            HomePageNetBean.ResultBean.NewversionBean newversion = result.getNewversion();
+                            NewVersionPrompt(result.getNewversion());
 //                            DataClass.URL = result.getRootPath();
                             initImageSlideshow();
                             if (onHomePageListener != null)

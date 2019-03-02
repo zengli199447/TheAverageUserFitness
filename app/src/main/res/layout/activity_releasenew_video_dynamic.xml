@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/input_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="left"
+                android:hint="@string/share_news"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:minHeight="@dimen/dp300"
+                android:padding="@dimen/dp10"
+                android:textColor="@color/gray_light_text"
+                android:textColorHint="@color/gray_light"
+                android:textSize="@dimen/dp13" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_light"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp5"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@color/gray_s">
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp150"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/action"
+                    android:layout_width="@dimen/dp150"
+                    android:layout_height="@dimen/dp150"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/add_icon" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/conditions_all"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp30"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:button="@drawable/check_conditions"
+                android:checked="true"
+                android:gravity="center"
+                android:text="   所有人可见"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp13" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginBottom="@dimen/dp5"
+                android:layout_marginLeft="@dimen/dp35"
+                android:layout_marginTop="@dimen/dp5"
+                android:background="@color/gray_light" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/conditions_only"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp30"
+                android:layout_marginBottom="@dimen/dp30"
+                android:layout_marginLeft="@dimen/dp10"
+                android:button="@drawable/check_conditions"
+                android:gravity="center"
+                android:text="   仅好友可见"
+                android:textColor="@color/black_overlay"
+                android:textSize="@dimen/dp13" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

@@ -88,7 +88,7 @@ public class ControllerMine extends ControllerClassObserver implements MineTools
             case 1:
                 Intent helpCenterIntent = new Intent(context, WebConcentratedActivity.class);
                 helpCenterIntent.putExtra("link", "do=kefu");
-                helpCenterIntent.putExtra("titleName", context.getString(R.string.service_center));
+                helpCenterIntent.putExtra("titleName", context.getString(R.string.help_center));
                 context.startActivity(helpCenterIntent);
                 break;
         }

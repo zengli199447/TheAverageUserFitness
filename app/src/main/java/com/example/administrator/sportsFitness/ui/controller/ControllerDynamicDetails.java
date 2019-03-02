@@ -1,10 +1,12 @@
 package com.example.administrator.sportsFitness.ui.controller;
 
+import android.app.Activity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,6 +28,7 @@ import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.AlbumBuilder;
 import com.example.administrator.sportsFitness.widget.CommonSubscriber;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
+import com.example.administrator.sportsFitness.widget.media.SuperVideoView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ public class ControllerDynamicDetails extends ControllerClassObserver implements
     RecyclerView recycler_view_comments;
     EditText input_reply;
     TextView send;
+    SuperVideoView video_view;
     private ArrayList<String> photoList = new ArrayList<>();
     private AlbumBuilder albumBuilder;
     private ArrayList<DynamicDetailsNetBean.ResultBean.ReplyBean> replyList = new ArrayList<>();
@@ -62,11 +66,12 @@ public class ControllerDynamicDetails extends ControllerClassObserver implements
     private int totalSupport;
     private ShowDialog instance;
 
-    public ControllerDynamicDetails(RecyclerView recycler_view, RecyclerView recycler_view_comments, EditText input_reply, TextView send, String userId, String dynamicId) {
+    public ControllerDynamicDetails(RecyclerView recycler_view, RecyclerView recycler_view_comments, EditText input_reply, TextView send, SuperVideoView video_view, String userId, String dynamicId) {
         this.recycler_view = recycler_view;
         this.recycler_view_comments = recycler_view_comments;
         this.input_reply = input_reply;
         this.send = send;
+        this.video_view = video_view;
         this.userId = userId;
         this.dynamicId = dynamicId;
         this.relpyId = userId;
@@ -94,12 +99,12 @@ public class ControllerDynamicDetails extends ControllerClassObserver implements
     @Override
     protected void onClassCreate() {
         super.onClassCreate();
+        video_view.register((Activity) context);
         albumBuilder = new AlbumBuilder(context);
         instance = ShowDialog.getInstance();
         initAdapter();
         initListener();
         NetDynamicDetails(1);
-
     }
 
     private void initAdapter() {
@@ -141,17 +146,16 @@ public class ControllerDynamicDetails extends ControllerClassObserver implements
     @Override
     protected void onClassResume() {
         super.onClassResume();
+        video_view.onResume();
     }
 
     private TextWatcher TextWatcherListener = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
         }
 
         @Override
@@ -159,13 +163,13 @@ public class ControllerDynamicDetails extends ControllerClassObserver implements
             if (s.toString().isEmpty()) {
                 send.setEnabled(false);
                 send.setTextColor(context.getResources().getColor(R.color.gray_light));
-                relpyId = relpyBasisName;
+                relpyId = relpyBasisId;
                 relpyName = relpyBasisName;
             } else {
                 send.setEnabled(true);
                 send.setTextColor(context.getResources().getColor(R.color.blue_bar));
             }
-            if (!s.toString().isEmpty() && relpyId != null && !relpyId.equals(relpyBasisId)) {
+            if (!s.toString().isEmpty() && !relpyBasisId.equals(relpyId)) {
                 if (!s.toString().contains(new StringBuffer().append("@").append(relpyName).append(" : ").toString())) {
                     input_reply.setText("");
                 }
@@ -194,7 +198,7 @@ public class ControllerDynamicDetails extends ControllerClassObserver implements
                 relpyName = replyBean.getUsername_to();
                 break;
         }
-        if (!relpyId.equals(relpyBasisId)) {
+        if (!relpyBasisId.equals(relpyId)) {
             refreshHint(relpyName);
         }
     }
@@ -209,7 +213,7 @@ public class ControllerDynamicDetails extends ControllerClassObserver implements
     private String JudgeComments(String content) {
         String text = "";
         text = content;
-        if (!relpyId.equals(relpyBasisId)) {
+        if (!relpyBasisId.equals(relpyId)) {
             String[] split = content.split(":");
             text = split[1].toString().trim();
             LogUtil.e(TAG, "sendCommentsNetWork -- no");
@@ -217,6 +221,19 @@ public class ControllerDynamicDetails extends ControllerClassObserver implements
             relpyId = "";
         }
         return text;
+    }
+
+    @Override
+    protected void onClassPause() {
+        super.onClassPause();
+        video_view.onPause();
+    }
+
+    @Override
+    protected void onClassDestroy() {
+        super.onClassDestroy();
+        video_view.onPause();
+        video_view.unRegisterReceiver();
     }
 
     /**
@@ -249,7 +266,13 @@ public class ControllerDynamicDetails extends ControllerClassObserver implements
                                 for (DynamicDetailsNetBean.ResultBean.DetailBean.ImgpathjsonBean imgpathjsonBean : imgpathjson) {
                                     photoList.add(SystemUtil.JudgeUrl(imgpathjsonBean.getImgpath()));
                                 }
-                                initRecyclerView();
+                                if (photoList.size() == 1 && SystemUtil.JudgeNetFilePathType(photoList.get(0))) {
+                                    video_view.setVisibility(View.VISIBLE);
+                                    video_view.setVideoPath(photoList.get(0), null);
+                                } else {
+                                    video_view.setVisibility(View.GONE);
+                                    initRecyclerView();
+                                }
                             }
                             List<DynamicDetailsNetBean.ResultBean.ReplyBean> reply = result.getReply();
                             newDataSize = reply.size();

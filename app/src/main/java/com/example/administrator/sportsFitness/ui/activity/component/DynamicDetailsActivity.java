@@ -1,16 +1,23 @@
 package com.example.administrator.sportsFitness.ui.activity.component;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,9 +33,12 @@ import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.ui.controller.ControllerDynamicDetails;
 import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.ui.view.CustomConditionsPopupWindow;
+import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.StickyBoContentTextBuilder;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
+import com.example.administrator.sportsFitness.widget.media.CustomVideoView;
+import com.example.administrator.sportsFitness.widget.media.SuperVideoView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +53,7 @@ import butterknife.OnClick;
  * remark:
  */
 public class DynamicDetailsActivity extends BaseActivity implements CustomConditionsPopupWindow.OnItemClickListener, PopupWindow.OnDismissListener,
-        ControllerDynamicDetails.OnDynamicDetailsListener, NestedScrollView.OnScrollChangeListener, StickyBoContentTextBuilder.OnStickyBoContentTextClickListener {
+        ControllerDynamicDetails.OnDynamicDetailsListener, NestedScrollView.OnScrollChangeListener, StickyBoContentTextBuilder.OnStickyBoContentTextClickListener, SuperVideoView.CurrentProgressListener {
 
     @BindView(R.id.title_name)
     TextView title_name;
@@ -85,6 +95,22 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
     @BindView(R.id.footer_layout)
     RelativeLayout footer_layout;
 
+    @BindView(R.id.dynamic_content_params_layout)
+    LinearLayout dynamic_content_params_layout;
+    @BindView(R.id.video_view)
+    SuperVideoView video_view;
+
+    @BindView(R.id.layout_title_bar)
+    RelativeLayout layout_title_bar;
+    @BindView(R.id.dynamic_content_layout)
+    RelativeLayout dynamic_content_layout;
+    @BindView(R.id.controller_layout)
+    RelativeLayout controller_layout;
+    @BindView(R.id.comments_layout)
+    LinearLayout comments_layout;
+    @BindView(R.id.input_content_layout)
+    RelativeLayout input_content_layout;
+
     private ControllerDynamicDetails controllerDynamicDetails;
     private CustomConditionsPopupWindow customConditionsPopupWindow;
     private String userId;
@@ -95,6 +121,9 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
     private List<DynamicDetailsNetBean.ResultBean.DetailBean.UserZhuanBean> user_zhuan;
     private Map<String, String> ForwardingMap = new HashMap<>();
     private String secondname;
+    private int top;
+    private int oldTop;
+    private BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void registerEvent(CommonEvent commonevent) {
@@ -120,9 +149,10 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
         stickyBoContentTextBuilder = new StickyBoContentTextBuilder();
         userId = getIntent().getStringExtra("userId");
         dynamicId = getIntent().getStringExtra("dynamicId");
-        controllerDynamicDetails = new ControllerDynamicDetails(recycler_view, recycler_view_comments, input_reply, send, userId, dynamicId);
+        controllerDynamicDetails = new ControllerDynamicDetails(recycler_view, recycler_view_comments, input_reply, send, video_view, userId, dynamicId);
         customConditionsPopupWindow = new CustomConditionsPopupWindow(this);
         instance = ShowDialog.getInstance();
+        BroadcastReceiverActionMove();
     }
 
     @Override
@@ -151,6 +181,7 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
         controllerDynamicDetails.setOnDynamicDetailsListener(this);
         scrollView.setOnScrollChangeListener(this);
         stickyBoContentTextBuilder.setOnStickyBoContentTextClickListener(this);
+        video_view.setCurrentProgressListener(this);
     }
 
     @OnClick({R.id.user_img, R.id.about, R.id.comments, R.id.forwarding, R.id.support_check, R.id.all_comments, R.id.img_btn_black,
@@ -287,6 +318,7 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
 
     @Override
     public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        top = scrollY;
         if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
             pageNumber = pageNumber + 1;
             controllerDynamicDetails.NetDynamicDetails(pageNumber);
@@ -299,5 +331,113 @@ public class DynamicDetailsActivity extends BaseActivity implements CustomCondit
         theDetailsInformationIntent.putExtra("userId", ForwardingMap.get(new StringBuffer().append(content).append(" ").toString()));
         theDetailsInformationIntent.putExtra("userName", content);
         startActivity(theDetailsInformationIntent);
+    }
+
+    @Override
+    public void onCurrentProgressListener(int seekTo, CustomVideoView videoView) {
+
+    }
+
+    @Override
+    public void onScreenListener() {
+        this.oldTop = top;
+    }
+
+    // 加入横(竖)屏要处理的代码
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mobile(true);
+        } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mobile(false);
+            ScollerTo();
+        }
+    }
+
+    //应对全屏幕修改边距
+    public void mobile(boolean status) {
+        if (status) {
+            layout_title_bar.setVisibility(View.GONE);
+            dynamic_content_layout.setVisibility(View.GONE);
+            controller_layout.setVisibility(View.GONE);
+            comments_layout.setVisibility(View.GONE);
+            input_content_layout.setVisibility(View.GONE);
+            dynamic_content.setVisibility(View.GONE);
+        } else {
+            layout_title_bar.setVisibility(View.VISIBLE);
+            dynamic_content_layout.setVisibility(View.VISIBLE);
+            controller_layout.setVisibility(View.VISIBLE);
+            comments_layout.setVisibility(View.VISIBLE);
+            input_content_layout.setVisibility(View.VISIBLE);
+            if (!dynamic_content.getText().toString().trim().isEmpty())
+                dynamic_content.setVisibility(View.VISIBLE);
+        }
+        RelativeLayout.LayoutParams videoViewParams = (RelativeLayout.LayoutParams) video_view.getLayoutParams();
+        RelativeLayout.LayoutParams scrollViewLayoutParams = (RelativeLayout.LayoutParams) scrollView.getLayoutParams();
+        LinearLayout.LayoutParams controllerLayoutParams = (LinearLayout.LayoutParams) dynamic_content_params_layout.getLayoutParams();
+
+        if (status) {
+            videoViewParams.setMargins(0, 0, 0, 0);
+            scrollViewLayoutParams.setMargins(0, 0, 0, 0);
+            controllerLayoutParams.setMargins(0, 0, 0, 0);
+        } else {
+            videoViewParams.setMargins(0, SystemUtil.dp2px(this, 10), 0, 0);
+            scrollViewLayoutParams.setMargins(0, 0, 0, SystemUtil.dp2px(this, 50));
+            controllerLayoutParams.setMargins(SystemUtil.dp2px(this, 15), SystemUtil.dp2px(this, 5), SystemUtil.dp2px(this, 15), 0);
+        }
+        video_view.setLayoutParams(videoViewParams);
+        scrollView.setLayoutParams(scrollViewLayoutParams);
+        dynamic_content_params_layout.setLayoutParams(controllerLayoutParams);
+    }
+
+    // 改变滚动条的位置
+    public void ScollerTo() {
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0, oldTop);
+            }
+        });
+    }
+
+    /**
+     * 注册广播监听当前熄屏开屏解锁等操作
+     */
+    private void BroadcastReceiverActionMove() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        // 屏幕亮屏广播
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        // 屏幕解锁广播
+        filter.addAction(Intent.ACTION_USER_PRESENT);
+        // 当长按电源键弹出“关机”对话或者锁屏时系统会发出这个广播
+        // example：有时候会用到系统对话框，权限可能很高，会覆盖在锁屏界面或者“关机”对话框之上，
+        // 所以监听这个广播，当收到时就隐藏自己的对话，如点击pad右下角部分弹出的对话框
+        filter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(final Context context, final Intent intent) {
+                LogUtil.e(TAG, "onReceive");
+                String action = intent.getAction();
+                if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                    LogUtil.e(TAG, "screen on");
+                    video_view.refreshBufferStatus(true);
+                } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                    LogUtil.e(TAG, "screen off");
+                } else if (Intent.ACTION_USER_PRESENT.equals(action)) {
+                    LogUtil.e(TAG, "screen unlock");
+                } else if (Intent.ACTION_CLOSE_SYSTEM_DIALOGS.equals(intent.getAction())) {
+                    LogUtil.e(TAG, " receive Intent.ACTION_CLOSE_SYSTEM_DIALOGS");
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 }
