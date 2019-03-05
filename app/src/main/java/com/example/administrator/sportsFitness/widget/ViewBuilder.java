@@ -64,7 +64,7 @@ public class ViewBuilder {
                 Class<?> tabLayout = tabs.getClass();
                 Field tabStrip = null;
                 try {
-                    tabStrip = tabLayout.getDeclaredField("mTabStrip");
+                    tabStrip = tabLayout.getDeclaredField("slidingTabIndicator");
                 } catch (NoSuchFieldException e) {
                     e.printStackTrace();
                 }

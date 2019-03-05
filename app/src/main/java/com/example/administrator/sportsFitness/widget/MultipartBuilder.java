@@ -99,7 +99,6 @@ public class MultipartBuilder {
     }
 
     public void commitFile(final String file) {
-
         MyApplication.executorService.submit(new Runnable() {
             @Override
             public void run() {

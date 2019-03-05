@@ -31,6 +31,7 @@ public class CustomConditionsPopupWindow extends PopupWindow implements View.OnC
     private TextView cancle;
     private TextView release_img;
     private TextView release_video;
+    private View line_release;
     private View mPopView;
     private OnItemClickListener mListener;
     private Context context;
@@ -50,6 +51,7 @@ public class CustomConditionsPopupWindow extends PopupWindow implements View.OnC
 
         release_img = mPopView.findViewById(R.id.release_img);
         release_video = mPopView.findViewById(R.id.release_video);
+        line_release = mPopView.findViewById(R.id.line_release);
 
         confirm.setOnClickListener(this);
         cancle.setOnClickListener(this);
@@ -61,6 +63,7 @@ public class CustomConditionsPopupWindow extends PopupWindow implements View.OnC
     public void refreshView() {
         release_img.setVisibility(View.VISIBLE);
         release_video.setVisibility(View.VISIBLE);
+        line_release.setVisibility(View.VISIBLE);
         confirm.setVisibility(View.GONE);
     }
 

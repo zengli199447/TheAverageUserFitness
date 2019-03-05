@@ -130,9 +130,9 @@
     <string name="cp">私教</string>
     <string name="treat">我要请客</string>
     <string name="select_share">马上分享</string>
-    <string name="fitness_treat">健身请客</string>
-    <string name="fitness_treat_content">健身请客,好友约不停</string>
-    <string name="share_friend">分享好友</string>
+    <string name="fitness_treat">请客健身</string>
+    <string name="fitness_treat_content">请ta健身,为健康加油</string>
+    <string name="share_friend">邀请免单</string>
     <string name="the_share">分享到</string>
     <string name="wechat_friend">微信好友</string>
     <string name="wechat_friend_circle">微信朋友圈</string>
@@ -146,7 +146,7 @@
     <string name="handle_card">立即办理</string>
     <string name="renewal">续费</string>
     <string name="money_page">钱包</string>
-    <string name="qr_code_instructions">扫一扫二维码,加我为好友~</string>
+    <string name="qr_code_instructions">加好友,扫门禁,淘好货</string>
     <string name="my_qr_code">我的二维码</string>
     <string name="edit_data">编辑资料</string>
     <string name="user_photo">头像</string>
@@ -184,7 +184,7 @@
     <string name="scan_success">扫描成功</string>
     <string name="qr_code">扫一扫</string>
     <string name="qr_prompt">将二维码放入框内,即可自动扫描</string>
-    <string name="add_friends_alias">撩好友</string>
+    <string name="add_friends_alias">觅幂</string>
     <string name="find_friend">觅友</string>
     <string name="find_course">觅课</string>
 
@@ -276,6 +276,12 @@
     <string name="input_prompt_query">输入手机号或昵称</string>
     <string name="news_version">最新版本</string>
     <string name="help_center">帮助中心</string>
+    <string name="or_download">是否保存至本地?</string>
+    <string name="download_successfl">保存成功</string>
+    <string name="download_error">保存失败</string>
+    <string name="invitation_for_free">邀请新好友,各免费一次</string>
+    <string name="cache_error_prompt">视频不可大于50M,请重新选择</string>
+    <string name="duration_error_prompt">视频时长可不超过10秒,请重新选择</string>
 
 
 </resources>

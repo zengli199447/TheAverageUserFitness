@@ -169,7 +169,7 @@ public class ControllerArrange extends ControllerClassObserver implements Arrang
      * 新版本提示
      */
     private void NewVersionPrompt(HomePageNetBean.ResultBean.NewversionBean newversion) {
-        if (!SystemUtil.getAppVersionName(context, false).equals(newversion.getVersionvalue())) {
+        if (newversion.getVersionvalue() != null && !SystemUtil.getAppVersionName(context, false).equals(newversion.getVersionvalue())) {
             instance.showHelpfulHintsDialog(context, new StringBuffer().append(context.getString(R.string.news_version)).append(":").append(newversion.getVersionvalue()).toString(), EventCode.ONSTART);
         }
     }

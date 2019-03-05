@@ -355,6 +355,22 @@ public class SystemUtil {
         return l;
     }
 
+    //创建文件夹
+    public static String createFile(Context context, String fileName) {
+        File file = null;
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + fileName);
+        } else {
+            file = new File(context.getCacheDir().getAbsolutePath() + "/" + fileName);
+        }
+
+        if (!file.exists()) {
+            boolean isSuccess = file.mkdirs();
+        }
+        return file.getPath();
+    }
+
     public static void openKeybord(EditText mEditText, Context mContext) {
         InputMethodManager imm = (InputMethodManager) mContext
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -741,6 +757,24 @@ public class SystemUtil {
             status = false;
         }
         return status;
+    }
+
+    public static String getNetFilePathTypeSuffix(String path) {
+        String type = "";
+        if (path.contains(".mp4")) {
+            type = ".mp4";
+        } else if (path.contains(".mov")) {
+            type = ".mov";
+        } else if (path.contains(".mkv")) {
+            type = ".mkv";
+        } else if (path.contains(".avi")) {
+            type = ".avi";
+        } else if (path.contains(".3gp")) {
+            type = ".3gp";
+        } else if (path.contains(".rm")) {
+            type = ".rm";
+        }
+        return type;
     }
 
     /**

@@ -31,6 +31,7 @@ public class MyApplication extends Application {
     public static MyApplication instance;
     public static Set<Activity> allActivities;
     public static ExecutorService executorService;
+    public static int FLAG = -1;
 
     public static synchronized MyApplication getInstance() {
         return instance;

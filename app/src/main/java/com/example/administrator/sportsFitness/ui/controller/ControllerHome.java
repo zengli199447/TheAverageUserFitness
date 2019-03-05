@@ -25,12 +25,18 @@ import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.rxtools.RxBus;
 import com.example.administrator.sportsFitness.rxtools.RxUtil;
 import com.example.administrator.sportsFitness.ui.view.FlowLayout;
+import com.example.administrator.sportsFitness.utils.LogUtil;
+import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.widget.CommonSubscriber;
 import com.example.administrator.sportsFitness.widget.OnLinePayBuilder;
 import com.example.administrator.sportsFitness.widget.ViewBuilder;
+import com.example.administrator.sportsFitness.widget.download.DownloadProgressListener;
+import com.example.administrator.sportsFitness.widget.download.DownloadUtil;
 import com.google.gson.Gson;
 
 
+import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -42,13 +48,14 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class ControllerHome extends ControllerClassObserver implements View.OnKeyListener {
+public class ControllerHome extends ControllerClassObserver implements View.OnKeyListener, DownloadProgressListener {
 
     EditText search_edit;
     FlowLayout history_search_layout;
     FrameLayout frameLayout;
     private LayoutInflater mInflater;
     private OnLinePayBuilder onLinePayBuilder;
+    private DownloadUtil downloadUtil;
 
     public ControllerHome(EditText search_edit, FlowLayout history_search_layout, FrameLayout frameLayout) {
         this.search_edit = search_edit;
@@ -77,6 +84,20 @@ public class ControllerHome extends ControllerClassObserver implements View.OnKe
                 int payStatus = payObject.getPayStatus();
                 PayNetWork(code, payType, payStatus);
                 break;
+            case EventCode.DOWNLOAD:
+                File outFile = null;
+                if (SystemUtil.JudgeNetFilePathType(DataClass.DOWNLOAD_URL)) {
+                    outFile = new File(SystemUtil.createFile(context, context.getString(R.string.app_name))
+                            , new StringBuffer().append(new Date().getTime()).append(SystemUtil.getNetFilePathTypeSuffix(DataClass.DOWNLOAD_URL)).toString());
+                } else if (DataClass.DOWNLOAD_URL.contains(".gif")) {
+                    outFile = new File(SystemUtil.createFile(context, context.getString(R.string.app_name))
+                            , new StringBuffer().append(new Date().getTime()).append(".gif").toString());
+                } else {
+                    outFile = new File(SystemUtil.createFile(context, context.getString(R.string.app_name))
+                            , new StringBuffer().append(new Date().getTime()).append(".jpg").toString());
+                }
+                downloadUtil.downloadFile(DataClass.DOWNLOAD_URL.split(".com/")[1], outFile.getPath());
+                break;
         }
     }
 
@@ -88,6 +109,7 @@ public class ControllerHome extends ControllerClassObserver implements View.OnKe
     @Override
     protected void onClassCreate() {
         super.onClassCreate();
+        downloadUtil = new DownloadUtil(this);
         search_edit.setOnKeyListener(this);
         mInflater = LayoutInflater.from(context);
         onLinePayBuilder = new OnLinePayBuilder(context);
@@ -110,6 +132,21 @@ public class ControllerHome extends ControllerClassObserver implements View.OnKe
             searchAction(inputContent);
         }
         return false;
+    }
+
+    @Override
+    public void onFinish(File file) {
+        toastUtil.showToast(context.getString(R.string.download_successfl));
+    }
+
+    @Override
+    public void onProgress(int progress) {
+        LogUtil.e(TAG, "onProgress : " + progress);
+    }
+
+    @Override
+    public void onFailed(String errMsg) {
+        toastUtil.showToast(context.getString(R.string.download_error));
     }
 
     //历史搜索

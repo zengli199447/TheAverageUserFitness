@@ -103,6 +103,7 @@ public class EventCode {
     public static final int DELET_DYNAMIC_DETAILS = 4038;
     public static final int DYNAMIC_DELETE_STATUS = 4039;
     public static final int CERTIFICATION_TAG = 4040;
+    public static final int DOWNLOAD = 4041;
 
 
     //-----------------------PAY---------------------------------

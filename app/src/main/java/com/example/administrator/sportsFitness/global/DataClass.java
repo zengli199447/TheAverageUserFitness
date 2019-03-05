@@ -173,6 +173,9 @@ public class DataClass {
     //单张图片或封面信息
     public static HashMap<String, ChangeViewLayoutParamsBean> ChangeViewLayoutParamsHashMap = new HashMap<>();
 
+    //图片、视频下载地址
+    public static String DOWNLOAD_URL = "";
+
     //转发标记
     public static String FORWARDING_TAG = ":";
 

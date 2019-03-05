@@ -193,19 +193,19 @@
     </string-array>
 
     <string-array name="arrange">
-        <item>撩好友</item>
-        <item>约好友</item>
+        <item>觅幂</item>
+        <item>觅好友</item>
         <item>觅私教</item>
         <item>觅场地</item>
-        <item>我的行程</item>
+        <item>Me 行程</item>
     </string-array>
 
     <string-array name="arrange_annotation">
-        <item>关注好友, 邀请好友</item>
-        <item>邀约好友, 一起健身</item>
-        <item>专业教练, 定制属于您的方案</item>
-        <item>管住嘴, 迈开腿</item>
-        <item>运动生活每一天</item>
+        <item>发现周边,觅ta</item>
+        <item>想找谁玩,约ta</item>
+        <item>想让谁教,定ta</item>
+        <item>想在哪练,盘ta</item>
+        <item>运动生活,就用觅幂</item>
     </string-array>
 
     <string-array name="social">

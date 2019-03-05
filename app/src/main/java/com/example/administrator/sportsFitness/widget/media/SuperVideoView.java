@@ -32,13 +32,19 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.sportsFitness.R;
 import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.global.MyApplication;
+import com.example.administrator.sportsFitness.model.event.CommonEvent;
+import com.example.administrator.sportsFitness.model.event.EventCode;
+import com.example.administrator.sportsFitness.rxtools.RxBus;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.example.administrator.sportsFitness.utils.ToastUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
 /**
@@ -85,6 +91,7 @@ public class SuperVideoView extends RelativeLayout {
     private ImageView play_btn;
     private ImageView buffer_logo;
     private TextView error_prompt;
+    private ImageView btn_download;
     private boolean prepareStatus;
     private MyVolumeReceiver myVolumeReceiver;
     private AnimationDrawable animationDrawable;
@@ -129,14 +136,16 @@ public class SuperVideoView extends RelativeLayout {
      * @param path
      */
     public void setVideoPath(String path, String name) {
-//        path = "http://192.168.2.197:8080/data/video/dzt5.mp4";
+//        path = "http://192.168.2.197:8080/data/video/dzt6.mp4";
         this.mVideoPath = path;
         this.mName = name;
         if (path.startsWith("http") || path.startsWith("https")) {
             videoView.setVideoURI(Uri.parse(path));
             NetVideoBitmap(mVideoPath);
+            btn_download.setVisibility(VISIBLE);
         } else {
             videoView.setVideoURI(Uri.parse(path));
+            btn_download.setVisibility(GONE);
         }
 //        title_name.setText(name);
     }
@@ -180,6 +189,8 @@ public class SuperVideoView extends RelativeLayout {
         play_btn = (ImageView) videoLayout.findViewById(R.id.play_btn);
         buffer_logo = (ImageView) videoLayout.findViewById(R.id.buffer_logo);
         error_prompt = (TextView) videoLayout.findViewById(R.id.error_prompt);
+        btn_download = (ImageView) videoLayout.findViewById(R.id.btn_download);
+
 
     }
 
@@ -387,7 +398,7 @@ public class SuperVideoView extends RelativeLayout {
                             error_prompt.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    error_prompt.setVisibility(VISIBLE);
+//                                    error_prompt.setVisibility(VISIBLE);
                                 }
                             });
                         }
@@ -472,6 +483,16 @@ public class SuperVideoView extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 setControllerHideHint();
+            }
+        });
+
+        btn_download.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataClass.DOWNLOAD_URL = mVideoPath;
+                RxBus.getDefault().post(new CommonEvent(EventCode.DOWNLOAD));
+                btn_download.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.download_gray_icon));
+                btn_download.setEnabled(false);
             }
         });
 
@@ -568,12 +589,6 @@ public class SuperVideoView extends RelativeLayout {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case UPDATE_PROGRESS:
-                    if (videoView.isPlaying() && bufferStart) {
-                        cover_layout.setVisibility(GONE);
-                    } else {
-                        cover_layout.setVisibility(VISIBLE);
-                    }
-
                     // 获取当前时间
                     int currentTime = videoView.getCurrentPosition();
                     // 获取总时间
@@ -589,15 +604,27 @@ public class SuperVideoView extends RelativeLayout {
                     } else {
                         seekbarProgress.setMax(totalTime);
                         seekbarProgress.setProgress(currentTime);
+                        btnController.setImageResource(R.drawable.btn_pause_style);
                         updateTextViewFormat(tvCurrentProgress, currentTime);
                         updateTextViewFormat(tvTotalProgress, totalTime);
                         mHandler.sendEmptyMessageDelayed(UPDATE_PROGRESS, 100);
                     }
-                    if (completionStart) {
-                        cover.setVisibility(VISIBLE);
+
+                    if (videoView.isPlaying() && bufferStart) {
+                        cover_layout.setVisibility(GONE);
                     } else {
-                        cover.setVisibility(GONE);
+                        cover_layout.setVisibility(VISIBLE);
+                        if (completionStart) {
+                            cover.setVisibility(VISIBLE);
+                            LogUtil.e(TAG, "cover VISIBLE");
+                        } else {
+                            if (cover.getVisibility() != View.GONE) {
+                                cover.setVisibility(GONE);
+                                LogUtil.e(TAG, "cover GONE");
+                            }
+                        }
                     }
+
                     break;
                 case 0:
                     if (intervalTime == 0) {
@@ -612,7 +639,10 @@ public class SuperVideoView extends RelativeLayout {
                     cover_layout.setVisibility(VISIBLE);
                     break;
                 case 2:
-                    cover.setImageBitmap(bitmap);
+                    final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    Glide.with(cover.getContext()).load(byteArrayOutputStream.toByteArray()).fitCenter().error(R.drawable.banner_off).into(cover);
+                    LogUtil.e(TAG, "预览图");
                     break;
             }
         }

@@ -3,7 +3,7 @@
     android:id="@+id/layout_qr_code"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="gone"
+    android:visibility="visible"
     android:background="@color/blue_bar">
 
     <RelativeLayout

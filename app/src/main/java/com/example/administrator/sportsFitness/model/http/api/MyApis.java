@@ -40,10 +40,14 @@ import java.util.Map;
 
 import io.reactivex.Flowable;
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 
 /**
@@ -259,5 +263,11 @@ public interface MyApis {
     @POST("api/api.mingfa.php?")
     Flowable<StudentFormNetBean> StudentForm(@QueryMap Map<String, String> map);
 
+    /**
+     * 下载文件
+     */
+    @Streaming
+    @GET
+    Call<ResponseBody> DownloadFile(@Url String fileUrl);
 
 }

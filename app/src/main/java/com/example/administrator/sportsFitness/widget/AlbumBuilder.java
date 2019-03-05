@@ -1,5 +1,6 @@
 package com.example.administrator.sportsFitness.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -9,11 +10,14 @@ import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.model.event.CommonEvent;
 import com.example.administrator.sportsFitness.model.event.EventCode;
 import com.example.administrator.sportsFitness.rxtools.RxBus;
+import com.example.administrator.sportsFitness.ui.dialog.ShowDialog;
 import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.example.administrator.sportsFitness.utils.SystemUtil;
 import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumFile;
+import com.yanzhenjie.album.Filter;
+import com.yanzhenjie.album.ItemAction;
 import com.yanzhenjie.album.api.widget.Widget;
 
 import java.io.File;
@@ -24,7 +28,7 @@ import java.util.ArrayList;
  * 邮箱：229017464@qq.com
  * remark:
  */
-public class AlbumBuilder {
+public class AlbumBuilder implements Filter {
 
     String TAG = getClass().getSimpleName();
     Context context;
@@ -57,6 +61,12 @@ public class AlbumBuilder {
 
     }
 
+    @Override
+    public boolean filter(Object attributes) {
+        LogUtil.e(TAG, "attributes : " + attributes);
+        return false;
+    }
+
     /**
      * 视频单选
      */
@@ -64,6 +74,33 @@ public class AlbumBuilder {
         Album.video(context).singleChoice()
                 .camera(true)
                 .columnCount(3)
+                .limitBytes(45 * 1024 * 1024)
+                .limitDuration(10000)
+                .filterDuration(new Filter<Long>() {
+                    @Override
+                    public boolean filter(Long attributes) {
+                        boolean status;
+                        if (attributes < 11000) {
+                            status = false;
+                        } else {
+                            status = true;
+                        }
+                        return status;
+                    }
+                })
+                .filterSize(new Filter<Long>() {
+                    @Override
+                    public boolean filter(Long attributes) {
+                        boolean status;
+                        if (attributes > 50 * 1024 * 1024) {
+                            status = true;
+                        } else {
+                            status = false;
+                        }
+                        return status;
+                    }
+                })
+                .afterFilterVisibility(true)
                 .widget(initWidget(context))
                 .onResult(new Action<ArrayList<AlbumFile>>() {
                     @Override
@@ -103,6 +140,31 @@ public class AlbumBuilder {
     }
 
     /**
+     * 开启相机
+     */
+    @SuppressLint("Range")
+    public void Camera() {
+        Album.camera(context)
+                .video() // Record Video.
+                .filePath(SystemUtil.createFile(context, context.getString(R.string.app_name)))
+                .quality(1) // Video quality, [0, 1].
+                .limitDuration(10000) // The longest duration of the video is in milliseconds.
+                .limitBytes(Long.MIN_VALUE) // Maximum size of the video, in bytes.
+                .onResult(new Action<String>() {
+                    @Override
+                    public void onAction(@NonNull String result) {
+
+                    }
+                })
+                .onCancel(new Action<String>() {
+                    @Override
+                    public void onAction(@NonNull String result) {
+                    }
+                })
+                .start();
+    }
+
+    /**
      * 画廊
      *
      * @param imageList   画廊数据集
@@ -110,7 +172,25 @@ public class AlbumBuilder {
      * @param position    当前查看下标
      */
     public void ImageTheExhibition(ArrayList<String> imageList, final boolean isCheckable, int position) {
+        final ShowDialog instance = ShowDialog.getInstance();
         Album.gallery(context).currentPosition(position).checkedList(imageList).checkable(isCheckable)
+                .itemClick(new ItemAction<String>() {
+                    @Override
+                    public void onAction(Context context, String item) {
+                        if (!isCheckable)
+                            LogUtil.e(TAG, "item : " + item);
+                    }
+                })
+                .itemLongClick(new ItemAction<String>() {
+                    @Override
+                    public void onAction(Context context, String item) {
+                        if (!isCheckable) {
+                            DataClass.DOWNLOAD_URL = item;
+                            instance.showHelpfulHintsDialog(context, context.getString(R.string.or_download), EventCode.DOWNLOAD);
+                            LogUtil.e(TAG, "item : " + item);
+                        }
+                    }
+                })
                 .onResult(new Action<ArrayList<String>>() {
                     @Override
                     public void onAction(@NonNull ArrayList<String> result) {

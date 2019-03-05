@@ -11,7 +11,10 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 
+import com.example.administrator.sportsFitness.R;
+import com.example.administrator.sportsFitness.global.DataClass;
 import com.example.administrator.sportsFitness.global.MyApplication;
+import com.example.administrator.sportsFitness.ui.activity.SplashScreenActivity;
 import com.example.administrator.sportsFitness.utils.LogUtil;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -37,6 +40,9 @@ public abstract class SimpleActivity extends SupportActivity implements View.OnC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogUtil.e(TAG, "MyApplication.FLAG :" + MyApplication.FLAG);
+        if (MyApplication.FLAG == -1)
+            RestoreInstanceState(false);
         TitleSysStyle();
         setContentView(getLayout());
         requestPermissions();
@@ -70,6 +76,8 @@ public abstract class SimpleActivity extends SupportActivity implements View.OnC
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null)
+            RestoreInstanceState(true);
     }
 
     @Override
@@ -106,8 +114,7 @@ public abstract class SimpleActivity extends SupportActivity implements View.OnC
 
     private void requestPermissions() {
         RxPermissions rxPermission = new RxPermissions(SimpleActivity.this);
-        rxPermission
-                .requestEach(Manifest.permission.ACCESS_FINE_LOCATION,
+        rxPermission.requestEach(Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_CALENDAR,
                         Manifest.permission.READ_CALL_LOG,
@@ -159,7 +166,14 @@ public abstract class SimpleActivity extends SupportActivity implements View.OnC
             }
         }
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//        SystemUtil.hideBottomAndUIMenu(this);
+    }
+
+    private void RestoreInstanceState(boolean status) {
+        if (status)
+            setContentView(R.layout.activity_main);
+        Intent outIntent = new Intent(this, SplashScreenActivity.class);
+        outIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(outIntent);
     }
 
     @Override

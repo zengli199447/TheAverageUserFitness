@@ -163,7 +163,6 @@ public class CourseFragment extends BaseFragment implements RadioGroup.OnChecked
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        toastUtil.showToast("checkedId");
         controllerCourse.changePageNumber();
         controllerCourse.RefreshNetWorkData(selectTime);
         switch (checkedId) {

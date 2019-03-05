@@ -129,7 +129,7 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
                 SystemUtil.textMagicTool(this, fitness_treat, getString(R.string.fitness_treat),
                         getString(R.string.fitness_treat_content), R.dimen.dp15, R.dimen.dp12, R.color.black, R.color.black_overlay, "\n");
                 SystemUtil.textMagicTool(this, share_friend, getString(R.string.share_friend),
-                        getString(R.string.fitness_treat_content), R.dimen.dp15, R.dimen.dp12, R.color.black, R.color.black_overlay, "\n");
+                        getString(R.string.invitation_for_free), R.dimen.dp15, R.dimen.dp12, R.color.black, R.color.black_overlay, "\n");
                 break;
             case EventCode.MY_QR_CODE:
                 title_name.setText(getString(R.string.my_qr_code));
@@ -137,7 +137,7 @@ public class ShowGeneraActivity extends BaseActivity implements CustomSharePopup
                 Glide.with(this).load(SystemUtil.JudgeUrl(DataClass.USERPHOTO)).error(R.drawable.banner_off).into(user_img);
                 user_name.setText(DataClass.UNAME);
                 String code = new StringBuffer().append(getString(R.string.fitness)).append("-").append(DataClass.USERID).toString();
-                qr_code.setImageBitmap(QrBuilder.createQRCodeWithLogo(code, 200, BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher)));
+                qr_code.setImageBitmap(QrBuilder.createQRCodeWithLogo(code, 200, BitmapFactory.decodeResource(getResources(), R.drawable.logo_icon)));
                 break;
             case EventCode.ADD_VALIDATION:
                 title_name.setText(getString(R.string.apply_for_friend));

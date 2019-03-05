@@ -29,6 +29,7 @@ import com.example.administrator.sportsFitness.widget.AlbumBuilder;
 import com.example.administrator.sportsFitness.widget.MultipartBuilder;
 import com.yanzhenjie.album.AlbumFile;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;

@@ -190,6 +190,18 @@
                     android:visibility="gone" />
 
                 <ImageView
+                    android:id="@+id/btn_download"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="50dp"
+                    android:padding="@dimen/dp12"
+                    android:src="@drawable/download_icon"
+                    android:visibility="gone" />
+
+                <ImageView
                     android:id="@+id/btn_screen"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
