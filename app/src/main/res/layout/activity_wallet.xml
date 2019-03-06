@@ -24,7 +24,7 @@
                 android:layout_margin="@dimen/dp15"
                 android:background="@drawable/wallet_bg_icon">
 
-                <com.example.administrator.sportsFitness.ui.view.CircleImageView
+                <com.example.administrator.sportsfitness.ui.view.CircleImageView
                     android:id="@+id/user_img"
                     android:layout_width="@dimen/dp50"
                     android:layout_height="@dimen/dp50"

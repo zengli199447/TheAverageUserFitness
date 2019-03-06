@@ -53,7 +53,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/gray_light" />
 
-    <com.example.administrator.sportsFitness.ui.view.CircleImageView
+    <com.example.administrator.sportsfitness.ui.view.CircleImageView
         android:id="@+id/user_img"
         android:layout_width="@dimen/dp90"
         android:layout_height="@dimen/dp90"

@@ -3,7 +3,7 @@
     android:id="@+id/layout_qr_code"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible"
+    android:visibility="gone"
     android:background="@color/blue_bar">
 
     <RelativeLayout
@@ -15,7 +15,7 @@
         android:background="@drawable/corners_white_dialog_bg">
 
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/user_img"
             android:layout_width="@dimen/dp60"
             android:layout_height="@dimen/dp60"

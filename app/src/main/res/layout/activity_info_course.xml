@@ -61,7 +61,7 @@
                 android:layout_marginRight="@dimen/dp15"
                 android:layout_marginTop="@dimen/dp10">
 
-                <com.example.administrator.sportsFitness.ui.view.CircleImageView
+                <com.example.administrator.sportsfitness.ui.view.CircleImageView
                     android:id="@+id/user_img"
                     android:layout_width="@dimen/dp50"
                     android:layout_height="@dimen/dp50"
@@ -194,7 +194,7 @@
                     android:textColor="@color/black_overlay"
                     android:textSize="@dimen/dp14" />
 
-                <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                     android:id="@+id/comments_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

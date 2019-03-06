@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/friend_img"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"

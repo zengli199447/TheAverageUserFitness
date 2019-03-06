@@ -27,7 +27,7 @@
             android:layout_marginRight="@dimen/dp15"
             android:src="@drawable/right_icon" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/user_photo"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
@@ -65,7 +65,7 @@
             android:layout_marginRight="@dimen/dp15"
             android:src="@drawable/right_icon" />
 
-        <com.example.administrator.sportsFitness.ui.view.ClearEditTextView
+        <com.example.administrator.sportsfitness.ui.view.ClearEditTextView
             android:id="@+id/nick_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -312,7 +312,7 @@
             android:layout_marginRight="@dimen/dp15"
             android:src="@drawable/right_icon" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/face_recognition"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"

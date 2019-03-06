@@ -65,7 +65,7 @@
             android:layout_marginRight="10dp"
             android:padding="@dimen/dp5" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/title_about_round_img"
             android:layout_width="@dimen/dp30"
             android:layout_height="@dimen/dp30"

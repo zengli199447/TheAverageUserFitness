@@ -33,7 +33,7 @@
         android:textSize="@dimen/dp12" />
 
 
-    <com.example.administrator.sportsFitness.ui.view.FlowLayout
+    <com.example.administrator.sportsfitness.ui.view.FlowLayout
         android:id="@+id/history_search_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

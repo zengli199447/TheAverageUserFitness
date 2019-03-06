@@ -23,7 +23,7 @@
         android:layout_marginRight="@dimen/dp15"
         android:orientation="horizontal">
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/img1"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
@@ -33,7 +33,7 @@
             app:border_color="@color/white"
             app:border_width="1dp" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/img2"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
@@ -44,7 +44,7 @@
             app:border_color="@color/white"
             app:border_width="1dp" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/img3"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
@@ -55,7 +55,7 @@
             app:border_color="@color/white"
             app:border_width="1dp" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/img4"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
@@ -66,7 +66,7 @@
             app:border_color="@color/white"
             app:border_width="1dp" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/img5"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"

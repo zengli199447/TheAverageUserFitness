@@ -16,7 +16,7 @@
         android:textColor="@color/black_overlay"
         android:textSize="@dimen/dp16" />
 
-    <com.example.administrator.sportsFitness.ui.view.FlowLayout
+    <com.example.administrator.sportsfitness.ui.view.FlowLayout
         android:id="@+id/personal_tag_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         android:textColor="@color/gray_light_text"
         android:textSize="@dimen/dp12" />
 
-    <com.example.administrator.sportsFitness.ui.view.FlowLayout
+    <com.example.administrator.sportsfitness.ui.view.FlowLayout
         android:id="@+id/hot_tag_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

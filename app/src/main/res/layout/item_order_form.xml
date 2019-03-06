@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <com.example.administrator.sportsFitness.ui.view.CircleImageView
+                <com.example.administrator.sportsfitness.ui.view.CircleImageView
                     android:id="@+id/img"
                     android:layout_width="@dimen/dp50"
                     android:layout_height="@dimen/dp50"

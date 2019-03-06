@@ -7,7 +7,7 @@
     android:visibility="gone">
 
 
-    <com.example.administrator.sportsFitness.ui.view.CircleImageView
+    <com.example.administrator.sportsfitness.ui.view.CircleImageView
         android:id="@+id/add_user_img"
         android:layout_width="@dimen/dp70"
         android:layout_height="@dimen/dp70"

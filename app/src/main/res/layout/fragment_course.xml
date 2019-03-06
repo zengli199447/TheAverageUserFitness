@@ -27,7 +27,7 @@
             android:layout_below="@+id/layout_coures_title_bar"
             android:layout_toRightOf="@+id/category_recycler">
 
-            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+            <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                 android:id="@+id/empty_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

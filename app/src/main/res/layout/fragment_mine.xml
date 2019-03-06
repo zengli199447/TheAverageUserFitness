@@ -15,7 +15,7 @@
             android:layout_height="@dimen/dp230"
             android:background="@drawable/mine_bg">
 
-            <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            <com.example.administrator.sportsfitness.ui.view.CircleImageView
                 android:id="@+id/user_photo"
                 android:layout_width="@dimen/dp70"
                 android:layout_height="@dimen/dp70"
@@ -171,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                         android:id="@+id/ranking_list"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                         android:id="@+id/weekly"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -207,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                         android:id="@+id/CV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -225,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                         android:id="@+id/sign_in"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

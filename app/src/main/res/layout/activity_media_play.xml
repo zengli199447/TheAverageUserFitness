@@ -17,7 +17,7 @@
         android:layout_height="0dp"
         android:layout_weight="2">
 
-        <com.example.administrator.sportsFitness.widget.media.SuperVideoView
+        <com.example.administrator.sportsfitness.widget.media.SuperVideoView
             android:id="@+id/video_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

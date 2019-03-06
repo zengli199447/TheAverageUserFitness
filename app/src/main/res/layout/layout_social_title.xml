@@ -56,7 +56,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+            <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                 android:id="@+id/dynamic_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -33,7 +33,7 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:background="@drawable/search_icon" />
 
-            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+            <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

@@ -14,7 +14,7 @@
         android:textColor="@color/black_overlay"
         android:textSize="@dimen/dp14" />
 
-    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
         android:id="@+id/current_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/dp14" />
 
-        <com.example.administrator.sportsFitness.ui.view.IsometricGridView
+        <com.example.administrator.sportsfitness.ui.view.IsometricGridView
             android:id="@+id/item_header_city_gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

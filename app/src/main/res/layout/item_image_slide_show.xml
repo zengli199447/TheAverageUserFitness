@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.administrator.sportsFitness.ui.view.CustomRoundAngleImageView
+    <com.example.administrator.sportsfitness.ui.view.CustomRoundAngleImageView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

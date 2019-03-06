@@ -5,7 +5,7 @@
     android:layout_height="200dp"
     android:background="@color/black">
 
-    <com.example.administrator.sportsFitness.widget.media.CustomVideoView
+    <com.example.administrator.sportsfitness.widget.media.CustomVideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="200dp"

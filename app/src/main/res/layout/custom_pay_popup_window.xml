@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp15">
 
-            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+            <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                 android:id="@+id/zfb_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp15">
 
-            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+            <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                 android:id="@+id/wechat_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

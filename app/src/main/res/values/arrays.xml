@@ -196,16 +196,16 @@
         <item>觅幂</item>
         <item>觅好友</item>
         <item>觅私教</item>
-        <item>觅场地</item>
+        <item>觅场馆</item>
         <item>Me 行程</item>
     </string-array>
 
     <string-array name="arrange_annotation">
-        <item>发现周边,觅ta</item>
-        <item>想找谁玩,约ta</item>
-        <item>想让谁教,定ta</item>
-        <item>想在哪练,盘ta</item>
-        <item>运动生活,就用觅幂</item>
+        <item>发现周边，觅ta</item>
+        <item>想找谁玩，约ta</item>
+        <item>想让谁教，定ta</item>
+        <item>想在哪练，盘ta</item>
+        <item>运动生活，就用觅幂</item>
     </string-array>
 
     <string-array name="social">

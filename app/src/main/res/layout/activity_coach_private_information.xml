@@ -16,7 +16,7 @@
             android:layout_height="@dimen/dp60"
             android:layout_margin="@dimen/dp15">
 
-            <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            <com.example.administrator.sportsfitness.ui.view.CircleImageView
                 android:id="@+id/user_img"
                 android:layout_width="@dimen/dp60"
                 android:layout_height="@dimen/dp60"
@@ -68,7 +68,7 @@
                 android:textColor="@color/black_overlay"
                 android:textSize="@dimen/dp13" />
 
-            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+            <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                 android:id="@+id/select_training_camp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                 android:textColor="@color/black_overlay"
                 android:textSize="@dimen/dp13" />
 
-            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+            <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                 android:id="@+id/select_student"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -282,6 +282,9 @@
     <string name="invitation_for_free">邀请新好友,各免费一次</string>
     <string name="cache_error_prompt">视频不可大于50M,请重新选择</string>
     <string name="duration_error_prompt">视频时长可不超过10秒,请重新选择</string>
+    <string name="going_download_background">已转至后台下载</string>
+    <string name="coach_private_contract">签约教练</string>
+    <string name="gym_big">健身场馆</string>
 
 
 </resources>

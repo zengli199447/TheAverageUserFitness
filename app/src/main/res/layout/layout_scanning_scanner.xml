@@ -9,7 +9,7 @@
         app:zxing_framing_rect_height="@dimen/dp200"
         app:zxing_framing_rect_width="@dimen/dp200" />
 
-    <com.example.administrator.sportsFitness.ui.view.ZxingViewFinderView
+    <com.example.administrator.sportsfitness.ui.view.ZxingViewFinderView
         android:id="@+id/zxing_viewfinder_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

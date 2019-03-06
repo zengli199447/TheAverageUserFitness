@@ -4,7 +4,7 @@
     android:layout_height="@dimen/dp80"
     android:background="@color/white">
 
-    <com.example.administrator.sportsFitness.ui.view.CircleImageView
+    <com.example.administrator.sportsfitness.ui.view.CircleImageView
         android:id="@+id/user_img"
         android:layout_width="@dimen/dp50"
         android:layout_height="@dimen/dp50"
@@ -45,7 +45,7 @@
 
     </LinearLayout>
 
-    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
         android:visibility="gone"
         android:id="@+id/distance"
         android:layout_width="wrap_content"

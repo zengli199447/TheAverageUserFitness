@@ -7,7 +7,7 @@
     android:layout_marginRight="@dimen/dp15"
     android:background="@color/white">
 
-    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
         android:id="@+id/calendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:textColor="@color/black_overlay"
         android:textSize="@dimen/dp13" />
 
-    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:textColor="@color/black_overlay"
         android:textSize="@dimen/dp13" />
 
-    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
         android:id="@+id/people_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         android:textColor="@color/black_overlay"
         android:textSize="@dimen/dp13" />
 
-    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
         android:id="@+id/heat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         android:textColor="@color/red_text"
         android:textSize="@dimen/dp12" />
 
-    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
         android:id="@+id/store"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
         android:textColor="@color/black_overlay"
         android:textSize="@dimen/dp13" />
 
-    <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+    <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
         android:id="@+id/student"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
         android:layout_marginTop="@dimen/dp15"
         android:layout_toRightOf="@+id/student">
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/img1"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
@@ -114,7 +114,7 @@
             app:border_color="@color/white"
             app:border_width="1dp" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/img2"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
@@ -125,7 +125,7 @@
             app:border_color="@color/white"
             app:border_width="1dp" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/img3"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
@@ -136,7 +136,7 @@
             app:border_color="@color/white"
             app:border_width="1dp" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/img4"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
@@ -147,7 +147,7 @@
             app:border_color="@color/white"
             app:border_width="1dp" />
 
-        <com.example.administrator.sportsFitness.ui.view.CircleImageView
+        <com.example.administrator.sportsfitness.ui.view.CircleImageView
             android:id="@+id/img5"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"

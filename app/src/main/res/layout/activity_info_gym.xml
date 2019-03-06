@@ -45,7 +45,7 @@
                     android:textColor="@color/red_text"
                     android:textSize="@dimen/dp14" />
 
-                <com.example.administrator.sportsFitness.ui.view.ShinyView
+                <com.example.administrator.sportsfitness.ui.view.ShinyView
                     android:id="@+id/shiny_view"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp15"
@@ -87,7 +87,7 @@
                 android:layout_marginLeft="@dimen/dp15"
                 android:layout_marginRight="@dimen/dp15">
 
-                <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                     android:id="@+id/location_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                 android:layout_height="0.5dp"
                 android:background="@color/gray_light" />
 
-            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+            <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                 android:layout_marginRight="@dimen/dp15"
                 android:layout_marginTop="@dimen/dp10">
 
-                <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                     android:id="@+id/course"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -170,7 +170,7 @@
                     android:textColor="@color/black_overlay"
                     android:textSize="@dimen/dp14" />
 
-                <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                     android:id="@+id/course_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
                 android:layout_height="@dimen/dp10"
                 android:background="@color/gray_" />
 
-            <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+            <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp10"
@@ -244,7 +244,7 @@
                 android:layout_marginRight="@dimen/dp15"
                 android:layout_marginTop="@dimen/dp10">
 
-                <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                     android:id="@+id/user_evaluation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -253,7 +253,7 @@
                     android:textColor="@color/black_overlay"
                     android:textSize="@dimen/dp14" />
 
-                <com.example.administrator.sportsFitness.ui.view.DrawableCenterTextView
+                <com.example.administrator.sportsfitness.ui.view.DrawableCenterTextView
                     android:id="@+id/evaluation_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

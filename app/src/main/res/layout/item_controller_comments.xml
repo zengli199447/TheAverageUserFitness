@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp50">
 
-            <com.example.administrator.sportsFitness.ui.view.CircleImageView
+            <com.example.administrator.sportsfitness.ui.view.CircleImageView
                 android:id="@+id/user_img"
                 android:layout_width="@dimen/dp40"
                 android:layout_height="@dimen/dp40"
@@ -41,7 +41,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/dp14" />
 
-                <com.example.administrator.sportsFitness.ui.view.ShinyView
+                <com.example.administrator.sportsfitness.ui.view.ShinyView
                     android:id="@+id/shiny_view"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp15"
@@ -85,7 +85,7 @@
             android:layout_marginTop="@dimen/dp10"
             android:visibility="visible">
 
-            <com.example.administrator.sportsFitness.ui.view.GridRecyclerView
+            <com.example.administrator.sportsfitness.ui.view.GridRecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
