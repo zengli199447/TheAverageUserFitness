@@ -116,6 +116,7 @@ public class ControllerMine extends ControllerClassObserver implements MineTools
                             DataClass.GENDER = result.getSex();
                             DataClass.UNAME = result.getSecondname();
                             DataClass.BRITHDAY = result.getBrithday();
+                            DataClass.CARD_NUMBER = result.getCardno();
                             if (progressDialog != null)
                                 progressDialog.dismiss();
                             if (onPersonalContentNetWorkListener != null)

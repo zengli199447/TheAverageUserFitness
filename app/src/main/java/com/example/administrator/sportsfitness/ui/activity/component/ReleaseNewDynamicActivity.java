@@ -152,7 +152,7 @@ public class ReleaseNewDynamicActivity extends BaseActivity implements Multipart
 
     @Override
     public void onNewDynamicReleaseListener() {
-
+        controllerReleaseNewDynamic.ClearFile();
     }
 
     @Override

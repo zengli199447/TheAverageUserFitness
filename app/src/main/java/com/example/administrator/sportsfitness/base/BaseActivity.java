@@ -7,6 +7,7 @@ import com.example.administrator.sportsfitness.di.module.ActivityModule;
 import com.example.administrator.sportsfitness.global.MyApplication;
 import com.example.administrator.sportsfitness.model.DataManager;
 import com.example.administrator.sportsfitness.model.event.CommonEvent;
+import com.example.administrator.sportsfitness.model.event.EventCode;
 import com.example.administrator.sportsfitness.rxtools.RxBus;
 import com.example.administrator.sportsfitness.rxtools.RxUtil;
 import com.example.administrator.sportsfitness.utils.ToastUtil;
@@ -75,6 +76,8 @@ public abstract class BaseActivity extends SimpleActivity {
 
                     @Override
                     public void onNext(CommonEvent commonevent) {
+                        if (commonevent.getCode() == EventCode.SYS_ERROR)
+                            finish();
                         registerEvent(commonevent);
                     }
 

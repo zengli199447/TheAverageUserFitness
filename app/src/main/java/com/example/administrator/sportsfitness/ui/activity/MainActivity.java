@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import com.example.administrator.sportsfitness.R;
 import com.example.administrator.sportsfitness.global.MyApplication;
+import com.example.administrator.sportsfitness.model.event.CommonEvent;
+import com.example.administrator.sportsfitness.model.event.EventCode;
+import com.example.administrator.sportsfitness.rxtools.RxBus;
 import com.example.administrator.sportsfitness.ui.dialog.ProgressDialog;
 import com.example.administrator.sportsfitness.ui.dialog.ShowDialog;
 
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = showDialog.showProgressStatus(this);
         progressDialog.show();
         progressDialog.ShowDiaLog("发生错误，正在关闭应用 ...");
+        RxBus.getDefault().post(new CommonEvent(EventCode.SYS_ERROR));
         MyApplication.executorService.submit(new Runnable() {
             @Override
             public void run() {

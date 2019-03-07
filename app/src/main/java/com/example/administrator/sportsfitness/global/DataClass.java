@@ -159,6 +159,8 @@ public class DataClass {
     public static String BRITHDAY = "";
     //用户钱包余额
     public static String MONEY = "0";
+    //健身卡号
+    public static String CARD_NUMBER = "";
 
     //相册集合
     public static ArrayList<AlbumFile> AlbumFileList = new ArrayList<>();

@@ -70,7 +70,7 @@ public class CardPageActivity extends BaseActivity {
     protected void initView() {
         title_name.setText(getString(R.string.card));
         title_about_img.setImageDrawable(getResources().getDrawable(R.drawable.doubt_icon));
-        card_bind_phone_number.setText(DataClass.PHONE);
+        card_bind_phone_number.setText(DataClass.CARD_NUMBER);
     }
 
     @Override

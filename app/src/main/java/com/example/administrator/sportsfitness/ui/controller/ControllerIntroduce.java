@@ -171,7 +171,6 @@ public class ControllerIntroduce extends ControllerClassObserver implements Cont
             photoList.add(SystemUtil.JudgeUrl(imgpathjsonBean.getImgpath()));
         }
         if (SystemUtil.JudgeNetFilePathType(imgpathjson.get(0).getImgpath())|| imgpathjson.get(0).getImgpath().contains("video")) {
-            toastUtil.showToast("进入播放");
             Intent dynamicDetailsIntent = new Intent(context, DynamicDetailsActivity.class);
             dynamicDetailsIntent.putExtra("userId", dynamicBean.getUserid());
             dynamicDetailsIntent.putExtra("dynamicId", dynamicBean.getNewsid());

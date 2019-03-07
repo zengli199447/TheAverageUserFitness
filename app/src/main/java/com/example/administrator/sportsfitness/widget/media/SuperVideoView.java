@@ -146,7 +146,7 @@ public class SuperVideoView extends RelativeLayout {
             }else {
                 NetVideoBitmap(mVideoPath);
             }
-            btn_download.setVisibility(VISIBLE);
+//            btn_download.setVisibility(VISIBLE);
         } else {
             videoView.setVideoURI(Uri.parse(path));
             btn_download.setVisibility(GONE);

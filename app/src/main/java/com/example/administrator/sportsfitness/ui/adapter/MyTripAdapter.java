@@ -52,19 +52,19 @@ public class MyTripAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
         creat_time.setText(needdoBean.getTime_txt());
 
-        SystemUtil.textMagicTool(context, content, needdoBean.getShopname(), needdoBean.getCoursesname(),
+        SystemUtil.textMagicTool(context, content, needdoBean.getCoursesname(), needdoBean.getShopname().isEmpty() ? " - " : needdoBean.getShopname(),
                 R.dimen.dp14, R.dimen.dp13, R.color.black_overlay, R.color.gray_light_text, "\n");
 
         type.setText(needdoBean.getDatatype_txt());
 
-        if (needdoBean.getDatatype_txt().contains(context.getString(R.string.course))) {
-            Glide.with(context).load(SystemUtil.JudgeUrl(needdoBean.getListimg())).error(R.drawable.banner_off).into(gym_img);
-            gym_img.setVisibility(View.VISIBLE);
-            user_img.setVisibility(View.GONE);
-        } else {
+        if (needdoBean.getDatatype_txt().contains(context.getString(R.string.cp))) {
             Glide.with(context).load(SystemUtil.JudgeUrl(needdoBean.getListimg())).error(R.drawable.banner_off).into(user_img);
             gym_img.setVisibility(View.GONE);
             user_img.setVisibility(View.VISIBLE);
+        } else {
+            Glide.with(context).load(SystemUtil.JudgeUrl(needdoBean.getListimg())).error(R.drawable.banner_off).into(gym_img);
+            gym_img.setVisibility(View.VISIBLE);
+            user_img.setVisibility(View.GONE);
         }
 
 

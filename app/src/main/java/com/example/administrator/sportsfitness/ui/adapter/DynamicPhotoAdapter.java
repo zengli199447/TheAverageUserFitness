@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.sportsfitness.R;
 import com.example.administrator.sportsfitness.ui.holder.MyViewHolder;
+import com.example.administrator.sportsfitness.utils.LogUtil;
 import com.yanzhenjie.album.AlbumFile;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class DynamicPhotoAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ImageView photo_img = holder.itemView.findViewById(R.id.photo_img);
         ImageView delet_img = holder.itemView.findViewById(R.id.delet_img);
-        if (position == list.size() || list.size() == 0) {
+        if (list.size() == 0 | position == list.size()) {
             photo_img.setImageDrawable(context.getResources().getDrawable(R.drawable.add_icon));
             ClickListener(photo_img, position, 0);
             delet_img.setVisibility(View.GONE);

@@ -298,12 +298,15 @@ public class ControllerCourse extends ControllerClassObserver implements Categor
         switch (flagStatus) {
             case EventCode.COURSE:
                 NetCourse();
+                NetClassType(1);
                 break;
             case EventCode.COACH_PRIVATE:
                 NetCoachPrivateForm();
+                NetClassType(1);
                 break;
             case EventCode.GYM:
                 NetGymForm();
+                NetClassType(2);
                 break;
         }
     }

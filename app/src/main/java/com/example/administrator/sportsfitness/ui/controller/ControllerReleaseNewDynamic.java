@@ -79,8 +79,14 @@ public class ControllerReleaseNewDynamic extends ControllerClassObserver impleme
         dynamicPhotoAdapter.setPhotoClickListener(this);
     }
 
-    private void refreshAdapter() {
+    public void refreshAdapter() {
         dynamicPhotoAdapter.notifyDataSetChanged();
+    }
+
+    public void ClearFile(){
+        DataClass.DYNAMICCONTENT = "";
+        DataClass.AlbumFileList.clear();
+        initAdapter();
     }
 
     @Override

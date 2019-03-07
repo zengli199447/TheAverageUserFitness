@@ -9,10 +9,10 @@
         android:layout_marginTop="@dimen/dp20"
         android:id="@+id/logo_img"
         android:layout_width="@dimen/dp70"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp70"
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/dp20"
-        android:src="@drawable/placeholder_logo_icon" />
+        android:src="@drawable/logo_icon" />
 
     <RelativeLayout
         android:id="@+id/layout_input"

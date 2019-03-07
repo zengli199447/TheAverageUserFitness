@@ -205,7 +205,9 @@ public class ReleaseNewVideoDynamicActivity extends BaseActivity implements Mult
 
     @Override
     public void onNewDynamicReleaseListener() {
-
+        DataClass.VIDEODYNAMICCONTENT = "";
+        DataClass.AlbumVideoFileList.clear();
+        onResume();
     }
 
     @Override
