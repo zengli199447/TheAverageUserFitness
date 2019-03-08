@@ -107,7 +107,7 @@
     <string name="coures_form">课程列表</string>
     <string name="comments_additional">追加评论</string>
     <string name="appointment_now">立即预约</string>
-    <string name="online_information">在线资讯</string>
+    <string name="online_information">在线咨询</string>
     <string name="select_training_camp">请选择训练场地</string>
     <string name="training_camp">训练营</string>
     <string name="select_student">请选择学员</string>
@@ -283,7 +283,7 @@
     <string name="cache_error_prompt">视频不可大于50M,请重新选择</string>
     <string name="duration_error_prompt">视频时长可不超过10秒,请重新选择</string>
     <string name="going_download_background">已转至后台下载</string>
-    <string name="coach_private_contract">签约教练</string>
+    <string name="coach_private_contract">签约私教</string>
     <string name="gym_big">健身场馆</string>
 
 
