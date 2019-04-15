@@ -79,6 +79,9 @@ public class ControllerOrderForm extends ControllerClassObserver implements Swip
                 pageNumber = 1;
                 NetOrder();
                 break;
+            case EventCode.OR_THE_COMPLETE_ORDER:
+                NetCompleteOrder(orderBean.getOrderheadid());
+                break;
         }
     }
 
@@ -183,7 +186,7 @@ public class ControllerOrderForm extends ControllerClassObserver implements Swip
                 case R.id.controller_right:
                     TextView right = (TextView) view;
                     if (right.getText().toString().equals(context.getString(R.string.complete_order))) {
-
+                        instance.showConfirmOrNoDialog(context, context.getString(R.string.or_the_complete_order), EventCode.ONSTART, EventCode.OR_THE_COMPLETE_ORDER, EventCode.ONSTART);
                     } else if (right.getText().toString().equals(context.getString(R.string.take_payment))) {
                         customPayPopupWindow.refreshPageView(Double.valueOf(orderBean.getProducttotalmoney()), Double.valueOf(DataClass.MONEY));
                         customPayPopupWindow.showAtLocation(swipe_layout, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -295,5 +298,40 @@ public class ControllerOrderForm extends ControllerClassObserver implements Swip
                 }));
     }
 
+    /**
+     * 完成订单
+     *
+     * @param Id
+     */
+    public void NetCompleteOrder(String Id) {
+        HashMap map = new HashMap<>();
+        LinkedHashMap linkedHashMap = new LinkedHashMap();
+        linkedHashMap.put("action", DataClass.ORDER_OK_SET);
+        linkedHashMap.put("userid", DataClass.USERID);
+        linkedHashMap.put("orderheadid", Id);
+        String toJson = new Gson().toJson(linkedHashMap);
+        map.put("version", "v1");
+        map.put("vars", toJson);
+        addSubscribe(dataManager.UpLoadStatusNetBean(map)
+                .compose(RxUtil.<UpLoadStatusNetBean>rxSchedulerHelper())
+                .subscribeWith(new CommonSubscriber<UpLoadStatusNetBean>(toastUtil) {
+                    @Override
+                    public void onNext(UpLoadStatusNetBean upLoadStatusNetBean) {
+                        if (upLoadStatusNetBean.getStatus() == 1) {
+                            orderBean.setState(context.getString(R.string.already_complete));
+                            orderFormAdapter.notifyItemChanged(currentIndex);
+                            instance.showHelpfulHintsDialog(context, context.getString(R.string.complete_successful), EventCode.ONSTART);
+                        } else {
+                            toastUtil.showToast(upLoadStatusNetBean.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "Throwable : " + e.toString());
+                        super.onError(e);
+                    }
+                }));
+    }
 
 }

@@ -105,6 +105,8 @@ public class EventCode {
     public static final int CERTIFICATION_TAG = 4040;
     public static final int DOWNLOAD = 4041;
     public static final int SYS_ERROR = 4042;
+    public static final int OR_THE_COMPLETE_ORDER = 4043;
+
 
     //-----------------------PAY---------------------------------
     public static final int WALLET_TOP_UP_PAY = 5001;

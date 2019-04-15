@@ -121,7 +121,7 @@ public class WebConcentratedActivity extends BaseActivity implements X5WebView.X
                     theDetailsInformationIntent.putExtra("userName", titleName);
                     this.startActivity(theDetailsInformationIntent);
                 } else if (titleAbout.equals(getString(R.string.the_share))) {
-                    umShareBuilder.initUmUrlShare(1,"",url,getString(R.string.app_name),"健身周报");
+                    umShareBuilder.initUmUrlShare(1, "", url, getString(R.string.app_name), "健身周报");
                 }
                 break;
         }

@@ -38,6 +38,7 @@ public class CustomSelectFriendsPopupWindow extends PopupWindow implements View.
     private RecyclerView recycler_view;
     private List<FriendsCircleSelectBean> list = new ArrayList<>();
     private FriendsCircleSelectAdapter friendsCircleSelectAdapter;
+    private int height;
 
     public CustomSelectFriendsPopupWindow(Context context) {
         super(context);
@@ -61,6 +62,7 @@ public class CustomSelectFriendsPopupWindow extends PopupWindow implements View.
     private void initView() {
         mPopView = LayoutInflater.from(context).inflate(R.layout.custom_select_friends_popup_window, null);
         recycler_view = mPopView.findViewById(R.id.recycler_view);
+        height = mPopView.findViewById(R.id.pop_layout).getTop();
         setPopupWindow();
     }
 
@@ -87,7 +89,6 @@ public class CustomSelectFriendsPopupWindow extends PopupWindow implements View.
             mPopView.setOnTouchListener(new View.OnTouchListener() {// 如果触摸位置在窗口外面则销毁
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    int height = mPopView.findViewById(R.id.pop_layout).getTop();
                     int y = (int) event.getY();
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         if (y < height) {

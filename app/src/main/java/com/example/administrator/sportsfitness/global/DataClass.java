@@ -132,6 +132,8 @@ public class DataClass {
     public static String ORDER_CANCEL_GET = "order_cancel_get";
     //支付
     public static String ORDER_PAY_SET = "order_pay_set";
+    //完成订单
+    public static String ORDER_OK_SET = "order_ok_set";
 
 
     //动态（发布/修改）

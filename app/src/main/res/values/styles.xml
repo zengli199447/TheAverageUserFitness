@@ -24,7 +24,7 @@
         <!-- 欢迎页背景引用刚才写好的 -->
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowFullscreen">true</item>
-        <!-- <item name="android:windowIsTranslucent">true</item> --> <!-- 透明背景不要了 -->
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
     <style name="AppBaseTheme" parent="@android:style/Theme.Light" />
@@ -40,6 +40,7 @@
 
     <style name="AppSplash" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">@color/blue</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
     <style name="MainTheme" parent="AppTheme">

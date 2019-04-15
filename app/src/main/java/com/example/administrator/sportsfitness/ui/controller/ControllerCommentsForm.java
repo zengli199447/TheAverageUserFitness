@@ -109,6 +109,7 @@ public class ControllerCommentsForm extends ControllerClassObserver implements S
 
         @Override
         public void onScrolled(RecyclerView recyclerView) {
+            int scrollY = recyclerView.getScrollY();
 
         }
     };

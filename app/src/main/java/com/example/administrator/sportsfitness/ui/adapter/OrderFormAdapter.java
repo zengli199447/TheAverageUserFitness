@@ -173,6 +173,7 @@ public class OrderFormAdapter extends RecyclerView.Adapter<MyViewHolder> {
                 controller_life.setVisibility(View.GONE);
                 controller_right.setVisibility(View.GONE);
                 line.setVisibility(View.GONE);
+                order_status.setTextColor(context.getResources().getColor(R.color.gray_light_text));
             }
         } else {
             controller_life.setVisibility(View.VISIBLE);

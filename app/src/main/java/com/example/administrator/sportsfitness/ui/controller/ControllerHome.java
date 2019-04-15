@@ -155,7 +155,7 @@ public class ControllerHome extends ControllerClassObserver implements View.OnKe
         history_search_layout.removeAllViews();
         List<SearchDBInfo> searchDBInfos = null;
         if (DataClass.USERID.isEmpty()) {
-            searchDBInfos = dataManager.querySearchDBInfo(DataClass.USERID);
+            searchDBInfos = dataManager.querySearchDBInfo(DataClass.STANDARD_USER);
         } else {
             searchDBInfos = dataManager.querySearchDBInfo(DataClass.USERID);
         }

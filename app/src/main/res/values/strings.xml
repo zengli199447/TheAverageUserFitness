@@ -7,7 +7,7 @@
     <string name="login">登    录</string>
     <string name="registered">立即注册</string>
     <string name="forgot_password">忘记密码</string>
-    <string name="share_login">第三方等录</string>
+    <string name="share_login">第三方登录</string>
     <string name="account">账号</string>
     <string name="your_phone_number">你的手机号</string>
     <string name="to_obtain_code">获取验证码</string>
@@ -285,6 +285,8 @@
     <string name="going_download_background">已转至后台下载</string>
     <string name="coach_private_contract">签约私教</string>
     <string name="gym_big">健身场馆</string>
+    <string name="complete_successful">订单完成!</string>
+    <string name="or_the_complete_order">是否完成当前订单</string>
 
 
 </resources>

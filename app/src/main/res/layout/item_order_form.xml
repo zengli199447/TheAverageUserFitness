@@ -59,7 +59,8 @@
                 android:layout_below="@+id/order_content"
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_toRightOf="@+id/layout_img"
-                android:lineSpacingExtra="@dimen/dp10"
+                android:lineSpacingExtra="@dimen/dp5"
+                android:layout_marginRight="@dimen/dp90"
                 android:paddingBottom="@dimen/dp10"
                 android:textColor="@color/black_overlay"
                 android:textSize="@dimen/dp13" />

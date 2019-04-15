@@ -90,15 +90,15 @@ public class WelcomeActivity extends BaseActivity {
             LoginUserInfo admin = dataManager.queryLoginUserInfo(DataClass.STANDARD_USER);
             DataClass.USERID = admin.getUserid();
         }
-        if (dataManager.loadAppDBInfoDao().size() > 0) {
+//        if (dataManager.loadAppDBInfoDao().size() > 0) {
             splash_img.setVisibility(View.VISIBLE);
             view_pager.setVisibility(View.GONE);
             handler.sendEmptyMessageDelayed(0, getResources().getInteger(R.integer.send_message_action_ss));
-        } else {
-            view_pager.setVisibility(View.VISIBLE);
-            splash_img.setVisibility(View.GONE);
-            dataManager.insertAppDBInfoDao(new AppDBInfo("", true));
-        }
+//        } else {
+//            view_pager.setVisibility(View.VISIBLE);
+//            splash_img.setVisibility(View.GONE);
+//            dataManager.insertAppDBInfoDao(new AppDBInfo("", true));
+//        }
     }
 
     @Override

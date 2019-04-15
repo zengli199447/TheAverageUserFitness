@@ -9,7 +9,7 @@
     <integer name="map_margin">100</integer>
 
     <!--启动页滞留时间-->
-    <integer name="send_message_action_ss">1500</integer>
+    <integer name="send_message_action_ss">3000</integer>
     <!--刷新滞留时间(模拟)-->
     <integer name="refresh_simulation">1500</integer>
     <!--刷新提示滞留时间(模拟)-->

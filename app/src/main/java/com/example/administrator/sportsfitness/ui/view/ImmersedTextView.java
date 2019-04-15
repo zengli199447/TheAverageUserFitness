@@ -31,7 +31,7 @@ public class ImmersedTextView extends TextView {
         mPaint = getPaint();
         String mTipText = getText().toString();
         mPaint.getTextBounds(mTipText, 0, mTipText.length(), mTextBound);
-        mLinearGradient = new LinearGradient(0, 0, mViewWidth, 0, new int[]{0xFF029793, 0xFF36c9c4,0xFF85efeb}, null, Shader.TileMode.REPEAT);
+        mLinearGradient = new LinearGradient(0, 0, mViewWidth, 0, new int[]{0xFFe53448, 0xFFe65b6b,0xFFec7986}, null, Shader.TileMode.REPEAT);
         mPaint.setShader(mLinearGradient);
         canvas.drawText(mTipText, getMeasuredWidth() / 3 - mTextBound.width() / 3, getMeasuredHeight() / 2 + mTextBound.height() / 2, mPaint);
     }
